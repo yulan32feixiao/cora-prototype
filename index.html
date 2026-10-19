@@ -8,64 +8,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0D1B2A;
-    --ink: #0F172A;
-    --body: #334155;
-    --muted: #64748B;
-    --line: #E2E8F0;
-    --bg: #F4F7FB;
-    --card: #FFFFFF;
-    --blue: #2563EB;
-    --blue-soft: #EFF4FF;
-    --green: #059669;
-    --green-soft: #ECFDF5;
-    --amber: #B45309;
-    --amber-soft: #FFFBEB;
-    --red: #DC2626;
-    --red-soft: #FEF2F2;
-    --radius: 18px;
+    --navy: #0D1B2A; --ink: #0F172A; --body: #334155; --muted: #64748B; --line: #E2E8F0;
+    --bg: #F4F7FB; --card: #FFFFFF; --blue: #2563EB; --blue-soft: #EFF4FF;
+    --green: #059669; --green-soft: #ECFDF5; --amber: #B45309; --amber-soft: #FFFBEB;
+    --red: #DC2626; --red-soft: #FEF2F2; --radius: 18px;
+    --sans: 'Inter', 'PingFang HK', 'PingFang SC', 'Noto Sans TC', 'Noto Sans SC', 'Microsoft JhengHei', system-ui, sans-serif;
+    --display: 'Plus Jakarta Sans', 'PingFang HK', 'PingFang SC', 'Noto Sans TC', 'Noto Sans SC', system-ui, sans-serif;
     font-size: 15px;
   }
   body.big { font-size: 18px; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
-  body {
-    background: var(--bg);
-    color: var(--body);
-    font-family: 'Inter', system-ui, sans-serif;
-    line-height: 1.5;
-  }
-  h1, h2, h3, h4, .num { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; color: var(--ink); margin: 0; }
+  body { background: var(--bg); color: var(--body); font-family: var(--sans); line-height: 1.5; }
+  h1, h2, h3, .num { font-family: var(--display); color: var(--ink); margin: 0; }
   button { font: inherit; cursor: pointer; }
-  .zh { color: var(--muted); font-weight: 500; }
+  [hidden] { display: none !important; }
 
   /* ---------- Top bar ---------- */
-  .topbar {
-    position: sticky; top: 0; z-index: 20;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-    padding: 10px 20px; background: var(--navy); color: #fff;
-  }
+  .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 20px; background: var(--navy); color: #fff; }
   .brand { display: flex; align-items: center; gap: 10px; }
-  .brand .logo {
-    width: 30px; height: 30px; border-radius: 9px; background: var(--blue);
-    display: grid; place-items: center; font-weight: 800; font-family: 'Plus Jakarta Sans';
-  }
-  .brand b { font-family: 'Plus Jakarta Sans'; font-size: 1.05rem; }
+  .brand .logo { width: 30px; height: 30px; border-radius: 9px; background: var(--blue); display: grid; place-items: center; font-weight: 800; font-family: var(--display); }
+  .brand b { font-family: var(--display); font-size: 1.05rem; }
   .brand small { display: block; color: #94A3B8; font-size: .72rem; }
-  .demo-tag { font-size: .72rem; background: #F59E0B; color: #1F2937; padding: 3px 9px; border-radius: 99px; font-weight: 700; }
+  .demo-tag { font-size: .68rem; background: #F59E0B; color: #1F2937; padding: 3px 9px; border-radius: 99px; font-weight: 700; }
+  .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .seg { display: flex; background: #1E293B; border-radius: 12px; padding: 3px; }
-  .seg button { border: 0; background: transparent; color: #CBD5E1; padding: 7px 14px; border-radius: 9px; font-weight: 600; font-size: .85rem; }
+  .seg button { border: 0; background: transparent; color: #CBD5E1; padding: 6px 11px; border-radius: 9px; font-weight: 600; font-size: .8rem; white-space: nowrap; }
   .seg button.on { background: #fff; color: var(--navy); }
-  .ghost-btn { border: 1px solid #334155; background: transparent; color: #E2E8F0; padding: 6px 10px; border-radius: 9px; font-weight: 700; font-size: .85rem; }
+  .ghost-btn { border: 1px solid #334155; background: transparent; color: #E2E8F0; padding: 6px 10px; border-radius: 9px; font-weight: 700; font-size: .8rem; }
 
   /* ---------- Patient stage ---------- */
   .stage { display: flex; justify-content: center; align-items: flex-start; gap: 40px; padding: 28px 20px 40px; }
-  .phone {
-    width: 390px; height: 820px; flex: none; position: relative;
-    background: var(--bg); border: 10px solid #0B1220; border-radius: 48px;
-    box-shadow: 0 30px 60px -20px rgba(13,27,42,.35); overflow: hidden;
-    display: flex; flex-direction: column;
-  }
+  .phone { width: 390px; height: 820px; flex: none; position: relative; background: var(--bg); border: 10px solid #0B1220; border-radius: 48px; box-shadow: 0 30px 60px -20px rgba(13,27,42,.35); overflow: hidden; display: flex; flex-direction: column; }
   .statusbar { display: flex; justify-content: space-between; padding: 12px 26px 4px; font-size: .78rem; font-weight: 600; color: var(--ink); background: #fff; }
   .screen { flex: 1; overflow-y: auto; scrollbar-width: none; }
   .screen::-webkit-scrollbar { display: none; }
@@ -77,18 +51,24 @@
   .tabbar button.on { color: var(--blue); }
   .tabbar button.on .ic { filter: none; opacity: 1; }
 
-  .annot { width: 330px; position: sticky; top: 90px; }
+  .annot { width: 340px; position: sticky; top: 90px; }
   .annot .mod { font-size: .75rem; font-weight: 700; letter-spacing: .08em; color: var(--blue); text-transform: uppercase; }
   .annot h2 { font-size: 1.6rem; font-weight: 800; margin: 4px 0 10px; }
   .annot p { margin: 0 0 14px; }
-  .annot .need { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }
-  .annot .need b { color: var(--ink); display: block; font-size: .85rem; margin-bottom: 2px; }
-  .annot .need span { font-size: .85rem; }
+  .annot h4 { font-family: var(--display); color: var(--ink); font-size: .85rem; margin: 16px 0 8px; }
+  .annot ol { margin: 0; padding-left: 20px; font-size: .88rem; }
+  .annot ol li { margin-bottom: 4px; }
+  .need { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; }
+  .need b { color: var(--ink); display: block; font-size: .85rem; margin-bottom: 2px; }
+  .need span { font-size: .84rem; }
 
-  /* ---------- Shared components ---------- */
-  .hello { display: flex; justify-content: space-between; align-items: center; margin: 4px 2px 12px; }
-  .hello h1 { font-size: 1.35rem; font-weight: 800; }
-  .hello .sub { font-size: .8rem; color: var(--muted); }
+  /* ---------- Components ---------- */
+  .hello { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin: 4px 2px 12px; }
+  .hello h1 { font-size: 1.3rem; font-weight: 800; line-height: 1.25; }
+  .hello .sub { font-size: .78rem; color: var(--muted); }
+  .hello-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .icon-btns { display: flex; gap: 6px; }
+  .icon-btn { border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 4px 10px; font-size: .74rem; font-weight: 700; color: var(--blue); white-space: nowrap; }
   .chip { display: inline-flex; align-items: center; gap: 5px; font-size: .7rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: var(--blue-soft); color: var(--blue); white-space: nowrap; }
   .chip.green { background: var(--green-soft); color: var(--green); }
   .chip.amber { background: var(--amber-soft); color: var(--amber); }
@@ -96,111 +76,135 @@
   .chip.gray { background: #F1F5F9; color: var(--muted); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; margin-bottom: 12px; }
   .card h3 { font-size: .98rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
-  .card .hint { font-size: .78rem; color: var(--muted); margin: -4px 0 10px; }
+  .hint { font-size: .78rem; color: var(--muted); margin: -4px 0 10px; }
   .row { display: flex; align-items: center; gap: 10px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .stat { background: #F8FAFC; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
   .stat .lbl { font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-  .stat .num { font-size: 1.35rem; font-weight: 800; }
+  .stat .num { font-size: 1.3rem; font-weight: 800; }
   .stat .num small { font-size: .75rem; font-weight: 600; color: var(--muted); }
   .stat .note { font-size: .7rem; color: var(--muted); }
-  .sos {
-    display: flex; align-items: center; justify-content: space-between; gap: 8px;
-    background: var(--red-soft); border: 1px solid #FECACA; color: #991B1B;
-    border-radius: 14px; padding: 9px 12px; font-size: .76rem; margin-bottom: 12px;
-  }
+  .sos { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--red-soft); border: 1px solid #FECACA; color: #991B1B; border-radius: 14px; padding: 9px 12px; font-size: .76rem; margin-bottom: 12px; }
   .sos a { background: var(--red); color: #fff; text-decoration: none; font-weight: 700; padding: 5px 10px; border-radius: 9px; white-space: nowrap; }
   .btn { border: 0; background: var(--blue); color: #fff; font-weight: 700; padding: 9px 14px; border-radius: 12px; font-size: .85rem; }
   .btn.light { background: var(--blue-soft); color: var(--blue); }
   .btn.block { width: 100%; }
-  .link { border: 0; background: none; color: var(--blue); font-weight: 600; font-size: .8rem; padding: 0; }
+  .btn.big { padding: 13px 16px; font-size: .95rem; border-radius: 14px; }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .link { border: 0; background: none; color: var(--blue); font-weight: 600; font-size: .8rem; padding: 0; text-align: left; }
+  .foot-note { font-size: .74rem; color: var(--muted); margin-top: 8px; }
+  .empty { text-align: center; padding: 22px 16px; }
+  .empty .big-ic { font-size: 2.4rem; }
+  .empty h3 { justify-content: center; margin: 8px 0 6px; }
+  .empty p { font-size: .82rem; margin: 0 0 14px; }
+  .coach { background: var(--navy); color: #E2E8F0; border-radius: var(--radius); padding: 14px; margin-bottom: 12px; font-size: .84rem; }
+  .coach b { color: #fff; display: block; font-family: var(--display); font-size: .98rem; margin-bottom: 4px; }
 
-  /* check-in */
   .sym { display: flex; flex-wrap: wrap; gap: 6px; }
   .sym button { border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 6px 11px; font-size: .78rem; font-weight: 600; color: var(--body); }
   .sym button.on { background: var(--blue); border-color: var(--blue); color: #fff; }
   .sym button.warn { border-color: #FECACA; color: #B91C1C; }
   .sym button.warn.on { background: var(--red); border-color: var(--red); color: #fff; }
-  .feedback { margin-top: 10px; font-size: .8rem; border-radius: 12px; padding: 9px 11px; display: none; }
-  .feedback.show { display: block; }
+  .feedback { margin-top: 10px; font-size: .8rem; border-radius: 12px; padding: 9px 11px; }
   .feedback.ok { background: var(--green-soft); color: #065F46; }
   .feedback.amber { background: var(--amber-soft); color: #92400E; }
   .feedback.red { background: var(--red-soft); color: #991B1B; }
   .sleep-scale { display: flex; justify-content: space-between; margin-top: 4px; }
   .sleep-scale button { border: 1px solid var(--line); background: #fff; border-radius: 12px; width: 52px; height: 44px; font-size: 1.3rem; }
   .sleep-scale button.on { border-color: var(--blue); background: var(--blue-soft); }
-
-  /* meds */
   .ring { width: 54px; height: 54px; flex: none; }
-  .med { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--line); }
-  .med:first-of-type { border-top: 0; }
+  .med { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--line); cursor: pointer; }
+  .med:first-child { border-top: 0; }
   .med input { width: 22px; height: 22px; accent-color: var(--green); margin-top: 2px; flex: none; }
   .med .t { font-weight: 700; color: var(--ink); font-size: .85rem; }
   .med .d { font-size: .74rem; color: var(--muted); }
   .med.done .t { text-decoration: line-through; color: var(--muted); }
-  .tag { font-size: .62rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 4px; vertical-align: 1px; }
+  .tag { font-size: .62rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 4px; vertical-align: 1px; white-space: nowrap; }
   .tag.w { background: var(--blue-soft); color: var(--blue); }
   .tag.c { background: #FDF2F8; color: #BE185D; }
   .rule { font-size: .74rem; background: var(--amber-soft); color: #92400E; border-radius: 10px; padding: 8px 10px; margin-top: 8px; }
-
+  .rule.blue { background: var(--blue-soft); color: #1E40AF; }
   .bar { height: 10px; background: #E2E8F0; border-radius: 99px; overflow: hidden; }
   .bar > i { display: block; height: 100%; background: var(--green); border-radius: 99px; transition: width .3s; }
-
   .recipe { display: flex; gap: 10px; }
   .recipe .em { font-size: 1.8rem; width: 48px; height: 48px; flex: none; border-radius: 12px; background: #FFF7ED; display: grid; place-items: center; }
-  .recipe b { color: var(--ink); font-size: .85rem; display: block; }
-  .recipe span { font-size: .75rem; }
-
-  /* checker */
+  .recipe b { color: var(--ink); font-size: .86rem; display: block; }
+  .recipe span { font-size: .76rem; }
   .checker { display: flex; gap: 6px; }
   .checker input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 9px 11px; font: inherit; font-size: .85rem; }
   .quick { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-  .quick button { border: 1px solid var(--line); background: #F8FAFC; border-radius: 8px; padding: 3px 8px; font-size: .72rem; }
-  .verdict { margin-top: 10px; border-radius: 12px; padding: 10px 12px; font-size: .8rem; display: none; }
-  .verdict.show { display: block; }
-  .verdict b { display: block; font-size: .85rem; margin-bottom: 2px; }
+  .quick button { border: 1px solid var(--line); background: #F8FAFC; border-radius: 8px; padding: 3px 8px; font-size: .74rem; }
+  .verdict { margin-top: 10px; border-radius: 12px; padding: 10px 12px; font-size: .8rem; }
+  .verdict b { display: block; font-size: .86rem; margin-bottom: 2px; }
   .verdict.red { background: var(--red-soft); color: #991B1B; }
   .verdict.amber { background: var(--amber-soft); color: #92400E; }
   .verdict.green { background: var(--green-soft); color: #065F46; }
   .verdict.gray { background: #F1F5F9; color: var(--body); }
-
-  .target { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); font-size: .82rem; }
-  .target:first-of-type { border-top: 0; }
-  .target b { color: var(--ink); }
-  .medrow { padding: 8px 0; border-top: 1px solid var(--line); font-size: .8rem; }
-  .medrow:first-of-type { border-top: 0; }
-  .medrow b { color: var(--ink); }
-
-  /* night */
-  .tier { font-size: .65rem; font-weight: 800; letter-spacing: .06em; padding: 2px 7px; border-radius: 6px; }
+  .target, .medrow { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line); font-size: .82rem; }
+  .medrow { display: block; }
+  .target:first-of-type, .medrow:first-of-type { border-top: 0; }
+  .target b, .medrow b { color: var(--ink); }
+  .sub-zh { color: var(--muted); font-size: .74rem; }
+  .tier { font-size: .62rem; font-weight: 800; letter-spacing: .04em; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
   .tier.t1 { background: var(--green-soft); color: var(--green); }
   .tier.t2 { background: var(--amber-soft); color: var(--amber); }
-  .thermal { position: relative; height: 92px; margin-top: 6px; }
   .switch { position: relative; width: 44px; height: 26px; flex: none; }
   .switch input { opacity: 0; width: 0; height: 0; }
   .switch span { position: absolute; inset: 0; background: #CBD5E1; border-radius: 99px; transition: .2s; }
   .switch span::before { content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .2s; }
   .switch input:checked + span { background: var(--blue); }
   .switch input:checked + span::before { transform: translateX(18px); }
-
-  /* visit */
   .q { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; padding: 8px 0; border-top: 1px solid var(--line); font-size: .82rem; }
   .q:first-child { border-top: 0; }
-  .q button { border: 0; background: none; color: var(--muted); font-size: 1rem; line-height: 1; }
+  .q button { border: 0; background: none; color: var(--muted); font-size: 1.1rem; line-height: 1; }
 
-  /* emergency sheet */
-  .sheet { position: absolute; inset: 0; background: rgba(15,23,42,.55); display: none; align-items: flex-end; z-index: 5; }
+  /* sheets & overlays inside phone */
+  .sheet { position: absolute; inset: 0; background: rgba(15,23,42,.55); display: none; align-items: flex-end; z-index: 8; }
   .sheet.show { display: flex; }
-  .sheet .panel { background: #fff; width: 100%; border-radius: 26px 26px 0 0; padding: 22px 20px 30px; }
-  .sheet .panel h2 { color: var(--red); font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
+  .sheet .panel { background: #fff; width: 100%; max-height: 88%; overflow-y: auto; border-radius: 26px 26px 0 0; padding: 22px 20px 28px; }
+  .sheet .panel h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
   .sheet .panel p { font-size: .85rem; margin: 0 0 10px; }
+  .sheet .panel h4 { font-family: var(--display); color: var(--ink); font-size: .88rem; margin: 14px 0 6px; }
+  .sheet .panel ol { margin: 0; padding-left: 20px; font-size: .85rem; }
   .sheet .call { display: block; text-align: center; background: var(--red); color: #fff; text-decoration: none; font-weight: 800; font-size: 1.1rem; padding: 14px; border-radius: 14px; margin: 14px 0 8px; }
+  .ob { position: absolute; inset: 0; background: #fff; z-index: 6; display: flex; flex-direction: column; }
+  .ob-top { display: flex; justify-content: space-between; align-items: center; padding: 44px 20px 8px; font-size: .78rem; color: var(--muted); }
+  .dots { display: flex; gap: 5px; }
+  .dots i { width: 22px; height: 5px; border-radius: 9px; background: var(--line); }
+  .dots i.on { background: var(--blue); }
+  .ob-body { flex: 1; overflow-y: auto; padding: 8px 22px 16px; }
+  .ob-body .hero { font-size: 3rem; margin: 6px 0 4px; }
+  .ob-body h2 { font-size: 1.55rem; font-weight: 800; margin-bottom: 8px; line-height: 1.25; }
+  .ob-body p { margin: 0 0 12px; font-size: .9rem; }
+  .ob-foot { display: flex; gap: 8px; padding: 12px 20px 26px; border-top: 1px solid var(--line); }
+  .ob-foot .btn { flex: 1; }
+  .lang-pick { display: grid; gap: 8px; margin: 6px 0 14px; }
+  .lang-pick button { border: 2px solid var(--line); background: #fff; border-radius: 14px; padding: 12px 14px; text-align: left; font-weight: 700; color: var(--ink); font-size: .95rem; }
+  .lang-pick button.on { border-color: var(--blue); background: var(--blue-soft); }
+  .lang-pick small { display: block; font-weight: 500; color: var(--muted); font-size: .75rem; }
+  .checklist { list-style: none; padding: 0; margin: 0 0 12px; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; border-top: 1px solid var(--line); font-size: .88rem; }
+  .checklist li:first-child { border-top: 0; }
+  .checklist li::before { content: "✓"; position: absolute; left: 4px; color: var(--green); font-weight: 800; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 12px; }
+  .steps li { counter-increment: s; position: relative; padding: 10px 0 10px 40px; border-top: 1px solid var(--line); font-size: .88rem; }
+  .steps li:first-child { border-top: 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 9px; width: 28px; height: 28px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); font-weight: 800; display: grid; place-items: center; }
+  .routine { display: grid; gap: 8px; }
+  .routine div { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; font-size: .85rem; }
+  .routine b { color: var(--ink); display: block; }
+  .ok-box { background: var(--green-soft); color: #065F46; border-radius: 12px; padding: 10px 12px; font-size: .84rem; margin-top: 10px; }
+  .time-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line); font-size: .84rem; }
+  .time-row:first-child { border-top: 0; }
+  .time-row input { border: 1px solid var(--line); border-radius: 10px; padding: 5px 8px; font: inherit; font-size: .85rem; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 10px 16px; border-radius: 12px; font-size: .85rem; z-index: 50; max-width: 90vw; display: none; }
+  .toast.show { display: block; }
 
   /* ---------- Doctor view ---------- */
   .doc { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; }
   .doc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
-  .doc-head .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; color: var(--blue); text-transform: uppercase; }
-  .doc-head h1 { font-size: 1.9rem; font-weight: 800; margin: 2px 0 4px; }
+  .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; color: var(--blue); text-transform: uppercase; }
+  .doc-head h1 { font-size: 1.8rem; font-weight: 800; margin: 2px 0 4px; }
   .doc-head .meta { font-size: .85rem; color: var(--muted); }
   .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
   .kpi { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
@@ -210,695 +214,910 @@
   .kpi .delta { font-size: .78rem; font-weight: 600; color: var(--green); }
   .dgrid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
   .panel-d { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
-  .panel-d h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .panel-d .hint { font-size: .78rem; color: var(--muted); margin-bottom: 10px; }
+  .panel-d h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .panel-d .hint { margin: 0 0 10px; }
   table { width: 100%; border-collapse: collapse; font-size: .82rem; }
   th { text-align: left; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; padding: 6px 8px; border-bottom: 1px solid var(--line); }
   td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tr:last-child td { border-bottom: 0; }
-  textarea { width: 100%; min-height: 150px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: .85rem; color: var(--body); resize: vertical; }
-  .foot-note { font-size: .75rem; color: var(--muted); margin-top: 8px; }
-  .legend { display: flex; gap: 14px; font-size: .75rem; color: var(--muted); }
+  td .chip { white-space: normal; }
+  textarea { width: 100%; min-height: 160px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: .85rem; color: var(--body); resize: vertical; }
+  .legend { display: flex; gap: 14px; font-size: .75rem; color: var(--muted); font-weight: 500; }
   .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
-
-  svg text { font-family: 'Inter', sans-serif; }
+  .doc-empty { max-width: 640px; margin: 40px auto; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; text-align: center; }
+  .doc-empty ul { text-align: left; display: inline-block; margin: 6px 0 18px; }
+  svg text { font-family: var(--sans); }
 
   @media (max-width: 1100px) { .annot { display: none; } .kpis { grid-template-columns: repeat(3, 1fr); } .dgrid { grid-template-columns: 1fr; } }
   @media (max-width: 520px) {
     .stage { padding: 0; }
-    .phone { width: 100%; height: calc(100vh - 100px); border: 0; border-radius: 0; box-shadow: none; }
+    .phone { width: 100%; height: calc(100dvh - var(--topbar-h, 120px)); border: 0; border-radius: 0; box-shadow: none; }
     .statusbar { display: none; }
+    .ob-top { padding-top: 16px; }
     .kpis { grid-template-columns: repeat(2, 1fr); }
-    .topbar { padding: 10px 16px; }
+    .topbar { padding: 8px 12px; }
+    .brand small, .demo-tag { display: none; }
     .doc { padding: 16px; }
   }
   @media print {
-    .topbar, #patientView { display: none !important; }
+    .topbar, #patientView, .no-print { display: none !important; }
     #doctorView { display: block !important; }
     body { background: #fff; }
-    .no-print { display: none !important; }
   }
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">
-    <div class="logo">C</div>
-    <div><b>Cora</b> <span class="zh" style="color:#94A3B8">× Soma</span><small>Post-PCI home recovery · 心臟支架術後康復</small></div>
-    <span class="demo-tag">CONCEPT PROTOTYPE · SIMULATED DATA</span>
-  </div>
-  <div class="row">
-    <div class="seg" role="tablist">
-      <button id="vPatient" class="on" onclick="setView('patient')">Patient app 病人</button>
-      <button id="vDoctor" onclick="setView('doctor')">Doctor view 醫生</button>
-    </div>
-    <button class="ghost-btn" onclick="document.body.classList.toggle('big')" title="Larger text">A+</button>
-  </div>
-</header>
+<header class="topbar" id="topbar"></header>
 
-<!-- ======================= PATIENT APP ======================= -->
 <section id="patientView">
   <div class="stage">
-    <div class="phone">
+    <div class="phone" id="phone">
       <div class="statusbar"><span>9:41</span><span>5G ▮▮▮ 🔋</span></div>
       <div class="screen" id="screen">
-
-        <!-- ===== TODAY (Module C + daily check-in) ===== -->
-        <div class="page on" id="p-today">
-          <div class="hello">
-            <div>
-              <div class="sub">Day <span id="dayNo"></span> after PCI · Week <span id="weekNo"></span></div>
-              <h1>Good morning, Mr Chan<br><span class="zh" style="font-size:.95rem">早晨，陳生</span></h1>
-            </div>
-            <span class="chip green">● eHealth+ synced</span>
-          </div>
-
-          <div class="sos">
-            <span>Chest pain or breathless at rest? Don't wait for the app. 胸痛或氣促請即求助</span>
-            <a href="tel:999">Call 999</a>
-          </div>
-
-          <div class="card">
-            <h3>How are you today? <span class="zh">今日感覺</span></h3>
-            <p class="hint">Tap anything you notice. Your cardiologist sees this at your next visit.</p>
-            <div class="sym" id="symList"></div>
-            <div class="feedback" id="symFeedback"></div>
-            <div style="margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink)">How did you sleep? <span class="zh">瞓得好唔好</span></div>
-            <div class="sleep-scale" id="sleepScale"></div>
-          </div>
-
-          <div class="card">
-            <h3>
-              <span>Today's medicines <span class="zh">今日藥物</span></span>
-              <svg class="ring" viewBox="0 0 54 54" id="medRing"></svg>
-            </h3>
-            <div id="medList"></div>
-            <div class="rule">⚠️ Never stop aspirin or clopidogrel on your own. Stopping early can block the stent. Ask your cardiologist first.</div>
-            <button class="link" style="margin-top:8px" onclick="toggleMissed()">Missed a dose? ›</button>
-            <div class="feedback amber" id="missed">Take it when you remember, unless it's almost time for the next dose. <b>Never take a double dose.</b> If unsure, ask your pharmacist.</div>
-          </div>
-
-          <div class="card">
-            <h3>Gentle walk <span class="chip" id="walkChip"></span></h3>
-            <p class="hint">Goal rises each week, as set by your rehab plan. Stop and rest if you feel chest discomfort.</p>
-            <div class="row" style="justify-content:space-between;font-size:.82rem;margin-bottom:6px">
-              <span><b class="num" id="walkNow" style="font-size:1.2rem"></b> / <span id="walkGoal"></span> min</span>
-              <button class="btn light" onclick="addWalk()">+ 5 min</button>
-            </div>
-            <div class="bar"><i id="walkBar"></i></div>
-          </div>
-
-          <div class="card">
-            <h3>Today's heart-friendly meal <span class="chip amber">TCM 食養</span></h3>
-            <div class="recipe" id="todayRecipe"></div>
-            <div class="rule" style="background:var(--blue-soft);color:#1E40AF">Low salt (&lt;2,000 mg sodium/day) · low saturated fat. Want to add a herb to your soup? <button class="link" onclick="go('plan')">Check it first ›</button></div>
-          </div>
-        </div>
-
-        <!-- ===== NIGHT (Module B) ===== -->
-        <div class="page" id="p-night">
-          <div class="hello">
-            <div>
-              <div class="sub">Last night · 22:30 – 06:45</div>
-              <h1>Soma night report<br><span class="zh" style="font-size:.95rem">昨晚睡眠</span></h1>
-            </div>
-            <span class="chip green">● Soma connected</span>
-          </div>
-
-          <div class="card">
-            <h3>Sleep & movement <span class="tier t1">TIER 1 · PRESSURE SENSORS</span></h3>
-            <div class="grid2">
-              <div class="stat"><div class="lbl">In bed</div><div class="num">8h 15m</div><div class="note">22:30 – 06:45</div></div>
-              <div class="stat"><div class="lbl">Asleep</div><div class="num">7h 22m</div><div class="note">89% efficiency</div></div>
-              <div class="stat"><div class="lbl">Turns</div><div class="num">12</div><div class="note">Usual for you</div></div>
-              <div class="stat"><div class="lbl">Out of bed</div><div class="num">1×</div><div class="note">03:10, 4 min</div></div>
-            </div>
-            <div style="margin-top:12px;font-size:.75rem;font-weight:700;color:var(--muted)">HOURS ASLEEP · LAST 7 NIGHTS</div>
-            <div id="sleepBars"></div>
-          </div>
-
-          <div class="card">
-            <h3>Resting heart & breathing <span class="tier t2">TIER 2 · BEING VALIDATED</span></h3>
-            <p class="hint">Estimated by BCG sensors only during still, quiet sleep. A trend for your doctor, <b>not an alarm</b>. Soma cannot detect a heart attack.</p>
-            <div class="grid2">
-              <div class="stat"><div class="lbl">Resting HR</div><div class="num">61 <small>bpm</small></div><div class="note">7-night avg 62</div></div>
-              <div class="stat"><div class="lbl">Breathing</div><div class="num">14 <small>/min</small></div><div class="note">7-night avg 14</div></div>
-            </div>
-            <div class="row" style="margin-top:10px;justify-content:space-between;font-size:.78rem">
-              <span>Valid signal last night</span><b class="num" style="color:var(--green)">92%</b>
-            </div>
-            <div class="bar" style="margin-top:4px"><i style="width:92%"></i></div>
-            <div class="foot-note">8% of the night was dropped because of movement noise. Noisy data is never shown as a reading.</div>
-            <div style="margin-top:12px;font-size:.75rem;font-weight:700;color:var(--muted)">RESTING HR TREND · LAST 7 NIGHTS</div>
-            <div id="hrLine"></div>
-          </div>
-
-          <div class="card">
-            <h3>Bed warmth <span class="tier t1">TIER 1 · THERMAL</span></h3>
-            <p class="hint">Warms before bed to help you fall asleep, then cools to neutral. Hard cut-off at 40 °C.</p>
-            <div class="thermal" id="thermal"></div>
-            <div class="row" style="justify-content:space-between;margin-top:8px;font-size:.82rem">
-              <span>Pre-warm tonight at 22:00 <span class="zh">今晚預熱</span></span>
-              <label class="switch"><input type="checkbox" id="prewarm" checked onchange="prewarmMsg()"><span></span></label>
-            </div>
-            <div class="foot-note" id="prewarmNote">Bed will warm to 37.0 °C at 22:00, then step down to 34.5 °C once you fall asleep.</div>
-          </div>
-        </div>
-
-        <!-- ===== MY PLAN (Module A) ===== -->
-        <div class="page" id="p-plan">
-          <div class="hello">
-            <div>
-              <div class="sub">From eHealth+ · synced today 07:00</div>
-              <h1>My recovery plan<br><span class="zh" style="font-size:.95rem">我的康復計劃</span></h1>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>My procedure</h3>
-            <div style="font-size:.82rem">PCI with drug-eluting stent (LAD) after heart attack · <b id="pciDate"></b><br>Discharged from hospital 3 days later · Cardiologist: Dr K. W. Wong</div>
-          </div>
-
-          <div class="card">
-            <h3>My targets <span class="zh">目標</span></h3>
-            <div class="target"><span>Blood pressure<br><span class="zh">target &lt;130/80</span></span><span><b>124/78</b> <span class="chip green">On target</span></span></div>
-            <div class="target"><span>LDL cholesterol<br><span class="zh">target &lt;1.4 mmol/L</span></span><span><b>1.32</b> <span class="chip green">On target</span></span></div>
-            <div class="target"><span>Fasting glucose<br><span class="zh">target &lt;6.0 mmol/L</span></span><span><b>5.4</b> <span class="chip green">On target</span></span></div>
-            <div class="target"><span>Smoking<br><span class="zh">target: stopped</span></span><span><b>Stopped</b> <span class="chip green">Since admission</span></span></div>
-            <div class="foot-note">Latest lab results from hospital, via eHealth+. Cora does not measure these.</div>
-          </div>
-
-          <div class="card">
-            <h3>My medicines <span class="zh">藥物</span></h3>
-            <div class="medrow"><b>Aspirin 100 mg</b> <span class="tag w">Western</span><br>Once daily with breakfast · keeps the stent open</div>
-            <div class="medrow"><b>Clopidogrel 75 mg</b> <span class="tag w">Western</span><br>Once daily with breakfast · keeps the stent open (usually 12 months)</div>
-            <div class="medrow"><b>Atorvastatin 40 mg</b> <span class="tag w">Western</span><br>Once daily at bedtime · lowers cholesterol, steadies plaque</div>
-            <div class="medrow"><b>Tongxinluo 通心絡 · 4 capsules</b> <span class="tag c">TCM</span><br>Three times daily after meals · prescribed alongside your Western medicines</div>
-            <div class="foot-note">Take exactly as prescribed. Times can be adjusted by your doctor or pharmacist.</div>
-          </div>
-
-          <div class="card">
-            <h3>Can I eat or drink this? <span class="zh">食得唔食得</span></h3>
-            <p class="hint">Many soups and herbs clash with heart medicines. Check before you add them.</p>
-            <div class="checker">
-              <input id="herbInput" placeholder="e.g. 丹參, grapefruit, oats" onkeydown="if(event.key==='Enter')checkHerb()">
-              <button class="btn" onclick="checkHerb()">Check</button>
-            </div>
-            <div class="quick" id="quickHerbs"></div>
-            <div class="verdict" id="verdict"></div>
-          </div>
-        </div>
-
-        <!-- ===== VISIT (bridge to Module D) ===== -->
-        <div class="page" id="p-visit">
-          <div class="hello">
-            <div>
-              <div class="sub">Cardiology clinic · Dr K. W. Wong</div>
-              <h1>My next visit<br><span class="zh" style="font-size:.95rem">覆診</span></h1>
-            </div>
-          </div>
-
-          <div class="card" style="background:var(--navy);border-color:var(--navy);color:#CBD5E1">
-            <div style="font-size:.75rem;font-weight:700;letter-spacing:.06em">NEXT APPOINTMENT</div>
-            <div class="num" style="color:#fff;font-size:1.5rem;font-weight:800;margin:2px 0">Fri 20 Nov 2026 · 10:30</div>
-            <div style="font-size:.8rem">Cardiac clinic, 4/F · bring your medicine box</div>
-          </div>
-
-          <div class="card">
-            <h3>Questions for my doctor <span class="zh">想問醫生</span></h3>
-            <p class="hint">Write them down when you think of them, so you don't forget at the visit.</p>
-            <div id="qList"></div>
-            <div class="checker" style="margin-top:8px">
-              <input id="qInput" placeholder="Type a question…" onkeydown="if(event.key==='Enter')addQ()">
-              <button class="btn" onclick="addQ()">Add</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>My 8-week summary</h3>
-            <div class="grid2">
-              <div class="stat"><div class="lbl">Medicines taken</div><div class="num">97%</div><div class="note">last 2 weeks</div></div>
-              <div class="stat"><div class="lbl">Walking</div><div class="num">5 / 7</div><div class="note">days this week</div></div>
-            </div>
-            <button class="btn block" style="margin-top:12px" onclick="setView('doctor')">Share summary with Dr Wong ›</button>
-            <div class="foot-note">You choose what is shared. Data stays in your eHealth+ record.</div>
-          </div>
-        </div>
-
+        <div class="page on" id="p-today"></div>
+        <div class="page" id="p-night"></div>
+        <div class="page" id="p-plan"></div>
+        <div class="page" id="p-visit"></div>
       </div>
-
-      <nav class="tabbar">
-        <button class="on" data-tab="today" onclick="go('today')"><span class="ic">☀️</span>Today</button>
-        <button data-tab="night" onclick="go('night')"><span class="ic">🌙</span>Night</button>
-        <button data-tab="plan" onclick="go('plan')"><span class="ic">📋</span>My plan</button>
-        <button data-tab="visit" onclick="go('visit')"><span class="ic">🩺</span>Visit</button>
-      </nav>
-
-      <div class="sheet" id="sheet">
-        <div class="panel">
-          <h2>Call 999 now 請即致電 999</h2>
-          <p>Chest pain or pressure that lasts more than a few minutes, or breathlessness at rest, can be a heart attack.</p>
-          <p><b>Do not wait for Cora or Soma data.</b> Take your GTN spray if your doctor prescribed one, unlock your door and stay seated.</p>
-          <a class="call" href="tel:999">📞 Call 999</a>
-          <button class="btn light block" onclick="closeSheet()">I'm OK — close</button>
-        </div>
-      </div>
+      <nav class="tabbar" id="tabbar"></nav>
+      <div class="ob" id="ob" hidden></div>
+      <div class="sheet" id="sosSheet"><div class="panel" id="sosPanel"></div></div>
+      <div class="sheet" id="helpSheet" onclick="if(event.target===this)closeHelp()"><div class="panel" id="helpPanel"></div></div>
     </div>
-
     <aside class="annot" id="annot"></aside>
   </div>
 </section>
 
-<!-- ======================= DOCTOR VIEW (Module D) ======================= -->
-<section id="doctorView" hidden>
-  <div class="doc">
-    <div class="doc-head">
-      <div>
-        <div class="eyebrow">Module D · Longitudinal recovery report</div>
-        <h1>Mr Chan, 62 · 8-week post-PCI summary</h1>
-        <div class="meta">DES to LAD · <span id="docPeriod"></span> · For Dr K. W. Wong (Cardiology) · Patient-reported + Soma sensor data</div>
-      </div>
-      <div class="row no-print">
-        <span class="chip gray">Clinician review only · not a diagnosis</span>
-        <button class="btn" onclick="window.print()">Print / save PDF</button>
-      </div>
-    </div>
+<section id="doctorView" hidden><div class="doc" id="doc"></div></section>
 
-    <div class="kpis">
-      <div class="kpi"><div class="lbl">Adherence · MMAS-8</div><div class="num">8.0 <small>/ 8</small></div><div class="delta">↑ from 6.75 (wk 1–2)</div></div>
-      <div class="kpi"><div class="lbl">Diet log completed</div><div class="num">96<small>%</small></div><div class="delta">↑ from 78%</div></div>
-      <div class="kpi"><div class="lbl">Sleep · PSQI</div><div class="num">5</div><div class="delta">↓ from 11 (lower = better)</div></div>
-      <div class="kpi"><div class="lbl">Resting HR at night</div><div class="num">61 <small>bpm</small></div><div class="delta">↓ from 71 · trend only</div></div>
-      <div class="kpi"><div class="lbl">Soma valid signal</div><div class="num">92<small>%</small></div><div class="delta" style="color:var(--muted)">avg 91% over 8 weeks</div></div>
-    </div>
-
-    <div class="dgrid">
-      <div>
-        <div class="panel-d">
-          <h3>8-week trends <span class="legend"><span><i style="background:var(--blue)"></i>Resting HR (bpm)</span><span><i style="background:#F59E0B"></i>PSQI</span></span></h3>
-          <div class="hint">HR from Soma Tier 2 (quiet-sleep windows only, being validated). PSQI from fortnightly in-app questionnaire.</div>
-          <div id="docTrend"></div>
-        </div>
-        <div class="panel-d">
-          <h3>Weekly medication adherence <span class="legend"><span><i style="background:var(--blue)"></i>Western</span><span><i style="background:#DB2777"></i>Tongxinluo</span></span></h3>
-          <div class="hint">% of scheduled doses ticked in Cora.</div>
-          <div id="docAdh"></div>
-        </div>
-      </div>
-      <div>
-        <div class="panel-d">
-          <h3>Symptom & safety log <span class="chip amber" id="flagCount"></span></h3>
-          <div class="hint">What the patient reported and what Cora advised. Today's check-ins appear here live.</div>
-          <table>
-            <thead><tr><th>When</th><th>Reported</th><th>Cora response</th></tr></thead>
-            <tbody id="symTable"></tbody>
-          </table>
-        </div>
-        <div class="panel-d">
-          <h3>Patient's questions for this visit</h3>
-          <ul id="docQ" style="margin:6px 0 0;padding-left:18px;font-size:.85rem"></ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel-d">
-      <h3>Draft summary for eHealth+ record <span class="chip gray">Editable by clinician</span></h3>
-      <div class="hint">Cora drafts from the data above. The cardiologist reviews, edits and decides. Cora makes no diagnosis or prescribing decision.</div>
-      <textarea id="docNote"></textarea>
-      <div class="foot-note">Demo regimen simplified for the prototype. Real post-PCI regimens often also include a beta-blocker, ACE inhibitor/ARB and stomach protection.</div>
-    </div>
-  </div>
-</section>
+<div class="toast" id="toast"></div>
 
 <script>
-  // ---------------- Demo data ----------------
-  const PCI_DATE = new Date('2026-08-24');
-  const TODAY = new Date('2026-10-19');
-  const dayNo = Math.round((TODAY - PCI_DATE) / 86400000);
+/* =========================================================
+   Language: en = English, yue = Cantonese (繁體), zh = Mandarin (简体)
+   ========================================================= */
+let LANG = 'en';
+const LI = { en: 0, yue: 1, zh: 2 };
+const pick = (a) => Array.isArray(a) ? (a[LI[LANG]] ?? a[0]) : a;
 
-  const SYMPTOMS = [
-    { id: 'none', label: '😊 No symptoms', level: 'ok' },
-    { id: 'chest', label: 'Chest pain / pressure', level: 'red', warn: true },
-    { id: 'breath', label: 'Breathless at rest', level: 'red', warn: true },
-    { id: 'bleed', label: 'Bleeding / black stools', level: 'amber', warn: true },
-    { id: 'palp', label: 'Palpitations', level: 'amber' },
-    { id: 'dizzy', label: 'Dizzy', level: 'amber' },
-    { id: 'tired', label: 'Very tired', level: 'log' },
-    { id: 'mood', label: 'Low mood / worried', level: 'log' },
-  ];
-  const SYM_MSG = {
-    ok: ['ok', 'Logged — great to hear. Keep going with today\'s plan.'],
-    bleed: ['amber', 'Please contact your clinic today. Do not stop aspirin or clopidogrel on your own. If bleeding is heavy or won\'t stop, call 999.'],
-    palp: ['amber', 'Logged for Dr Wong. If it keeps happening, or you feel faint, contact your clinic.'],
-    dizzy: ['amber', 'Logged. Sit or lie down until it passes. If it keeps happening, contact your clinic.'],
-    tired: ['ok', 'Logged for your cardiologist. Tiredness is common in recovery; mention it at your visit.'],
-    mood: ['ok', 'Logged. Worry and low mood are common after a heart attack and are part of recovery. Your doctor can help — it will be on your visit summary.'],
-  };
+const T = {
+  brandSub: ['Post-PCI home recovery', '通波仔後居家康復', '支架术后居家康复'],
+  demoTag: ['CONCEPT PROTOTYPE · SIMULATED DATA', '概念原型・模擬數據', '概念原型・模拟数据'],
+  modeDemo: ['Demo: 8 weeks in', '示範：用咗8星期', '示范：使用8周后'],
+  modeNew: ['New user (empty)', '新用戶（冇數據）', '新用户（无数据）'],
+  viewPatient: ['Patient app', '病人App', '患者App'],
+  viewDoctor: ['Doctor view', '醫生版', '医生端'],
+  resetNew: ['↺ Restart setup', '↺ 重新設定', '↺ 重新设置'],
 
-  const MEDS = [
-    { time: '08:00', name: 'Aspirin 100 mg + Clopidogrel 75 mg', note: 'With breakfast', type: 'w' },
-    { time: '08:30', name: 'Tongxinluo 通心絡 · 4 capsules', note: 'After breakfast', type: 'c' },
-    { time: '13:30', name: 'Tongxinluo 通心絡 · 4 capsules', note: 'After lunch', type: 'c' },
-    { time: '19:30', name: 'Tongxinluo 通心絡 · 4 capsules', note: 'After dinner', type: 'c' },
-    { time: '22:00', name: 'Atorvastatin 40 mg', note: 'At bedtime · no grapefruit', type: 'w' },
-  ];
+  sosText: ["Chest pain or breathless at rest? Don't wait for the app.", '心口痛或者休息都氣促？唔好等App，即刻求助。', '胸痛或休息时也气促？不要等App，立即求助。'],
+  call999: ['Call 999', '打999', '拨打999'],
+  ehSynced: ['eHealth+ synced', '已同步醫健通+', '已同步医健通+'],
+  ehNot: ['eHealth+ not connected', '未連接醫健通+', '未连接医健通+'],
+  somaConnected: ['Soma connected', 'Soma已連接', 'Soma已连接'],
+  help: ['? How to use', '? 點樣用', '? 怎么用'],
+  listen: ['🔊 Listen', '🔊 讀出', '🔊 朗读'],
+  close: ['Close', '關閉', '关闭'],
+  howToUse: ['How to use this screen', '呢頁點樣用', '这一页怎么用'],
+  needsMet: ['What patient need it meets', '解決病人咩需要', '满足患者什么需求'],
+  needLbl: ['Need', '需要', '需求'],
 
-  const RECIPES = [
-    { em: '🥣', name: 'Steamed oats with black fungus & goji', zh: '黑木耳杞子蒸燕麥', why: 'Soluble fibre helps lower cholesterol. No added salt.' },
-    { em: '🍵', name: 'Light hawthorn, lotus leaf & tangerine peel tea', zh: '山楂荷葉陳皮茶', why: 'After meals for digestion. Brew lightly — under 3 g hawthorn.' },
-    { em: '🐟', name: 'Steamed fish with ginger & light astragalus broth', zh: '薑蔥黃芪蒸魚', why: 'Omega-3 fats; culinary astragalus under 5 g; ginger instead of salt.' },
-    { em: '🍐', name: 'Snow pear, lily bulb & lotus seed soup (no sugar)', zh: '雪梨百合蓮子湯', why: 'A calming evening soup to support sleep. No rock sugar.' },
-  ];
+  tabToday: ['Today', '今日', '今天'], tabNight: ['Night', '夜間', '夜间'], tabPlan: ['My plan', '計劃', '计划'], tabVisit: ['Visit', '覆診', '复诊'],
 
-  const HERBS = [
-    { keys: ['grapefruit', '西柚', '葡萄柚'], level: 'red', title: 'Avoid — clashes with atorvastatin', why: 'Grapefruit raises statin levels in the blood (CYP3A4), increasing the risk of muscle side effects.' },
-    { keys: ['red yeast rice', '紅麴', '红曲', '紅曲'], level: 'red', title: 'Avoid — a hidden second statin', why: 'Red yeast rice naturally contains a statin. Together with atorvastatin this doubles the dose.' },
-    { keys: ['danshen', '丹參', '丹参'], level: 'red', title: 'Avoid unless prescribed', why: 'Danshen thins the blood. On aspirin + clopidogrel it adds to bleeding risk. Your Tongxinluo is already prescribed for circulation.' },
-    { keys: ['sanqi', 'san qi', '三七', '田七'], level: 'red', title: 'Avoid unless prescribed', why: 'Sanqi affects clotting and adds to bleeding risk with your antiplatelet medicines.' },
-    { keys: ['ginkgo', '銀杏', '银杏', '白果'], level: 'red', title: 'Avoid unless prescribed', why: 'Ginkgo can increase bleeding risk with aspirin and clopidogrel.' },
-    { keys: ['dong quai', 'angelica', '當歸', '当归'], level: 'red', title: 'Avoid unless prescribed', why: 'Dong quai may increase bleeding risk with antiplatelet medicines — common in soups, so check labels.' },
-    { keys: ['ginseng', '人參', '人参', '高麗參', '西洋參', '花旗參'], level: 'amber', title: 'Ask your doctor or pharmacist first', why: 'Ginseng, especially in concentrated or high doses, can affect blood pressure and heart rhythm.' },
-    { keys: ['hawthorn', '山楂'], level: 'amber', title: 'Food amounts only', why: 'A light tea (under 3 g) is in your approved list. Avoid concentrated hawthorn supplements unless your doctor agrees.' },
-    { keys: ['oat', '燕麥', '燕麦'], level: 'green', title: 'Good choice', why: 'Oat fibre (beta-glucan) helps lower LDL cholesterol.' },
-    { keys: ['black fungus', 'wood ear', '黑木耳', '木耳'], level: 'green', title: 'Fine in normal food amounts', why: 'Part of your approved recipe list.' },
-    { keys: ['goji', '杞子', '枸杞'], level: 'green', title: 'Fine in normal food amounts', why: 'Part of your approved recipe list.' },
-    { keys: ['lily', '百合'], level: 'green', title: 'Fine in normal food amounts', why: 'Used in your calming evening soup.' },
-    { keys: ['lotus seed', '蓮子', '莲子'], level: 'green', title: 'Fine in normal food amounts', why: 'Used in your calming evening soup.' },
-    { keys: ['fish', '魚', '鱼', 'salmon', 'sea bass'], level: 'green', title: 'Good choice', why: 'Steamed fish gives omega-3 fats. Avoid salted or deep-fried fish.' },
-    { keys: ['ginger', '薑', '姜'], level: 'green', title: 'Fine as seasoning', why: 'Use ginger and spring onion instead of salt or soy sauce.' },
-    { keys: ['astragalus', '黃芪', '黄芪', '北芪'], level: 'amber', title: 'Culinary amounts only (under 5 g)', why: 'A small slice in broth is in your approved list. Do not take concentrated astragalus products without asking.' },
-  ];
-  const QUICK = ['西柚', '紅麴', '丹參', '三七', '當歸', '花旗參', '山楂', '燕麥', '黑木耳', '百合'];
+  dayLine: ['Day {d} after PCI · Week {w}', '通波仔後第{d}日・第{w}星期', '支架术后第{d}天・第{w}周'],
+  greet: ['Good morning, Mr Chan', '早晨，陳生', '早上好，陈先生'],
+  greetNew: ['Welcome to Cora', '歡迎使用Cora', '欢迎使用Cora'],
+  howToday: ['How are you today?', '今日覺得點？', '今天感觉怎么样？'],
+  howHint: ['Tap anything you notice. Your cardiologist sees this at your next visit.', '有咩唔舒服就㩒，覆診時心臟科醫生會睇到。', '有任何不适就点一下，复诊时心内科医生会看到。'],
+  sym_none: ['😊 No symptoms', '😊 冇唔舒服', '😊 没有不适'],
+  sym_chest: ['Chest pain / pressure', '心口痛／有壓迫感', '胸痛／胸口压迫感'],
+  sym_breath: ['Breathless at rest', '休息都氣促', '休息时也气促'],
+  sym_bleed: ['Bleeding / black stools', '出血／大便黑', '出血／黑便'],
+  sym_palp: ['Palpitations', '心跳好快／心悸', '心慌／心悸'],
+  sym_dizzy: ['Dizzy', '頭暈', '头晕'],
+  sym_tired: ['Very tired', '好攰', '很累'],
+  sym_mood: ['Low mood / worried', '心情差／好擔心', '情绪低落／担心'],
+  msg_none: ["Logged — great to hear. Keep going with today's plan.", '記低咗，好嘢！繼續跟今日嘅計劃。', '已记录，很好！继续按今天的计划进行。'],
+  msg_red: ['Emergency advice shown. If symptoms are happening now, call 999.', '已顯示緊急指示。如果而家有呢啲症狀，即刻打999。', '已显示紧急提示。如果现在有这些症状，立即拨打999。'],
+  msg_bleed: ["Please contact your clinic today. Do not stop aspirin or clopidogrel on your own. If bleeding is heavy or won't stop, call 999.", '請今日聯絡診所。唔好自己停阿士匹靈或者氯吡格雷。如果出血好多或者止唔到，即刻打999。', '请今天联系诊所。不要自行停用阿司匹林或氯吡格雷。如果出血量大或止不住，立即拨打999。'],
+  msg_palp: ['Logged for your doctor. If it keeps happening, or you feel faint, contact your clinic.', '已經記低俾醫生睇。如果成日出現，或者覺得就快暈，請聯絡診所。', '已记录给医生。如果反复出现，或感觉快要晕倒，请联系诊所。'],
+  msg_dizzy: ['Logged. Sit or lie down until it passes. If it keeps happening, contact your clinic.', '記低咗。坐低或者瞓低等佢過。如果成日出現，請聯絡診所。', '已记录。坐下或躺下等它过去。如果反复出现，请联系诊所。'],
+  msg_tired: ['Logged for your cardiologist. Tiredness is common in recovery — mention it at your visit.', '已記低。康復期間好攰好常見，覆診時同醫生講。', '已记录。康复期间疲劳很常见，复诊时告诉医生。'],
+  msg_mood: ['Logged. Worry and low mood are common after a heart attack and are part of recovery. Your doctor can help.', '記低咗。心臟病發之後擔心、心情差好常見，都係康復嘅一部分，醫生可以幫你。', '已记录。心梗后担心、情绪低落很常见，也是康复的一部分，医生可以帮您。'],
+  sleepQ: ['How did you sleep?', '瞓得好唔好？', '睡得好吗？'],
+  medsTitle: ["Today's medicines", '今日食藥', '今日用药'],
+  medRule: ['⚠️ Never stop aspirin or clopidogrel on your own. Stopping early can block the stent. Ask your cardiologist first.', '⚠️ 千祈唔好自己停阿士匹靈或者氯吡格雷，太早停可能令支架塞。要停一定先問心臟科醫生。', '⚠️ 切勿自行停用阿司匹林或氯吡格雷，过早停药可能导致支架堵塞。停药前务必先问心内科医生。'],
+  missedQ: ['Missed a dose? ›', '漏食咗一次？›', '漏服了一次？›'],
+  missedA: ["Take it when you remember, unless it's almost time for the next dose. Never take a double dose. If unsure, ask your pharmacist.", '記得就即刻食，除非就快到下一次。千祈唔好一次食雙份。唔肯定就問藥劑師。', '想起来就马上服用，除非快到下一次。切勿一次服用双倍剂量。不确定就问药剂师。'],
+  tagW: ['Western', '西藥', '西药'], tagC: ['TCM', '中藥', '中药'],
+  noMeds: ['No medicines yet. Connect eHealth+ to import your hospital prescription — no typing needed.', '未有藥物資料。連接醫健通+就可以匯入醫院處方，唔使自己打。', '还没有药物信息。连接医健通+即可导入医院处方，无需手动输入。'],
+  connectEh: ['Connect eHealth+', '連接醫健通+', '连接医健通+'],
+  connecting: ['Connecting…', '連接緊…', '连接中…'],
+  walkTitle: ['Gentle walk', '輕鬆散步', '轻松散步'],
+  walkHint: ['Goal rises each week, as set by your rehab plan. Stop and rest if you feel chest discomfort.', '目標會按復康計劃每星期慢慢加。心口唔舒服就停低休息。', '目标会按康复计划每周逐步增加。胸口不适就停下休息。'],
+  walkDone: ['Done today ✓', '今日完成 ✓', '今日完成 ✓'],
+  walkWeek: ['Week {w} goal', '第{w}星期目標', '第{w}周目标'],
+  min: ['min', '分鐘', '分钟'],
+  mealTitle: ["Today's heart-friendly meal", '今日護心餐', '今日护心餐'],
+  mealTag: ['TCM food therapy', '中醫食療', '中医食疗'],
+  mealRule: ['Low salt (<2,000 mg sodium/day) · low saturated fat. Adding a herb to your soup?', '少鹽（每日鈉少過2,000毫克）・少飽和脂肪。想喺湯度加藥材？', '少盐（每日钠少于2,000毫克）・少饱和脂肪。想在汤里加药材？'],
+  checkFirst: ['Check it first ›', '先查一查 ›', '先查一下 ›'],
+  coachTitle: ['👋 Your first day with Cora', '👋 第一日用Cora', '👋 第一天使用Cora'],
+  coachBody: ['1. Tap how you feel. 2. Tick each medicine after you take it. 3. Not sure? Tap “? How to use” on any screen.', '1. 㩒低今日覺得點。2. 食完藥就剔。3. 唔識用？每頁都可以㩒「? 點樣用」。', '1. 点一下今天的感觉。2. 吃完药就打勾。3. 不会用？每页都可以点「? 怎么用」。'],
+  gotIt: ['Got it', '明白', '知道了'],
+  speakMeds: ['You have {n} medicines left today: {list}.', '今日仲有{n}次藥要食：{list}。', '今天还有{n}次药要吃：{list}。'],
+  speakMedsDone: ['All medicines taken today. Well done.', '今日啲藥全部食晒，好叻。', '今天的药全部吃完了，很棒。'],
 
-  const SLEEP7 = [6.4, 6.9, 7.1, 6.6, 7.3, 7.0, 7.4];
-  const HR7 = [64, 63, 63, 62, 62, 61, 61];
-  const NIGHTS = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
-  const WEEK_HR = [72, 70, 68, 66, 64, 63, 62, 61];
-  const WEEK_PSQI = [11, 11, 9, 8, 7, 6, 5, 5];
-  const WEEK_ADH_W = [86, 90, 93, 96, 98, 98, 99, 99];
-  const WEEK_ADH_C = [72, 80, 86, 91, 94, 95, 96, 97];
+  nightLast: ['Last night · 22:30 – 06:45', '琴晚・22:30 – 06:45', '昨晚・22:30 – 06:45'],
+  nightTitle: ['Soma night report', 'Soma 睡眠報告', 'Soma 睡眠报告'],
+  sleepMove: ['Sleep & movement', '睡眠同郁動', '睡眠与活动'],
+  tier1p: ['TIER 1 · PRESSURE', '第1級・壓力感應', '第1级・压力感应'],
+  inBed: ['In bed', '喺床時間', '在床时间'], asleep: ['Asleep', '瞓著', '入睡'], turns: ['Turns', '轉身', '翻身'], outBed: ['Out of bed', '落床', '离床'],
+  effNote: ['89% efficiency', '睡眠效率89%', '睡眠效率89%'], usual: ['Usual for you', '同平時差唔多', '和平时差不多'], outNote: ['03:10, 4 min', '03:10，4分鐘', '03:10，4分钟'],
+  hours7: ['HOURS ASLEEP · LAST 7 NIGHTS', '過去7晚睡眠時數', '过去7晚睡眠时长'],
+  hrTitle: ['Resting heart & breathing', '靜息心跳同呼吸', '静息心率与呼吸'],
+  tier2: ['TIER 2 · BEING VALIDATED', '第2級・驗證中', '第2级・验证中'],
+  hrHint: ['Estimated by BCG sensors only during still, quiet sleep. A trend for your doctor, not an alarm. Soma cannot detect a heart attack.', '只會喺你瞓得定嘅時候用BCG感應器估算。係俾醫生睇嘅趨勢，唔係警報。Soma偵測唔到心臟病發。', '仅在安静熟睡时由BCG传感器估算。是给医生看的趋势，不是警报。Soma无法检测心梗。'],
+  restHR: ['Resting HR', '靜息心跳', '静息心率'], breathing: ['Breathing', '呼吸', '呼吸'], avg7: ['7-night avg {v}', '7晚平均 {v}', '7晚平均 {v}'],
+  validSig: ['Valid signal last night', '琴晚有效訊號', '昨晚有效信号'],
+  validNote: ['8% of the night was dropped because of movement noise. Noisy data is never shown as a reading.', '琴晚有8%因為郁動雜訊而被剔除。有雜訊嘅數據唔會當讀數顯示。', '昨晚有8%因活动噪声被剔除。有噪声的数据不会作为读数显示。'],
+  hr7: ['RESTING HR TREND · LAST 7 NIGHTS', '過去7晚靜息心跳趨勢', '过去7晚静息心率趋势'],
+  warmTitle: ['Bed warmth', '床褥溫度', '床垫温度'],
+  tier1t: ['TIER 1 · THERMAL', '第1級・溫控', '第1级・温控'],
+  warmHint: ['Warms before bed to help you fall asleep, then cools to neutral. Hard cut-off at 40 °C.', '瞓前預熱幫你易啲入睡，之後降返中性溫度。去到40°C會自動斷電。', '睡前预热帮助入睡，之后降至中性温度。达到40°C自动断电。'],
+  prewarmLbl: ['Pre-warm tonight at 22:00', '今晚22:00預熱', '今晚22:00预热'],
+  prewarmOn: ['Bed will warm to 37.0 °C at 22:00, then step down to 34.5 °C once you fall asleep.', '22:00會預熱到37.0°C，瞓著之後降到34.5°C。', '22:00预热至37.0°C，入睡后降至34.5°C。'],
+  prewarmOff: ['Pre-warming off tonight. Bed stays at neutral 34.5 °C.', '今晚唔預熱，床會保持34.5°C。', '今晚不预热，床保持34.5°C。'],
+  cutoff: ['40 °C auto shut-off', '40°C自動斷電', '40°C自动断电'], neutral: ['neutral', '中性', '中性'],
+  noSomaTitle: ['Soma not connected yet', '未連接Soma', '尚未连接Soma'],
+  noSomaBody: ['Pair your Soma mattress cover to see your sleep each morning. Nothing to wear or charge.', '配對Soma床褥套之後，每朝都睇到你瞓成點。唔使戴、唔使叉電。', '配对Soma床垫套后，每天早上都能看到睡眠情况。无需佩戴或充电。'],
+  pairSoma: ['Pair Soma', '配對Soma', '配对Soma'], pairing: ['Pairing…', '配對緊…', '配对中…'],
+  firstNightTitle: ['Your first night with Soma 🌙', '今晚係第一晚用Soma 🌙', '今晚是第一晚使用Soma 🌙'],
+  firstNightBody: ['Just sleep as usual. Your first report appears tomorrow around 07:00. Heart and breathing trends need at least 7 nights.', '照平時咁瞓就得。第一份報告聽朝7點左右出。心跳同呼吸趨勢要至少7晚數據。', '像平时一样睡就行。第一份报告明早7点左右生成。心率和呼吸趋势至少需要7晚数据。'],
+  seeDemo: ['See an example after 8 weeks ›', '睇吓用咗8星期係點 ›', '看看使用8周后的样子 ›'],
+  speakNight: ['Last night you slept 7 hours 22 minutes and turned 12 times. Your resting heart rate trend is steady.', '琴晚你瞓咗7個鐘22分鐘，轉咗12次身。靜息心跳趨勢平穩。', '昨晚您睡了7小时22分钟，翻身12次。静息心率趋势平稳。'],
 
-  const state = {
-    sym: new Set(),
-    sleep: null,
-    meds: MEDS.map(() => false),
-    walk: 15,
-    walkGoal: 25,
-    questions: ['Can I travel to Shenzhen by train next month?', 'When can I stop clopidogrel?'],
+  planSub: ['From eHealth+ · synced today 07:00', '來自醫健通+・今日07:00同步', '来自医健通+・今天07:00同步'],
+  planTitle: ['My recovery plan', '我嘅康復計劃', '我的康复计划'],
+  procTitle: ['My procedure', '我做咗咩手術', '我的手术'],
+  procText: ['PCI with drug-eluting stent (LAD) after heart attack · {date}. Discharged 3 days later. Cardiologist: Dr Wong', '心臟病發後做通波仔，放咗藥物支架（左前降支）・{date}。3日後出院。心臟科醫生：王醫生', '心梗后行PCI，植入药物洗脱支架（前降支）・{date}。3天后出院。心内科医生：王医生'],
+  targets: ['My targets', '我嘅目標', '我的目标'],
+  bp: ['Blood pressure', '血壓', '血压'], ldl: ['LDL cholesterol', '壞膽固醇 (LDL)', '低密度胆固醇 (LDL)'], glu: ['Fasting glucose', '空腹血糖', '空腹血糖'], smoke: ['Smoking', '吸煙', '吸烟'],
+  tgt: ['target {v}', '目標 {v}', '目标 {v}'], onTarget: ['On target', '達標', '达标'], stopped: ['Stopped', '戒咗', '已戒'], tgtStopped: ['target: stopped', '目標：戒煙', '目标：戒烟'], sinceAdm: ['Since admission', '入院起', '入院起'],
+  labNote: ['Latest lab results from hospital, via eHealth+. Cora does not measure these.', '最新化驗結果由醫院經醫健通+傳過嚟，Cora唔會自己量。', '最新化验结果由医院经医健通+传来，Cora不会自行测量。'],
+  myMeds: ['My medicines', '我嘅藥', '我的药物'],
+  medNote: ['Take exactly as prescribed. Times can be adjusted by your doctor or pharmacist.', '請跟足處方食。時間可以由醫生或者藥劑師調整。', '请严格按处方服用。时间可由医生或药剂师调整。'],
+  checkerTitle: ['Can I eat or drink this?', '呢樣嘢食唔食得？', '这个能吃吗？'],
+  checkerHint: ['Many soups and herbs clash with heart medicines. Check before you add them.', '好多湯料同藥材會同心臟藥相沖，加之前查一查。', '很多汤料和药材会与心脏药物相冲，加之前先查一下。'],
+  checkerPh: ['e.g. 丹參, grapefruit, oats', '例如：丹參、西柚、燕麥', '例如：丹参、西柚、燕麦'],
+  check: ['Check', '查', '查询'],
+  notInListT: ["Not in Cora's list yet", 'Cora未有呢樣嘅資料', 'Cora暂无此项资料'],
+  notInListB: ['Please ask your pharmacist or a registered Chinese medicine practitioner before adding “{q}”.', '加「{q}」之前，請先問藥劑師或者註冊中醫師。', '添加「{q}」前，请先咨询药剂师或注册中医师。'],
+  planEmptyT: ['Connect eHealth+ to start', '連接醫健通+就可以開始', '连接医健通+即可开始'],
+  planEmptyB: ['Cora reads your discharge summary, medicines, lab results and appointments from eHealth+, so you never have to type them.', 'Cora會由醫健通+讀取你嘅出院摘要、藥物、化驗結果同覆診期，唔使你自己打。', 'Cora会从医健通+读取您的出院小结、药物、化验结果和复诊时间，无需手动输入。'],
+
+  visitSub: ['Cardiology clinic · Dr Wong', '心臟科診所・王醫生', '心内科门诊・王医生'],
+  visitTitle: ['My next visit', '下次覆診', '下次复诊'],
+  nextAppt: ['NEXT APPOINTMENT', '下次覆診', '下次复诊'],
+  apptPlace: ['Cardiac clinic, 4/F · bring your medicine box', '心臟科診所4樓・記得帶埋藥盒', '心内科门诊4楼・记得带药盒'],
+  noAppt: ['No appointment found. Connect eHealth+ to import it.', '搵唔到覆診期。連接醫健通+就可以匯入。', '未找到复诊时间。连接医健通+即可导入。'],
+  qTitle: ['Questions for my doctor', '想問醫生嘅問題', '想问医生的问题'],
+  qHint: ["Write them down when you think of them, so you don't forget at the visit.", '諗到就寫低，覆診時就唔會唔記得問。', '想到就记下来，复诊时就不会忘记问。'],
+  qPh: ['Type a question…', '打你想問嘅嘢…', '输入你想问的问题…'],
+  add: ['Add', '加', '添加'], noQ: ['No questions yet. Add one whenever it comes to mind.', '未有問題，諗到就加。', '还没有问题，想到就添加。'],
+  sumTitle: ['My 8-week summary', '我8星期嘅總結', '我的8周总结'],
+  sumTitleNew: ['My summary', '我嘅總結', '我的总结'],
+  medsTaken: ['Medicines taken', '有食藥', '按时服药'], last2w: ['last 2 weeks', '過去2星期', '过去2周'], walking: ['Walking', '散步', '散步'], daysWeek: ['days this week', '今個星期', '本周天数'],
+  share: ['Share summary with Dr Wong ›', '分享總結俾王醫生 ›', '把总结分享给王医生 ›'],
+  shareNote: ['You choose what is shared. Data stays in your eHealth+ record.', '分享咩由你決定，資料保存喺你嘅醫健通+紀錄。', '分享什么由您决定，数据保存在您的医健通+记录中。'],
+  sumBuilding: ['Your summary builds after 14 days of check-ins. Today is day {d} of 14.', '打卡滿14日就會有總結。今日係第{d}日。', '打卡满14天后生成总结。今天是第{d}天。'],
+  speakVisit: ['Your next visit is {date}. You have {n} questions saved.', '你下次覆診係{date}。你記低咗{n}條問題。', '您下次复诊是{date}。您记下了{n}个问题。'],
+
+  sosTitle: ['Call 999 now', '即刻打999', '立即拨打999'],
+  sosP1: ['Chest pain or pressure that lasts more than a few minutes, or breathlessness at rest, can be a heart attack.', '心口痛或者壓迫感持續幾分鐘以上，或者休息都氣促，可能係心臟病發。', '胸痛或压迫感持续几分钟以上，或休息时也气促，可能是心梗。'],
+  sosP2: ['Do not wait for Cora or Soma data. Use your GTN spray if your doctor prescribed one, unlock your door and sit down.', '唔好等Cora或者Soma嘅數據。如果醫生有開脷底噴劑就用，打開大門，坐低等救護車。', '不要等Cora或Soma的数据。如果医生开了硝酸甘油喷剂就使用，打开家门，坐下等待救护车。'],
+  imOk: ["I'm OK — close", '我冇事，關閉', '我没事，关闭'],
+
+  obSkip: ['Skip', '略過', '跳过'], obNext: ['Next', '下一步', '下一步'], obBack: ['Back', '返回', '返回'],
+  obStep: ['Step {n} of 5', '第{n}步／共5步', '第{n}步／共5步'],
+  ob0T: ['Welcome to Cora', '歡迎使用Cora', '欢迎使用Cora'],
+  ob0B: ['Cora helps you recover at home after your heart stent: medicine reminders, daily check-ins, sleep from your Soma mattress cover, and a summary for your cardiologist.', 'Cora幫你通波仔之後喺屋企康復：食藥提示、每日打卡、Soma床褥套睇睡眠，仲會整理總結俾心臟科醫生。', 'Cora帮助您在支架术后居家康复：用药提醒、每日打卡、Soma床垫套监测睡眠，并为心内科医生整理总结。'],
+  ob0Not: ['Cora does not diagnose or replace your doctor. In an emergency, always call 999.', 'Cora唔會診症，亦唔可以代替醫生。緊急情況一定要打999。', 'Cora不做诊断，也不能代替医生。紧急情况务必拨打999。'],
+  chooseLang: ['Choose your language', '揀語言', '选择语言'],
+  bigText: ['Larger text', '大啲字', '大字体'],
+  ob1T: ['Connect eHealth+', '連接醫健通+', '连接医健通+'],
+  ob1B: ['With your permission, Cora will read:', '得到你同意之後，Cora會讀取：', '经您同意后，Cora将读取：'],
+  ob1i1: ['Discharge summary', '出院摘要', '出院小结'], ob1i2: ['Medicines prescribed', '醫生開嘅藥', '医生开的药'], ob1i3: ['Lab results (BP, cholesterol, glucose)', '化驗結果（血壓、膽固醇、血糖）', '化验结果（血压、胆固醇、血糖）'], ob1i4: ['Appointments', '覆診日期', '复诊时间'],
+  ob1W: ['You can stop sharing at any time. Protected under the Personal Data (Privacy) Ordinance.', '你隨時可以停止分享，受《個人資料（私隱）條例》保障。', '您可随时停止分享，受香港《个人资料（私隐）条例》保障。'],
+  ob1Btn: ['Log in with iAM Smart (simulated)', '用「智方便」登入（模擬）', '用「智方便」登录（模拟）'],
+  ob1Done: ['Imported: PCI on {date}, 4 medicines, 3 lab results and your next appointment.', '已匯入：{date}通波仔、4種藥、3項化驗結果同下次覆診期。', '已导入：{date}PCI手术、4种药物、3项化验结果和下次复诊时间。'],
+  ob2T: ['Check your medicine times', '確認食藥時間', '确认用药时间'],
+  ob2B: ['Imported from your prescription. Change a time to fit your day — reminders follow it.', '由處方匯入。可以改時間配合你嘅作息，提示會跟住改。', '已从处方导入。可调整时间以配合作息，提醒会随之更改。'],
+  ob2NoEh: ['You skipped eHealth+, so there are no medicines yet. You can connect later from “My plan”.', '你略過咗醫健通+，所以未有藥物。之後可以喺「計劃」再連接。', '您跳过了医健通+，所以还没有药物。之后可在「计划」中连接。'],
+  ob3T: ['Set up your Soma cover', '安裝Soma床褥套', '安装Soma床垫套'],
+  ob3s1: ['Lay the Soma cover on your mattress, under the bed sheet.', '將Soma床褥套鋪喺床褥上面、床單下面。', '将Soma床垫套铺在床垫上、床单下。'],
+  ob3s2: ['Plug it in. The light turns blue.', '插電，燈會變藍色。', '接通电源，指示灯变蓝。'],
+  ob3s3: ['Hold the button for 3 seconds, then tap Pair.', '㩒住個掣3秒，再㩒「配對」。', '按住按钮3秒，然后点「配对」。'],
+  ob3Done: ['Soma connected. Your first night report appears tomorrow morning.', 'Soma已連接，聽朝就有第一份睡眠報告。', 'Soma已连接，明早即可看到第一份睡眠报告。'],
+  ob4T: ['Your daily routine', '你每日要做嘅嘢', '您每天要做的事'],
+  ob4a: ['Morning · 30 seconds', '朝早・30秒', '早上・30秒'], ob4aB: ['Tap how you feel, then tick your morning medicines.', '㩒低今日覺得點，再剔早上嘅藥。', '点一下今天的感觉，再勾选早上的药。'],
+  ob4b: ['Daytime', '日頭', '白天'], ob4bB: ['Go for your walk. Check a herb before adding it to soup.', '去散步。湯度加藥材之前先查一查。', '去散步。汤里加药材前先查一下。'],
+  ob4c: ['Evening', '夜晚', '晚上'], ob4cB: ['Tick evening medicines. Soma pre-warms your bed at 22:00.', '剔夜晚嘅藥。Soma會22:00預熱張床。', '勾选晚上的药。Soma会在22:00预热床铺。'],
+  ob4d: ['Before each visit', '每次覆診前', '每次复诊前'], ob4dB: ['Add your questions and tap Share.', '寫低想問嘅嘢，再㩒「分享」。', '写下想问的问题，再点「分享」。'],
+  ob4Start: ['Start using Cora', '開始用Cora', '开始使用Cora'],
+
+  whenToday: ['Today', '今日', '今天'],
+  wk: ['Wk {n}', '第{n}星期', '第{n}周'],
+  resp_red: ['Emergency advice shown: call 999', '顯示緊急指示：打999', '显示紧急提示：拨打999'],
+  resp_bleed: ['Advised: contact clinic today; do not stop DAPT', '建議今日聯絡診所；唔好停抗血小板藥', '建议今天联系诊所；不要停抗血小板药'],
+  resp_amber: ['Logged; contact clinic if it persists', '已記錄；持續就聯絡診所', '已记录；持续则联系诊所'],
+  resp_log: ['Logged for visit', '已記錄，覆診時睇', '已记录，复诊时查看'],
+  herbLogWhat: ['Checked “{q}”', '查詢「{q}」', '查询「{q}」'],
+  herbLogResp: ['Herb checker: {v}', '查詢結果：{v}', '查询结果：{v}'],
+
+  dEyebrow: ['Module D · Longitudinal recovery report', '模組D・長期康復報告', '模块D・长期康复报告'],
+  dTitle: ['Mr Chan, 62 · 8-week post-PCI summary', '陳先生，62歲・通波仔後8星期總結', '陈先生，62岁・PCI术后8周总结'],
+  dMeta: ['DES to LAD · {p} · For Dr Wong (Cardiology) · Patient-reported + Soma sensor data', '左前降支藥物支架・{p}・致王醫生（心臟科）・病人自報＋Soma感應數據', '前降支药物支架・{p}・致王医生（心内科）・患者自报＋Soma传感数据'],
+  dReview: ['Clinician review only · not a diagnosis', '只供醫生參考・並非診斷', '仅供医生参考・并非诊断'],
+  dPrint: ['Print / save PDF', '列印／儲存PDF', '打印／保存PDF'],
+  k1: ['Adherence · MMAS-8', '服藥依從性・MMAS-8', '服药依从性・MMAS-8'], d1: ['↑ from 6.75 (wk 1–2)', '↑ 由6.75（第1–2星期）', '↑ 从6.75（第1–2周）'],
+  k2: ['Diet log completed', '飲食紀錄完成率', '饮食记录完成率'], d2: ['↑ from 78%', '↑ 由78%', '↑ 从78%'],
+  k3: ['Sleep · PSQI', '睡眠・PSQI', '睡眠・PSQI'], d3: ['↓ from 11 (lower = better)', '↓ 由11（越低越好）', '↓ 从11（越低越好）'],
+  k4: ['Resting HR at night', '夜間靜息心跳', '夜间静息心率'], d4: ['↓ from 71 · trend only', '↓ 由71・只係趨勢', '↓ 从71・仅为趋势'],
+  k5: ['Soma valid signal', 'Soma有效訊號', 'Soma有效信号'], d5: ['avg 91% over 8 weeks', '8星期平均91%', '8周平均91%'],
+  dTrend: ['8-week trends', '8星期趨勢', '8周趋势'], lgHR: ['Resting HR (bpm)', '靜息心跳 (bpm)', '静息心率 (bpm)'],
+  dTrendHint: ['HR from Soma Tier 2 (quiet-sleep windows only, being validated). PSQI from a fortnightly in-app questionnaire.', '心跳來自Soma第2級（只計安靜睡眠時段，驗證中）。PSQI來自App每兩星期問卷。', '心率来自Soma第2级（仅安静睡眠时段，验证中）。PSQI来自App每两周问卷。'],
+  dAdh: ['Weekly medication adherence', '每星期服藥情況', '每周服药情况'], dAdhHint: ['% of scheduled doses ticked in Cora.', '喺Cora剔咗嘅劑量百分比。', '在Cora中勾选的剂量百分比。'],
+  dLog: ['Symptom & safety log', '症狀同安全紀錄', '症状与安全记录'],
+  dLogHint: ["What the patient reported and what Cora advised. Today's check-ins appear here live.", '病人報告咗咩、Cora俾咗咩建議。今日打卡會即時出現。', '患者报告了什么、Cora给了什么建议。今天的打卡会实时显示。'],
+  thWhen: ['When', '時間', '时间'], thRep: ['Reported', '報告', '报告'], thResp: ['Cora response', 'Cora回應', 'Cora回应'],
+  flags: ['{n} to review', '{n}項要跟進', '{n}项需跟进'],
+  dQ: ["Patient's questions for this visit", '病人今次覆診想問', '患者本次复诊的问题'], none: ['None', '冇', '无'],
+  dNote: ['Draft summary for eHealth+ record', '醫健通+紀錄摘要草稿', '医健通+记录摘要草稿'], dEdit: ['Editable by clinician', '醫生可以修改', '医生可修改'],
+  dNoteHint: ['Cora drafts from the data above. The cardiologist reviews, edits and decides. Cora makes no diagnosis or prescribing decision.', 'Cora根據以上數據起草，由心臟科醫生審閱、修改同決定。Cora唔會診斷或者開藥。', 'Cora根据以上数据起草，由心内科医生审阅、修改和决定。Cora不做诊断或处方决定。'],
+  dFoot: ['Demo regimen simplified for the prototype. Real post-PCI regimens often also include a beta-blocker, ACE inhibitor/ARB and stomach protection.', '示範處方已簡化。真實通波仔後處方通常仲包括β受體阻斷劑、ACEI／ARB同胃藥。', '示范处方已简化。真实PCI术后处方通常还包括β受体阻滞剂、ACEI／ARB和护胃药。'],
+  dEmptyT: ['No report yet for this patient', '呢位病人未有報告', '该患者暂无报告'],
+  dEmptyB: ['The patient started using Cora recently. The report appears after about 14 days of check-ins and Soma nights — and only if the patient taps Share.', '病人啱啱開始用Cora。大約打卡同用Soma滿14日，而且病人㩒咗「分享」，先會出報告。', '患者刚开始使用Cora。约14天打卡和Soma数据积累后，且患者点击「分享」，才会生成报告。'],
+  dEmptyWill: ['What you will see:', '到時會見到：', '届时将看到：'],
+  dE1: ['Medication adherence (Western + Tongxinluo) by week', '每星期服藥情況（西藥＋通心絡）', '每周服药情况（西药＋通心络）'],
+  dE2: ['Sleep and resting heart-rate trends from Soma', 'Soma嘅睡眠同靜息心跳趨勢', 'Soma的睡眠和静息心率趋势'],
+  dE3: ['Symptom log with what Cora advised', '症狀紀錄同Cora嘅建議', '症状记录及Cora的建议'],
+  dE4: ["Patient's questions, and an editable draft note", '病人想問嘅問題，同可以修改嘅摘要草稿', '患者的问题，以及可修改的摘要草稿'],
+  dEmptyDemo: ['View the 8-week demo report', '睇8星期示範報告', '查看8周示范报告'],
+  todayCheck: ["Today's check-in: {x}.", '今日打卡：{x}。', '今日打卡：{x}。'],
+
+  noTTS: ['Read-aloud is not supported in this browser.', '呢個瀏覽器唔支援讀出。', '此浏览器不支持朗读。'],
+  noVoice: ['No {l} voice on this device — it may read with another accent. Install one in system settings.', '呢部機未裝廣東話語音，可能會用其他口音讀。可以喺系統設定安裝。', '此设备未安装普通话语音，可能会用其他口音朗读。可在系统设置中安装。'],
+};
+
+function t(k, vars) {
+  const v = T[k];
+  if (v === undefined) { console.warn('missing', k); return k; }
+  let s = pick(v);
+  if (vars) for (const [a, b] of Object.entries(vars)) s = s.split('{' + a + '}').join(b);
+  return s;
+}
+
+/* ================= Content data ================= */
+const MEDS = [
+  { id: 'dapt', time: '08:00', type: 'w', name: ['Aspirin 100 mg + Clopidogrel 75 mg', '阿士匹靈100毫克＋氯吡格雷75毫克', '阿司匹林100毫克＋氯吡格雷75毫克'], note: ['With breakfast', '早餐時食', '早餐时服用'] },
+  { id: 'txl1', time: '08:30', type: 'c', name: ['Tongxinluo · 4 capsules', '通心絡・4粒', '通心络・4粒'], note: ['After breakfast', '早餐後', '早餐后'] },
+  { id: 'txl2', time: '13:30', type: 'c', name: ['Tongxinluo · 4 capsules', '通心絡・4粒', '通心络・4粒'], note: ['After lunch', '午餐後', '午餐后'] },
+  { id: 'txl3', time: '19:30', type: 'c', name: ['Tongxinluo · 4 capsules', '通心絡・4粒', '通心络・4粒'], note: ['After dinner', '晚餐後', '晚餐后'] },
+  { id: 'ator', time: '22:00', type: 'w', name: ['Atorvastatin 40 mg', '阿托伐他汀40毫克', '阿托伐他汀40毫克'], note: ['At bedtime · no grapefruit', '瞓前食・唔好食西柚', '睡前服用・不要吃西柚'] },
+];
+const MED_INFO = [
+  { type: 'w', name: ['Aspirin 100 mg', '阿士匹靈 100毫克', '阿司匹林 100毫克'], how: ['Once daily with breakfast · keeps the stent open', '每日一次，早餐時食・防止支架塞', '每日一次，早餐时服用・防止支架堵塞'] },
+  { type: 'w', name: ['Clopidogrel 75 mg', '氯吡格雷 75毫克', '氯吡格雷 75毫克'], how: ['Once daily with breakfast · keeps the stent open (usually 12 months)', '每日一次，早餐時食・防止支架塞（通常食12個月）', '每日一次，早餐时服用・防止支架堵塞（通常服用12个月）'] },
+  { type: 'w', name: ['Atorvastatin 40 mg', '阿托伐他汀 40毫克', '阿托伐他汀 40毫克'], how: ['Once daily at bedtime · lowers cholesterol, steadies plaque', '每晚瞓前一次・降膽固醇、穩定血管斑塊', '每晚睡前一次・降胆固醇、稳定斑块'] },
+  { type: 'c', name: ['Tongxinluo 通心絡 · 4 capsules', '通心絡膠囊・4粒', '通心络胶囊・4粒'], how: ['Three times daily after meals · prescribed alongside your Western medicines', '每日三次，飯後食・同西藥一齊由醫生處方', '每日三次，饭后服用・与西药一同由医生处方'] },
+];
+const SYMPTOMS = [
+  { id: 'none', level: 'ok' }, { id: 'chest', level: 'red', warn: true }, { id: 'breath', level: 'red', warn: true },
+  { id: 'bleed', level: 'amber', warn: true }, { id: 'palp', level: 'amber' }, { id: 'dizzy', level: 'amber' },
+  { id: 'tired', level: 'log' }, { id: 'mood', level: 'log' },
+];
+const RECIPES = [
+  { em: '🥣', name: ['Steamed oats with black fungus & goji', '黑木耳杞子蒸燕麥', '黑木耳枸杞蒸燕麦'], why: ['Soluble fibre helps lower cholesterol. No added salt.', '水溶性纖維幫手降膽固醇，唔加鹽。', '水溶性纤维有助降胆固醇，不加盐。'] },
+  { em: '🍵', name: ['Light hawthorn, lotus leaf & tangerine peel tea', '山楂荷葉陳皮茶（淡）', '山楂荷叶陈皮茶（淡）'], why: ['After meals for digestion. Brew lightly — under 3 g hawthorn.', '飯後飲幫助消化。要沖淡啲，山楂少過3克。', '饭后饮用助消化。冲淡一些，山楂少于3克。'] },
+  { em: '🐟', name: ['Steamed fish with ginger & light astragalus broth', '薑蔥黃芪蒸魚', '姜葱黄芪蒸鱼'], why: ['Omega-3 fats; culinary astragalus under 5 g; ginger instead of salt.', '有奧米加3；黃芪少過5克；用薑代替鹽。', '含欧米伽3；黄芪少于5克；用姜代替盐。'] },
+  { em: '🍐', name: ['Snow pear, lily bulb & lotus seed soup (no sugar)', '雪梨百合蓮子湯（無糖）', '雪梨百合莲子汤（无糖）'], why: ['A calming evening soup to support sleep. No rock sugar.', '夜晚飲安神助眠，唔加冰糖。', '晚上喝安神助眠，不加冰糖。'] },
+];
+const AVOID = ['Avoid unless prescribed', '除非醫生處方，否則避免', '除非医生处方，否则避免'];
+const FOODOK = ['Fine in normal food amounts', '正常食物份量冇問題', '正常食物用量没问题'];
+const GOOD = ['Good choice', '好選擇', '好选择'];
+const HERBS = [
+  { keys: ['grapefruit', '西柚', '葡萄柚'], level: 'red', title: ['Avoid — clashes with atorvastatin', '避免・同阿托伐他汀相沖', '避免・与阿托伐他汀相冲'], why: ['Grapefruit raises statin levels in the blood (CYP3A4), increasing the risk of muscle side effects.', '西柚會令血入面他汀濃度升高（CYP3A4），增加肌肉副作用風險。', '西柚会升高血液中他汀浓度（CYP3A4），增加肌肉副作用风险。'] },
+  { keys: ['red yeast rice', '紅麴', '红曲', '紅曲', '红麴'], level: 'red', title: ['Avoid — a hidden second statin', '避免・等於食多一種他汀', '避免・相当于多吃一种他汀'], why: ['Red yeast rice naturally contains a statin. Together with atorvastatin this doubles up.', '紅麴天然含有他汀成分，同阿托伐他汀一齊食等於重複食藥。', '红曲天然含他汀成分，与阿托伐他汀同服等于重复用药。'] },
+  { keys: ['danshen', 'salvia', '丹參', '丹参'], level: 'red', title: AVOID, why: ['Danshen thins the blood. On aspirin + clopidogrel it adds to bleeding risk. Your Tongxinluo is already prescribed for circulation.', '丹參有活血作用，同阿士匹靈加氯吡格雷一齊會增加出血風險。醫生已經開咗通心絡幫你通血脈。', '丹参有活血作用，与阿司匹林加氯吡格雷同用会增加出血风险。医生已开了通心络帮助通络。'] },
+  { keys: ['sanqi', 'san qi', 'notoginseng', '三七', '田七'], level: 'red', title: AVOID, why: ['Sanqi affects clotting and adds to bleeding risk with your antiplatelet medicines.', '三七會影響凝血，同抗血小板藥一齊增加出血風險。', '三七影响凝血，与抗血小板药同用增加出血风险。'] },
+  { keys: ['ginkgo', '銀杏', '银杏', '白果'], level: 'red', title: AVOID, why: ['Ginkgo can increase bleeding risk with aspirin and clopidogrel.', '銀杏同阿士匹靈、氯吡格雷一齊可能增加出血風險。', '银杏与阿司匹林、氯吡格雷同用可能增加出血风险。'] },
+  { keys: ['dong quai', 'angelica', '當歸', '当归'], level: 'red', title: AVOID, why: ['Dong quai may increase bleeding risk with antiplatelet medicines. It is common in soup packs, so check the label.', '當歸同抗血小板藥一齊可能增加出血風險，煲湯好常用，留意湯包成分。', '当归与抗血小板药同用可能增加出血风险，煲汤常用，注意汤包成分。'] },
+  { keys: ['ginseng', '人參', '人参', '高麗參', '高丽参', '西洋參', '西洋参', '花旗參', '花旗参'], level: 'amber', title: ['Ask your doctor or pharmacist first', '先問醫生或者藥劑師', '先问医生或药剂师'], why: ['Ginseng, especially concentrated or high doses, can affect blood pressure and heart rhythm.', '人參（特別係濃縮或者高劑量）可能影響血壓同心律。', '人参（尤其是浓缩或高剂量）可能影响血压和心律。'] },
+  { keys: ['hawthorn', '山楂'], level: 'amber', title: ['Food amounts only', '只可以食物份量', '仅限食物用量'], why: ['A light tea (under 3 g) is in your approved list. Avoid concentrated hawthorn supplements unless your doctor agrees.', '淡茶（少過3克）喺你嘅建議食譜入面。濃縮山楂補充品要醫生同意先好食。', '淡茶（少于3克）在您的推荐食谱中。浓缩山楂补充剂需医生同意后再用。'] },
+  { keys: ['astragalus', '黃芪', '黄芪', '北芪'], level: 'amber', title: ['Culinary amounts only (under 5 g)', '只可以煮餸份量（少過5克）', '仅限烹饪用量（少于5克）'], why: ['A small slice in broth is in your approved list. Do not take concentrated astragalus products without asking.', '湯入面放一小片喺建議食譜入面。濃縮黃芪產品要先問醫生。', '汤里放一小片在推荐食谱中。浓缩黄芪产品需先问医生。'] },
+  { keys: ['oat', '燕麥', '燕麦'], level: 'green', title: GOOD, why: ['Oat fibre (beta-glucan) helps lower LDL cholesterol.', '燕麥纖維（β-葡聚醣）有助降低壞膽固醇。', '燕麦纤维（β-葡聚糖）有助降低低密度胆固醇。'] },
+  { keys: ['black fungus', 'wood ear', '黑木耳', '木耳'], level: 'green', title: FOODOK, why: ['Part of your approved recipe list.', '喺你嘅建議食譜入面。', '在您的推荐食谱中。'] },
+  { keys: ['goji', '杞子', '枸杞'], level: 'green', title: FOODOK, why: ['Part of your approved recipe list.', '喺你嘅建議食譜入面。', '在您的推荐食谱中。'] },
+  { keys: ['lily', '百合'], level: 'green', title: FOODOK, why: ['Used in your calming evening soup.', '係你夜晚安神湯嘅材料。', '是您晚间安神汤的材料。'] },
+  { keys: ['lotus seed', '蓮子', '莲子'], level: 'green', title: FOODOK, why: ['Used in your calming evening soup.', '係你夜晚安神湯嘅材料。', '是您晚间安神汤的材料。'] },
+  { keys: ['fish', 'salmon', 'sea bass', '魚', '鱼'], level: 'green', title: GOOD, why: ['Steamed fish gives omega-3 fats. Avoid salted or deep-fried fish.', '蒸魚有奧米加3脂肪酸。避免鹹魚或者炸魚。', '清蒸鱼含欧米伽3脂肪酸。避免咸鱼或炸鱼。'] },
+  { keys: ['ginger', '薑', '姜'], level: 'green', title: ['Fine as seasoning', '做調味冇問題', '作调味没问题'], why: ['Use ginger and spring onion instead of salt or soy sauce.', '用薑蔥代替鹽同豉油。', '用姜葱代替盐和酱油。'] },
+];
+const QUICK = [['Grapefruit', '西柚', '西柚'], ['Red yeast rice', '紅麴', '红曲'], ['Danshen', '丹參', '丹参'], ['Sanqi', '三七', '三七'], ['Dong quai', '當歸', '当归'], ['American ginseng', '花旗參', '花旗参'], ['Hawthorn', '山楂', '山楂'], ['Oats', '燕麥', '燕麦'], ['Black fungus', '黑木耳', '黑木耳'], ['Lily bulb', '百合', '百合']];
+
+const GUIDE = {
+  onboarding: {
+    mod: ['Onboarding · first launch', '第一次開App・設定', '首次打开・设置'],
+    title: ['A real app starts empty', '真實App一開始係冇數據', '真实App一开始没有数据'],
+    text: ['New patients are guided one step at a time: language, eHealth+ consent, medicine times, Soma pairing and the daily routine. Every empty screen then explains what will appear and when.', '新病人會一步步被帶住設定：語言、醫健通+授權、食藥時間、配對Soma同每日流程。之後每個空白頁都會講明會出現咩、幾時出現。', '新患者会被一步步引导设置：语言、医健通+授权、用药时间、配对Soma和每日流程。之后每个空白页都会说明会出现什么、何时出现。'],
+    how: [['Pick a language and text size.', '揀語言同字體大細。', '选择语言和字体大小。'], ['Connect eHealth+ and confirm medicine times.', '連接醫健通+，確認食藥時間。', '连接医健通+，确认用药时间。'], ['Pair Soma, then learn the daily routine.', '配對Soma，再睇每日流程。', '配对Soma，再了解每日流程。']],
+    needs: [
+      [['Older users may not be confident with apps', '長者未必熟用App', '老年人不一定熟悉App'], ['One decision per screen, large buttons, read-aloud, Cantonese and Mandarin.', '每頁只做一個決定、大掣、可以讀出、有廣東話同普通話。', '每页只做一个决定、大按钮、可朗读、支持粤语和普通话。']],
+      [['Consent must be clear (PDPO)', '授權要清楚（私隱條例）', '授权必须清晰（私隐条例）'], ['Shows exactly which eHealth+ data is read, and that sharing can be stopped.', '清楚列出會讀取邊啲醫健通+資料，隨時可以停。', '清楚列出读取哪些医健通+数据，并可随时停止。']],
+      [['There is no data on day one', '第一日冇數據', '第一天没有数据'], ['Empty screens explain what appears and when (first night report tomorrow; trends after 7 nights).', '空白頁講明幾時有數據（聽朝有第一份報告；7晚後有趨勢）。', '空白页说明何时有数据（明早第一份报告；7晚后有趋势）。']],
+    ],
+  },
+  today: {
+    mod: ['Module C · Daily guidance', '模組C・每日指引', '模块C・每日指引'],
+    title: ['One screen for the whole day', '一頁睇晒今日要做咩', '一页看完今天要做的事'],
+    text: ['Western medicines and Tongxinluo in one checklist, a daily symptom check-in, a walking goal and one safe TCM meal.', '西藥同通心絡喺同一張清單、每日症狀打卡、散步目標，仲有一款安全嘅中醫食療。', '西药和通心络在同一张清单、每日症状打卡、散步目标，以及一款安全的中医食疗。'],
+    how: [['Every morning, tap how you feel and how you slept (about 30 seconds).', '每朝㩒低今日覺得點、瞓得好唔好（大約30秒）。', '每天早上点一下今天的感觉和睡眠情况（约30秒）。'], ['Tick each medicine after you take it.', '每食完一種藥就剔一剔。', '每吃完一种药就打勾。'], ["Add your walking minutes and look at today's meal idea.", '記低散步分鐘，睇吓今日食咩好。', '记录散步分钟，看看今天吃什么。']],
+    needs: [
+      [['Stopping antiplatelet medicines early is dangerous', '太早停抗血小板藥好危險', '过早停用抗血小板药很危险'], ['One checklist for Western + TCM, a clear “never stop on your own” rule and missed-dose advice.', '西藥中藥同一張清單，清楚寫明「唔好自己停藥」，仲有漏食點算。', '中西药同一张清单，明确写出「不要自行停药」，并提供漏服建议。']],
+      [['Patients are unsure which symptoms matter', '病人唔知邊啲症狀要緊', '患者不清楚哪些症状要紧'], ['The check-in sorts symptoms: call 999, contact the clinic, or log for the visit.', '打卡會分類：要打999、要聯絡診所、定係記低覆診講。', '打卡自动分类：拨打999、联系诊所，或记录待复诊。']],
+      [['Anxiety and low mood are common after a heart attack', '心臟病發後焦慮、心情差好常見', '心梗后焦虑、情绪低落很常见'], ["Mood is one tap and goes straight into the doctor's summary.", '心情㩒一下就記低，直接放入醫生總結。', '情绪点一下即记录，直接进入医生总结。']],
+    ],
+  },
+  night: {
+    mod: ['Module B · Overnight dashboard', '模組B・夜間數據', '模块B・夜间数据'],
+    title: ['Soma: nothing to wear', 'Soma：唔使戴任何嘢', 'Soma：无需佩戴设备'],
+    text: ['Tier 1 (pressure + warmth) is shown as fact. Tier 2 (heart and breathing from BCG) is shown only as a trend, with signal quality.', '第1級（壓力＋溫控）直接顯示。第2級（BCG估算心跳同呼吸）只顯示趨勢同訊號質素。', '第1级（压力＋温控）直接显示。第2级（BCG估算心率和呼吸）仅显示趋势和信号质量。'],
+    how: [['Nothing to do at night — just sleep on the Soma cover.', '夜晚唔使做任何嘢，照瞓就得。', '晚上什么都不用做，照常睡觉。'], ["Each morning, look at last night's sleep and turns.", '朝早睇吓琴晚瞓成點、轉咗幾多次身。', '早上看看昨晚的睡眠和翻身次数。'], ['Heart and breathing trends appear after 7 nights. They are not alarms.', '用滿7晚先有心跳同呼吸趨勢，佢哋唔係警報。', '满7晚后才有心率和呼吸趋势，它们不是警报。']],
+    needs: [
+      [['Older patients dislike wearing devices at night', '長者唔鍾意夜晚戴裝置', '老年患者不喜欢夜间佩戴设备'], ['Sensors sit inside the mattress cover — nothing to wear or charge.', '感應器喺床褥套入面，唔使戴、唔使叉電。', '传感器在床垫套内，无需佩戴或充电。']],
+      [['Home sensor data can be noisy', '屋企量嘅數據可能有雜訊', '居家传感数据可能有噪声'], ['The valid-signal ratio is shown; noisy segments are dropped, never displayed.', '顯示有效訊號比例，有雜訊嘅時段會剔走，唔會顯示。', '显示有效信号比例，噪声时段被剔除，不会显示。']],
+      [['It must not be mistaken for an alarm', '唔可以俾人誤會係警報', '不能被误认为警报'], ['A clear “not an alarm” label — emergencies always go to 999.', '清楚寫明「唔係警報」，緊急情況一律打999。', '明确标注「不是警报」，紧急情况一律拨打999。']],
+    ],
+  },
+  plan: {
+    mod: ['Module A · Clinical profile via eHealth+', '模組A・醫健通+臨床資料', '模块A・医健通+临床资料'],
+    title: ['The hospital plan, in plain words', '醫院計劃，講到你明', '医院计划，通俗易懂'],
+    text: ["Targets, lab results and medicines come from eHealth+. The herb checker compares soup ingredients with the patient's actual prescription.", '目標、化驗結果同藥物都由醫健通+匯入。藥材查詢會對照病人真正嘅處方。', '目标、化验结果和药物都从医健通+导入。药材查询会对照患者的实际处方。'],
+    how: [['Your hospital plan is imported from eHealth+ — nothing to type.', '醫院計劃由醫健通+匯入，唔使自己打。', '医院计划从医健通+导入，无需手动输入。'], ['See your targets and what each medicine is for.', '睇吓自己嘅目標，同每種藥有咩用。', '查看自己的目标和每种药的作用。'], ['Before adding a herb to soup, type its name in the checker.', '湯度加藥材之前，喺查詢欄打個名。', '汤里加药材前，在查询栏输入名称。']],
+    needs: [
+      [['Herbal soups are part of daily life in Hong Kong', '香港人日日都飲湯', '煲汤是香港人的日常'], ['The checker understands Chinese names (丹參, 當歸, 紅麴) and explains why.', '識認中文藥材名（丹參、當歸、紅麴），仲解釋原因。', '能识别中文药材名（丹参、当归、红曲），并解释原因。']],
+      [["Patients don't know why each medicine matters", '病人唔知每種藥點解要食', '患者不知道每种药为什么要吃'], ['Each medicine has a one-line purpose in plain language.', '每種藥都有一句淺白講明用途。', '每种药都有一句通俗的用途说明。']],
+      [['No double data entry', '唔使重複輸入資料', '无需重复录入'], ['Lab results are imported, not typed by the patient.', '化驗結果自動匯入，唔使病人打。', '化验结果自动导入，无需患者输入。']],
+    ],
+  },
+  visit: {
+    mod: ['Bridge to Module D', '連接模組D', '衔接模块D'],
+    title: ['Arrive prepared', '有準備咁去覆診', '有准备地去复诊'],
+    text: ['The next appointment, a running list of questions, and a one-tap share of the summary to the cardiologist.', '下次覆診日期、隨時加嘅問題清單，㩒一下就分享總結俾心臟科醫生。', '下次复诊时间、随时添加的问题清单，一键把总结分享给心内科医生。'],
+    how: [['Write down a question whenever you think of one.', '諗到問題就寫低。', '想到问题就记下来。'], ['Check the date and place of your next visit.', '睇清楚下次覆診嘅日期同地點。', '查看下次复诊的日期和地点。'], ['Before the visit, tap Share so your doctor sees your summary.', '覆診前㩒「分享」，醫生就睇到你嘅總結。', '复诊前点「分享」，医生就能看到您的总结。']],
+    needs: [
+      [['Clinic visits are short', '覆診時間好短', '复诊时间很短'], ["The doctor sees trends and the patient's questions before the visit starts.", '醫生見你之前已經睇到趨勢同你嘅問題。', '医生在见您之前已看到趋势和您的问题。']],
+      [['Patients forget what to ask', '病人成日唔記得問', '患者常忘记要问什么'], ['Questions are saved whenever they come to mind.', '諗到就存低。', '想到就保存。']],
+      [['Privacy (PDPO)', '私隱（私隱條例）', '隐私（香港私隐条例）'], ['The patient chooses to share; data stays in the eHealth+ record.', '由病人決定分享，資料保存喺醫健通+。', '由患者决定是否分享，数据保存在医健通+。']],
+    ],
+  },
+};
+
+const SLEEP7 = [6.4, 6.9, 7.1, 6.6, 7.3, 7.0, 7.4];
+const HR7 = [64, 63, 63, 62, 62, 61, 61];
+const NIGHTS = [['Tue', '二', '二'], ['Wed', '三', '三'], ['Thu', '四', '四'], ['Fri', '五', '五'], ['Sat', '六', '六'], ['Sun', '日', '日'], ['Mon', '一', '一']];
+const WEEK_HR = [72, 70, 68, 66, 64, 63, 62, 61];
+const WEEK_PSQI = [11, 11, 9, 8, 7, 6, 5, 5];
+const WEEK_ADH_W = [86, 90, 93, 96, 98, 98, 99, 99];
+const WEEK_ADH_C = [72, 80, 86, 91, 94, 95, 96, 97];
+
+/* ================= State ================= */
+const DEMO_TODAY = new Date('2026-10-19T09:00:00');
+const DEMO_PCI = new Date('2026-08-24T09:00:00');
+const NEW_TODAY = new Date();
+const NEW_PCI = new Date(NEW_TODAY.getTime() - 4 * 86400000);
+
+function makeDemo() {
+  return {
+    ob: 99, eh: true, soma: true, tip: true, sym: [], sleep: null,
+    meds: MEDS.map(() => false), times: MEDS.map((m) => m.time),
+    walk: 15, walkGoal: 25, prewarm: true,
+    questions: [['Can I travel to Shenzhen by train next month?', '下個月可唔可以搭高鐵返深圳？', '下个月可以坐高铁去深圳吗？'], ['When can I stop clopidogrel?', '幾時可以停氯吡格雷？', '什么时候可以停氯吡格雷？']],
     log: [
-      { when: 'Wk 2', what: 'Asked about adding 丹參 to soup', resp: 'Herb checker: avoid (bleeding risk with DAPT)', level: 'amber' },
-      { when: 'Wk 3', what: 'Palpitations, 2 nights', resp: 'Advised to contact clinic · nurse call, resolved', level: 'amber' },
-      { when: 'Wk 5', what: 'Low mood', resp: 'Logged for visit · rehab nurse follow-up', level: 'log' },
-      { when: 'Wk 6', what: 'Missed evening Tongxinluo ×2', resp: 'Reminder time moved to 19:30', level: 'log' },
+      { wk: 2, what: ['Asked about adding 丹參 to soup', '查詢湯中加丹參', '询问汤里加丹参'], resp: ['Herb checker: avoid (bleeding risk with DAPT)', '查詢結果：避免（同抗血小板藥一齊增加出血風險）', '查询结果：避免（与抗血小板药同用增加出血风险）'], level: 'amber' },
+      { wk: 3, what: ['Palpitations, 2 nights', '心悸，兩晚', '心悸，两晚'], resp: ['Advised to contact clinic · nurse called, resolved', '建議聯絡診所・護士已致電，已緩解', '建议联系诊所・护士已致电，已缓解'], level: 'amber' },
+      { wk: 5, what: ['Low mood', '情緒低落', '情绪低落'], resp: ['Logged for visit · rehab nurse follow-up', '已記錄・復康護士跟進', '已记录・康复护士跟进'], level: 'log' },
+      { wk: 6, what: ['Missed evening Tongxinluo ×2', '漏食夜晚通心絡 ×2', '漏服晚间通心络 ×2'], resp: ['Reminder moved to 19:30', '提示時間改為19:30', '提醒时间改为19:30'], level: 'log' },
     ],
   };
+}
+function makeNew() {
+  return { ob: 0, eh: false, soma: false, tip: false, sym: [], sleep: null, meds: MEDS.map(() => false), times: MEDS.map((m) => m.time), walk: 0, walkGoal: 10, prewarm: true, questions: [], log: [] };
+}
+function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function load(k) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
 
-  const ANNOT = {
-    today: {
-      mod: 'Module C · Daily guidance', title: 'One screen for the whole day',
-      text: 'Western medicines and Tongxinluo in a single checklist, a daily symptom check-in, a walking goal and one safe TCM meal.',
-      needs: [
-        ['Stopping antiplatelets early is dangerous', 'Combined checklist + a clear "never stop on your own" rule and missed-dose advice.'],
-        ['Patients are unsure which symptoms matter', 'Check-in sorts symptoms: emergency → 999, contact clinic, or log for the visit.'],
-        ['Anxiety and low mood are common after MI', 'Mood is one tap and goes straight to the doctor\'s summary.'],
-      ],
-    },
-    night: {
-      mod: 'Module B · Overnight dashboard', title: 'Soma, without wearables',
-      text: 'Tier 1 (pressure + thermal) is shown as fact. Tier 2 (BCG heart and breathing) is shown only as a trend, with signal quality.',
-      needs: [
-        ['Older patients dislike wearing devices at night', 'Sensors sit in the mattress cover; nothing to charge or put on.'],
-        ['Home sensor data can be noisy', 'Valid-signal ratio shown; noisy segments are dropped, never displayed.'],
-        ['Must not be mistaken for an alarm', 'Explicit "not an alarm" label — emergencies always go to 999.'],
-      ],
-    },
-    plan: {
-      mod: 'Module A · Clinical profile via eHealth+', title: 'Hospital plan, in plain words',
-      text: 'Targets, labs and medicines come from eHealth+. The herb checker filters soup ingredients against the patient\'s actual prescription.',
-      needs: [
-        ['Herbal soups are part of daily life in HK', 'Checker understands Chinese names (丹參, 當歸, 紅麴) and explains why.'],
-        ['Patients don\'t know why each drug matters', 'Each medicine has a one-line plain-language purpose.'],
-        ['No double data entry', 'Lab results are imported, not typed by the patient.'],
-      ],
-    },
-    visit: {
-      mod: 'Bridge to Module D', title: 'Arrive prepared',
-      text: 'Next appointment, a running list of questions and a one-tap share of the 8-week summary to the cardiologist.',
-      needs: [
-        ['Clinic visits are short', 'Doctor sees trends and the patient\'s questions before the patient sits down.'],
-        ['Patients forget what to ask', 'Questions are saved whenever they come to mind.'],
-        ['Privacy (PDPO)', 'Patient chooses to share; data stays in the eHealth+ record.'],
-      ],
-    },
-  };
+const S = { demo: makeDemo(), new: load('cora_new_v1') || makeNew() };
+let MODE = 'demo';
+let VIEW = 'patient';
+let TAB = 'today';
+let symMsg = null;       // { cls, key }
+let herbResult = null;   // { q, hit }
+let busy = { eh: false, soma: false };
+const st = () => S[MODE];
+const today = () => MODE === 'demo' ? DEMO_TODAY : NEW_TODAY;
+const pciDate = () => MODE === 'demo' ? DEMO_PCI : NEW_PCI;
+const dayNo = () => Math.round((today() - pciDate()) / 86400000);
+const weekNo = () => Math.max(1, Math.ceil(dayNo() / 7));
+const apptDate = () => { const d = new Date(today().getTime() + (MODE === 'demo' ? 32 : 24) * 86400000); d.setHours(10, 30, 0, 0); return d; };
 
-  // ---------------- Helpers ----------------
-  const $ = (id) => document.getElementById(id);
-  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const fmtDate = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+/* ================= Helpers ================= */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const locale = () => ({ en: 'en-GB', yue: 'zh-HK', zh: 'zh-CN' }[LANG]);
+const fmtDate = (d) => d.toLocaleDateString(locale(), { day: 'numeric', month: LANG === 'en' ? 'short' : 'long', year: 'numeric' });
+const fmtAppt = (d) => d.toLocaleDateString(locale(), { weekday: 'short', day: 'numeric', month: LANG === 'en' ? 'short' : 'long' }) + ' · 10:30';
+function save() { store('cora_new_v1', S.new); store('cora_prefs', { lang: LANG, big: document.body.classList.contains('big') }); }
+function toast(msg) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove('show'), 3200); }
 
-  function lineChart(values, labels, opts = {}) {
-    const W = opts.w || 330, H = opts.h || 120, pad = { l: 28, r: 10, t: 12, b: 22 };
-    const series = opts.series || [{ values, color: opts.color || 'var(--blue)', min: opts.min, max: opts.max }];
-    let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
-    const n = labels.length, xs = (i) => pad.l + i * (W - pad.l - pad.r) / (n - 1);
-    labels.forEach((lb, i) => { svg += `<text x="${xs(i)}" y="${H - 6}" font-size="10" fill="#94A3B8" text-anchor="middle">${lb}</text>`; });
-    series.forEach((s, si) => {
-      const min = s.min ?? Math.min(...s.values) - 2, max = s.max ?? Math.max(...s.values) + 2;
-      const ys = (v) => pad.t + (1 - (v - min) / (max - min)) * (H - pad.t - pad.b);
-      if (si === 0) {
-        [min, (min + max) / 2, max].forEach((g) => {
-          svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${ys(g)}" y2="${ys(g)}" stroke="#EEF2F7"/>`;
-          svg += `<text x="${pad.l - 6}" y="${ys(g) + 3}" font-size="9" fill="#94A3B8" text-anchor="end">${Math.round(g)}</text>`;
-        });
-      }
-      const pts = s.values.map((v, i) => `${xs(i)},${ys(v)}`).join(' ');
-      svg += `<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-      s.values.forEach((v, i) => {
-        const last = i === s.values.length - 1;
-        svg += `<circle cx="${xs(i)}" cy="${ys(v)}" r="${last ? 4.5 : 3}" fill="${last ? s.color : '#fff'}" stroke="${s.color}" stroke-width="2"/>`;
-        if (last || i === 0) svg += `<text x="${xs(i)}" y="${ys(v) - 9}" font-size="10" font-weight="700" fill="${s.color}" text-anchor="middle">${v}</text>`;
-      });
+function speak(text) {
+  if (!('speechSynthesis' in window)) { toast(t('noTTS')); return; }
+  const lang = { en: 'en-GB', yue: 'zh-HK', zh: 'zh-CN' }[LANG];
+  const voices = speechSynthesis.getVoices();
+  const norm = (s) => s.replace('_', '-').toLowerCase();
+  const match = voices.find((v) => norm(v.lang) === lang.toLowerCase()) ||
+    voices.find((v) => LANG === 'yue' ? /yue|zh-hk/.test(norm(v.lang)) : norm(v.lang).startsWith(lang.slice(0, 2)));
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang; u.rate = 0.92;
+  if (match) u.voice = match;
+  else if (voices.length && LANG !== 'en') toast(t('noVoice', { l: 'English' }));
+  speechSynthesis.speak(u);
+}
+if ('speechSynthesis' in window) speechSynthesis.onvoiceschanged = () => {};
+
+function lineChart(labels, series, opts = {}) {
+  const W = opts.w || 330, H = opts.h || 120, pad = { l: 28, r: 10, t: 14, b: 22 };
+  const n = labels.length, xs = (i) => pad.l + i * (W - pad.l - pad.r) / (n - 1);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+  labels.forEach((lb, i) => { svg += `<text x="${xs(i)}" y="${H - 6}" font-size="10" fill="#94A3B8" text-anchor="middle">${lb}</text>`; });
+  series.forEach((s, si) => {
+    const ys = (v) => pad.t + (1 - (v - s.min) / (s.max - s.min)) * (H - pad.t - pad.b);
+    if (si === 0) [s.min, (s.min + s.max) / 2, s.max].forEach((g) => {
+      svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${ys(g)}" y2="${ys(g)}" stroke="#EEF2F7"/><text x="${pad.l - 6}" y="${ys(g) + 3}" font-size="9" fill="#94A3B8" text-anchor="end">${Math.round(g)}</text>`;
     });
-    return svg + '</svg>';
-  }
-
-  function barChart(groups, labels, opts = {}) {
-    const W = opts.w || 330, H = opts.h || 120, pad = { l: 28, r: 6, t: 14, b: 22 };
-    const max = opts.max || Math.max(...groups.flatMap((g) => g.values));
-    const n = labels.length, slot = (W - pad.l - pad.r) / n, bw = Math.min(22, (slot - 6) / groups.length);
-    let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
-    const ys = (v) => pad.t + (1 - v / max) * (H - pad.t - pad.b);
-    [0, max / 2, max].forEach((g) => {
-      svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${ys(g)}" y2="${ys(g)}" stroke="#EEF2F7"/>`;
-      svg += `<text x="${pad.l - 6}" y="${ys(g) + 3}" font-size="9" fill="#94A3B8" text-anchor="end">${Math.round(g)}</text>`;
+    svg += `<polyline points="${s.values.map((v, i) => `${xs(i)},${ys(v)}`).join(' ')}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s.values.forEach((v, i) => {
+      const last = i === s.values.length - 1;
+      svg += `<circle cx="${xs(i)}" cy="${ys(v)}" r="${last ? 4.5 : 3}" fill="${last ? s.color : '#fff'}" stroke="${s.color}" stroke-width="2"/>`;
+      if (last || i === 0) svg += `<text x="${xs(i) + (i === 0 ? 8 : 0)}" y="${ys(v) - 9}" font-size="10" font-weight="700" fill="${s.color}" text-anchor="middle">${v}</text>`;
     });
-    labels.forEach((lb, i) => {
-      const x0 = pad.l + i * slot + (slot - bw * groups.length - 2 * (groups.length - 1)) / 2;
-      groups.forEach((g, gi) => {
-        const v = g.values[i], x = x0 + gi * (bw + 2);
-        svg += `<rect x="${x}" y="${ys(v)}" width="${bw}" height="${ys(0) - ys(v)}" rx="3" fill="${g.color}" opacity="${i === n - 1 ? 1 : .55}"/>`;
-        if (opts.showLast && i === n - 1) svg += `<text x="${x + bw / 2}" y="${ys(v) - 4}" font-size="10" font-weight="700" fill="${g.color}" text-anchor="middle">${v}</text>`;
-      });
-      svg += `<text x="${pad.l + i * slot + slot / 2}" y="${H - 6}" font-size="10" fill="#94A3B8" text-anchor="middle">${lb}</text>`;
+  });
+  return svg + '</svg>';
+}
+function barChart(labels, groups, opts = {}) {
+  const W = opts.w || 330, H = opts.h || 120, pad = { l: 28, r: 6, t: 14, b: 22 }, max = opts.max;
+  const n = labels.length, slot = (W - pad.l - pad.r) / n, bw = Math.min(22, (slot - 6) / groups.length);
+  const ys = (v) => pad.t + (1 - v / max) * (H - pad.t - pad.b);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+  [0, max / 2, max].forEach((g) => { svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${ys(g)}" y2="${ys(g)}" stroke="#EEF2F7"/><text x="${pad.l - 6}" y="${ys(g) + 3}" font-size="9" fill="#94A3B8" text-anchor="end">${Math.round(g)}</text>`; });
+  labels.forEach((lb, i) => {
+    const x0 = pad.l + i * slot + (slot - bw * groups.length - 2 * (groups.length - 1)) / 2;
+    groups.forEach((g, gi) => {
+      const v = g.values[i], x = x0 + gi * (bw + 2);
+      svg += `<rect x="${x}" y="${ys(v)}" width="${bw}" height="${ys(0) - ys(v)}" rx="3" fill="${g.color}" opacity="${i === n - 1 ? 1 : .55}"/>`;
+      if (i === n - 1) svg += `<text x="${x + bw / 2}" y="${ys(v) - 4}" font-size="10" font-weight="700" fill="${g.color}" text-anchor="middle">${v}</text>`;
     });
-    return svg + '</svg>';
+    svg += `<text x="${pad.l + i * slot + slot / 2}" y="${H - 6}" font-size="10" fill="#94A3B8" text-anchor="middle">${lb}</text>`;
+  });
+  return svg + '</svg>';
+}
+function thermalChart() {
+  const W = 330, H = 92, x = (h) => 28 + (h / 8) * (W - 38), y = (tp) => 10 + (1 - (tp - 32) / 9) * (H - 30);
+  const pts = [[0, 33.5], [0.4, 37], [0.75, 37], [1.2, 34.5], [8, 34.5]];
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+  s += `<line x1="28" x2="${W - 10}" y1="${y(40)}" y2="${y(40)}" stroke="var(--red)" stroke-dasharray="4 3"/>`;
+  s += `<text x="${W - 10}" y="${y(40) - 4}" font-size="9" fill="var(--red)" text-anchor="end" font-weight="700">${t('cutoff')}</text>`;
+  s += `<polyline points="${pts.map(([h, tp]) => x(h) + ',' + y(tp)).join(' ')}" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/>`;
+  s += `<text x="${x(0.55)}" y="${y(37) - 6}" font-size="10" font-weight="700" fill="#B45309" text-anchor="middle">37.0°</text>`;
+  s += `<text x="${x(4.5)}" y="${y(34.5) - 6}" font-size="10" font-weight="700" fill="#B45309" text-anchor="middle">34.5° ${t('neutral')}</text>`;
+  ['22:00', '00:00', '02:00', '04:00', '06:00'].forEach((lb, i) => { s += `<text x="${x(i * 2)}" y="${H - 4}" font-size="9" fill="#94A3B8" text-anchor="middle">${lb}</text>`; });
+  return s + '</svg>';
+}
+const helloBlock = (sub, title, extra = '') => `
+  <div class="hello">
+    <div><div class="sub">${sub}</div><h1>${title}</h1></div>
+    <div class="hello-actions">
+      <div class="icon-btns"><button class="icon-btn" onclick="speakPage()">${t('listen')}</button><button class="icon-btn" onclick="openHelp()">${t('help')}</button></div>
+      ${extra}
+    </div>
+  </div>`;
+const ehChip = () => st().eh ? `<span class="chip green">● ${t('ehSynced')}</span>` : `<span class="chip gray">○ ${t('ehNot')}</span>`;
+
+/* ================= Chrome ================= */
+function renderChrome() {
+  document.documentElement.lang = { en: 'en', yue: 'zh-HK', zh: 'zh-CN' }[LANG];
+  $('topbar').innerHTML = `
+    <div class="brand">
+      <div class="logo">C</div>
+      <div><b>Cora</b> <span style="color:#94A3B8">× Soma</span><small>${t('brandSub')}</small></div>
+      <span class="demo-tag">${t('demoTag')}</span>
+    </div>
+    <div class="controls">
+      <div class="seg"><button class="${MODE === 'demo' ? 'on' : ''}" onclick="setMode('demo')">${t('modeDemo')}</button><button class="${MODE === 'new' ? 'on' : ''}" onclick="setMode('new')">${t('modeNew')}</button></div>
+      <div class="seg"><button class="${VIEW === 'patient' ? 'on' : ''}" onclick="setView('patient')">${t('viewPatient')}</button><button class="${VIEW === 'doctor' ? 'on' : ''}" onclick="setView('doctor')">${t('viewDoctor')}</button></div>
+      <div class="seg"><button class="${LANG === 'en' ? 'on' : ''}" onclick="setLang('en')">EN</button><button class="${LANG === 'yue' ? 'on' : ''}" onclick="setLang('yue')">粵</button><button class="${LANG === 'zh' ? 'on' : ''}" onclick="setLang('zh')">普</button></div>
+      <button class="ghost-btn" onclick="toggleBig()" title="Larger text">A+</button>
+      ${MODE === 'new' ? `<button class="ghost-btn" onclick="resetNew()">${t('resetNew')}</button>` : ''}
+    </div>`;
+  document.documentElement.style.setProperty('--topbar-h', $('topbar').offsetHeight + 'px');
+  const tabs = [['today', '☀️', 'tabToday'], ['night', '🌙', 'tabNight'], ['plan', '📋', 'tabPlan'], ['visit', '🩺', 'tabVisit']];
+  $('tabbar').innerHTML = tabs.map(([id, ic, k]) => `<button class="${TAB === id ? 'on' : ''}" onclick="go('${id}')"><span class="ic">${ic}</span>${t(k)}</button>`).join('');
+}
+
+/* ================= Pages ================= */
+function renderToday() {
+  const s = st();
+  const greeting = MODE === 'new' && !s.eh ? t('greetNew') : t('greet');
+  let h = helloBlock(t('dayLine', { d: dayNo(), w: weekNo() }), greeting, ehChip());
+  h += `<div class="sos"><span>${t('sosText')}</span><a href="tel:999">${t('call999')}</a></div>`;
+  if (MODE === 'new' && !s.tip) h += `<div class="coach"><b>${t('coachTitle')}</b>${t('coachBody')}<div style="margin-top:10px"><button class="btn light" onclick="st().tip=true;refresh()">${t('gotIt')}</button></div></div>`;
+
+  h += `<div class="card"><h3>${t('howToday')}</h3><p class="hint">${t('howHint')}</p><div class="sym">` +
+    SYMPTOMS.map((x) => `<button class="${x.warn ? 'warn' : ''} ${s.sym.includes(x.id) ? 'on' : ''}" onclick="toggleSym('${x.id}')">${t('sym_' + x.id)}</button>`).join('') + '</div>';
+  if (symMsg) h += `<div class="feedback ${symMsg.cls}">${t(symMsg.key)}</div>`;
+  h += `<div style="margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink)">${t('sleepQ')}</div><div class="sleep-scale">` +
+    ['😫', '😕', '😐', '🙂', '😴'].map((f, i) => `<button class="${s.sleep === i ? 'on' : ''}" onclick="st().sleep=${i};refresh()" aria-label="${i + 1}/5">${f}</button>`).join('') + '</div></div>';
+
+  if (s.eh) {
+    const order = MEDS.map((m, i) => i).sort((a, b) => s.times[a].localeCompare(s.times[b]));
+    const done = s.meds.filter(Boolean).length, C = 2 * Math.PI * 22, pct = done / MEDS.length;
+    h += `<div class="card"><h3><span>${t('medsTitle')}</span><svg class="ring" viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" fill="none" stroke="#E2E8F0" stroke-width="6"/><circle cx="27" cy="27" r="22" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 27 27)"/><text x="27" y="31" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${done}/${MEDS.length}</text></svg></h3><div>` +
+      order.map((i) => { const m = MEDS[i]; return `<label class="med ${s.meds[i] ? 'done' : ''}"><input type="checkbox" ${s.meds[i] ? 'checked' : ''} onchange="st().meds[${i}]=this.checked;refresh()"><div><div class="t">${s.times[i]} · ${pick(m.name)}<span class="tag ${m.type}">${t(m.type === 'w' ? 'tagW' : 'tagC')}</span></div><div class="d">${pick(m.note)}</div></div></label>`; }).join('') +
+      `</div><div class="rule">${t('medRule')}</div><button class="link" style="margin-top:8px" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden">${t('missedQ')}</button><div class="feedback amber" hidden>${t('missedA')}</div></div>`;
+  } else {
+    h += `<div class="card empty"><div class="big-ic">💊</div><h3>${t('medsTitle')}</h3><p>${t('noMeds')}</p><button class="btn" onclick="connectEh()" ${busy.eh ? 'disabled' : ''}>${busy.eh ? t('connecting') : t('connectEh')}</button></div>`;
   }
 
-  // ---------------- Navigation ----------------
-  function go(tab) {
-    document.querySelectorAll('.page').forEach((p) => p.classList.toggle('on', p.id === 'p-' + tab));
-    document.querySelectorAll('.tabbar button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
-    $('screen').scrollTop = 0;
-    renderAnnot(tab);
-  }
+  const wdone = s.walk >= s.walkGoal;
+  h += `<div class="card"><h3>${t('walkTitle')} <span class="chip ${wdone ? 'green' : ''}">${wdone ? t('walkDone') : t('walkWeek', { w: weekNo() })}</span></h3><p class="hint">${t('walkHint')}</p>
+    <div class="row" style="justify-content:space-between;font-size:.82rem;margin-bottom:6px"><span><b class="num" style="font-size:1.2rem">${s.walk}</b> / ${s.walkGoal} ${t('min')}</span><button class="btn light" onclick="st().walk=Math.min(st().walk+5,60);refresh()">+ 5 ${t('min')}</button></div>
+    <div class="bar"><i style="width:${Math.min(100, s.walk / s.walkGoal * 100)}%"></i></div></div>`;
 
-  function setView(v) {
-    $('patientView').hidden = v !== 'patient';
-    $('doctorView').hidden = v !== 'doctor';
-    $('vPatient').classList.toggle('on', v === 'patient');
-    $('vDoctor').classList.toggle('on', v === 'doctor');
-    if (v === 'doctor') renderDoctor();
-    window.scrollTo(0, 0);
-  }
+  const r = RECIPES[today().getDate() % RECIPES.length];
+  h += `<div class="card"><h3>${t('mealTitle')} <span class="chip amber">${t('mealTag')}</span></h3><div class="recipe"><div class="em">${r.em}</div><div><b>${pick(r.name)}</b><span>${pick(r.why)}</span></div></div>
+    <div class="rule blue">${t('mealRule')} <button class="link" onclick="go('plan')">${t('checkFirst')}</button></div></div>`;
+  $('p-today').innerHTML = h;
+}
 
-  function renderAnnot(tab) {
-    const a = ANNOT[tab];
-    $('annot').innerHTML = `<div class="mod">${a.mod}</div><h2>${a.title}</h2><p>${a.text}</p>` +
-      a.needs.map(([n, f]) => `<div class="need"><b>Need: ${n}</b><span>→ ${f}</span></div>`).join('');
+function renderNight() {
+  const s = st();
+  const hasData = MODE === 'demo';
+  let h = helloBlock(hasData ? t('nightLast') : '', t('nightTitle'), s.soma ? `<span class="chip green">● ${t('somaConnected')}</span>` : '');
+  if (!s.soma) {
+    h += `<div class="card empty"><div class="big-ic">🛏️</div><h3>${t('noSomaTitle')}</h3><p>${t('noSomaBody')}</p><button class="btn" onclick="pairSoma()" ${busy.soma ? 'disabled' : ''}>${busy.soma ? t('pairing') : t('pairSoma')}</button></div>`;
+  } else if (!hasData) {
+    h += `<div class="card empty"><div class="big-ic">🌙</div><h3>${t('firstNightTitle')}</h3><p>${t('firstNightBody')}</p><button class="link" onclick="setMode('demo');go('night')">${t('seeDemo')}</button></div>`;
+  } else {
+    h += `<div class="card"><h3>${t('sleepMove')} <span class="tier t1">${t('tier1p')}</span></h3><div class="grid2">
+      <div class="stat"><div class="lbl">${t('inBed')}</div><div class="num">8h 15m</div><div class="note">22:30 – 06:45</div></div>
+      <div class="stat"><div class="lbl">${t('asleep')}</div><div class="num">7h 22m</div><div class="note">${t('effNote')}</div></div>
+      <div class="stat"><div class="lbl">${t('turns')}</div><div class="num">12</div><div class="note">${t('usual')}</div></div>
+      <div class="stat"><div class="lbl">${t('outBed')}</div><div class="num">1×</div><div class="note">${t('outNote')}</div></div></div>
+      <div style="margin-top:12px;font-size:.75rem;font-weight:700;color:var(--muted)">${t('hours7')}</div>
+      ${barChart(NIGHTS.map(pick), [{ values: SLEEP7, color: 'var(--blue)' }], { max: 9, h: 110 })}</div>`;
+    h += `<div class="card"><h3>${t('hrTitle')} <span class="tier t2">${t('tier2')}</span></h3><p class="hint">${t('hrHint')}</p><div class="grid2">
+      <div class="stat"><div class="lbl">${t('restHR')}</div><div class="num">61 <small>bpm</small></div><div class="note">${t('avg7', { v: 62 })}</div></div>
+      <div class="stat"><div class="lbl">${t('breathing')}</div><div class="num">14 <small>/min</small></div><div class="note">${t('avg7', { v: 14 })}</div></div></div>
+      <div class="row" style="margin-top:10px;justify-content:space-between;font-size:.78rem"><span>${t('validSig')}</span><b class="num" style="color:var(--green)">92%</b></div>
+      <div class="bar" style="margin-top:4px"><i style="width:92%"></i></div><div class="foot-note">${t('validNote')}</div>
+      <div style="margin-top:12px;font-size:.75rem;font-weight:700;color:var(--muted)">${t('hr7')}</div>
+      ${lineChart(NIGHTS.map(pick), [{ values: HR7, color: 'var(--blue)', min: 56, max: 68 }], { h: 110 })}</div>`;
   }
-
-  // ---------------- Today ----------------
-  function renderSymptoms() {
-    $('symList').innerHTML = SYMPTOMS.map((s) =>
-      `<button class="${s.warn ? 'warn' : ''} ${state.sym.has(s.id) ? 'on' : ''}" onclick="toggleSym('${s.id}')">${s.label}</button>`).join('');
+  if (s.soma) {
+    h += `<div class="card"><h3>${t('warmTitle')} <span class="tier t1">${t('tier1t')}</span></h3><p class="hint">${t('warmHint')}</p>${thermalChart()}
+      <div class="row" style="justify-content:space-between;margin-top:8px;font-size:.82rem"><span>${t('prewarmLbl')}</span><label class="switch"><input type="checkbox" ${s.prewarm ? 'checked' : ''} onchange="st().prewarm=this.checked;refresh()"><span></span></label></div>
+      <div class="foot-note">${t(s.prewarm ? 'prewarmOn' : 'prewarmOff')}</div></div>`;
   }
+  $('p-night').innerHTML = h;
+}
 
-  function toggleSym(id) {
-    const s = SYMPTOMS.find((x) => x.id === id);
-    if (id === 'none') state.sym = new Set(state.sym.has('none') ? [] : ['none']);
-    else {
-      state.sym.delete('none');
-      state.sym.has(id) ? state.sym.delete(id) : state.sym.add(id);
-    }
-    renderSymptoms();
-    const fb = $('symFeedback');
-    if (state.sym.has(id)) {
-      if (s.level === 'red') {
-        $('sheet').classList.add('show');
-        addLog(s.label, 'Emergency advice shown: call 999', 'red');
-        fb.className = 'feedback red show';
-        fb.textContent = 'Emergency advice shown. If symptoms are happening now, call 999.';
-        return;
-      }
-      const [cls, msg] = SYM_MSG[id === 'none' ? 'ok' : id];
-      fb.className = 'feedback show ' + cls;
-      fb.textContent = msg;
-      if (id !== 'none') addLog(s.label, id === 'bleed' ? 'Advised: contact clinic today; do not stop DAPT' : id === 'palp' || id === 'dizzy' ? 'Logged; advised to contact clinic if persistent' : 'Logged for visit', s.level === 'amber' ? 'amber' : 'log');
+function renderPlan() {
+  const s = st();
+  let h = helloBlock(s.eh ? t('planSub') : '', t('planTitle'));
+  if (!s.eh) {
+    h += `<div class="card empty"><div class="big-ic">🏥</div><h3>${t('planEmptyT')}</h3><p>${t('planEmptyB')}</p><button class="btn" onclick="connectEh()" ${busy.eh ? 'disabled' : ''}>${busy.eh ? t('connecting') : t('connectEh')}</button></div>`;
+  } else {
+    h += `<div class="card"><h3>${t('procTitle')}</h3><div style="font-size:.82rem">${t('procText', { date: fmtDate(pciDate()) })}</div></div>`;
+    const trow = (k, tg, val, chip) => `<div class="target"><span>${t(k)}<br><span class="sub-zh">${tg}</span></span><span style="text-align:right"><b>${val}</b> <span class="chip green">${chip}</span></span></div>`;
+    h += `<div class="card"><h3>${t('targets')}</h3>` +
+      trow('bp', t('tgt', { v: '<130/80' }), '124/78', t('onTarget')) +
+      trow('ldl', t('tgt', { v: '<1.4 mmol/L' }), '1.32', t('onTarget')) +
+      trow('glu', t('tgt', { v: '<6.0 mmol/L' }), '5.4', t('onTarget')) +
+      trow('smoke', t('tgtStopped'), t('stopped'), t('sinceAdm')) +
+      `<div class="foot-note">${t('labNote')}</div></div>`;
+    h += `<div class="card"><h3>${t('myMeds')}</h3>` + MED_INFO.map((m) => `<div class="medrow"><b>${pick(m.name)}</b> <span class="tag ${m.type}">${t(m.type === 'w' ? 'tagW' : 'tagC')}</span><br>${pick(m.how)}</div>`).join('') + `<div class="foot-note">${t('medNote')}</div></div>`;
+  }
+  h += `<div class="card" id="checkerCard"><h3>${t('checkerTitle')}</h3><p class="hint">${t('checkerHint')}</p>
+    <div class="checker"><input id="herbInput" placeholder="${t('checkerPh')}" value="${herbResult ? esc(herbResult.q) : ''}" onkeydown="if(event.key==='Enter')checkHerb()"><button class="btn" onclick="checkHerb()">${t('check')}</button></div>
+    <div class="quick">${QUICK.map((q) => `<button onclick="checkHerb('${esc(pick(q))}')">${esc(pick(q))}</button>`).join('')}</div>`;
+  if (herbResult) {
+    const { q, hit } = herbResult;
+    if (hit) h += `<div class="verdict ${hit.level}"><b>${{ red: '🚫', amber: '⚠️', green: '✅' }[hit.level]} ${esc(q)}: ${pick(hit.title)}</b>${pick(hit.why)}<div style="margin-top:6px"><button class="link" onclick="speak(this.closest('.verdict').innerText)">${t('listen')}</button></div></div>`;
+    else h += `<div class="verdict gray"><b>❔ ${t('notInListT')}</b>${t('notInListB', { q: esc(q) })}</div>`;
+  }
+  h += '</div>';
+  $('p-plan').innerHTML = h;
+}
+
+function renderVisit() {
+  const s = st();
+  let h = helloBlock(t('visitSub'), t('visitTitle'));
+  if (s.eh) h += `<div class="card" style="background:var(--navy);border-color:var(--navy);color:#CBD5E1"><div style="font-size:.75rem;font-weight:700;letter-spacing:.06em">${t('nextAppt')}</div><div class="num" style="color:#fff;font-size:1.45rem;font-weight:800;margin:2px 0">${fmtAppt(apptDate())}</div><div style="font-size:.8rem">${t('apptPlace')}</div></div>`;
+  else h += `<div class="card empty"><div class="big-ic">📅</div><p>${t('noAppt')}</p><button class="btn" onclick="connectEh()" ${busy.eh ? 'disabled' : ''}>${busy.eh ? t('connecting') : t('connectEh')}</button></div>`;
+  h += `<div class="card"><h3>${t('qTitle')}</h3><p class="hint">${t('qHint')}</p><div>` +
+    (s.questions.length ? s.questions.map((q, i) => `<div class="q"><span>• ${esc(pick(q))}</span><button onclick="st().questions.splice(${i},1);refresh()" aria-label="remove">×</button></div>`).join('') : `<div class="hint" style="margin:0">${t('noQ')}</div>`) +
+    `</div><div class="checker" style="margin-top:8px"><input id="qInput" placeholder="${t('qPh')}" onkeydown="if(event.key==='Enter')addQ()"><button class="btn" onclick="addQ()">${t('add')}</button></div></div>`;
+  if (MODE === 'demo') {
+    h += `<div class="card"><h3>${t('sumTitle')}</h3><div class="grid2">
+      <div class="stat"><div class="lbl">${t('medsTaken')}</div><div class="num">97%</div><div class="note">${t('last2w')}</div></div>
+      <div class="stat"><div class="lbl">${t('walking')}</div><div class="num">5 / 7</div><div class="note">${t('daysWeek')}</div></div></div>
+      <button class="btn block" style="margin-top:12px" onclick="setView('doctor')">${t('share')}</button><div class="foot-note">${t('shareNote')}</div></div>`;
+  } else {
+    h += `<div class="card"><h3>${t('sumTitleNew')}</h3><p style="font-size:.82rem;margin:0 0 8px">${t('sumBuilding', { d: 1 })}</p><div class="bar"><i style="width:${100 / 14}%"></i></div>
+      <button class="btn block" style="margin-top:12px" disabled>${t('share')}</button><div class="foot-note">${t('shareNote')}</div></div>`;
+  }
+  $('p-visit').innerHTML = h;
+}
+
+/* ================= Onboarding ================= */
+function renderOb() {
+  const s = st(), ob = $('ob');
+  const show = VIEW === 'patient' && MODE === 'new' && s.ob < 99;
+  ob.hidden = !show;
+  if (!show) return;
+  const step = s.ob;
+  const dots = [0, 1, 2, 3, 4].map((i) => `<i class="${i <= step ? 'on' : ''}"></i>`).join('');
+  let body = '', next = t('obNext'), nextDisabled = false, skip = true;
+  if (step === 0) {
+    skip = false;
+    body = `<div class="hero">💙</div><h2>${t('ob0T')}</h2><p>${t('ob0B')}</p><div class="rule">${t('ob0Not')}</div>
+      <h4 style="font-family:var(--display);color:var(--ink);margin:16px 0 6px">${t('chooseLang')}</h4>
+      <div class="lang-pick">
+        <button class="${LANG === 'en' ? 'on' : ''}" onclick="setLang('en')">English</button>
+        <button class="${LANG === 'yue' ? 'on' : ''}" onclick="setLang('yue')">廣東話（繁體）<small>Cantonese</small></button>
+        <button class="${LANG === 'zh' ? 'on' : ''}" onclick="setLang('zh')">普通话（简体）<small>Mandarin</small></button>
+      </div>
+      <div class="row" style="justify-content:space-between;font-size:.9rem"><span>${t('bigText')}</span><label class="switch"><input type="checkbox" ${document.body.classList.contains('big') ? 'checked' : ''} onchange="toggleBig()"><span></span></label></div>`;
+  } else if (step === 1) {
+    body = `<div class="hero">🏥</div><h2>${t('ob1T')}</h2><p>${t('ob1B')}</p>
+      <ul class="checklist"><li>${t('ob1i1')}</li><li>${t('ob1i2')}</li><li>${t('ob1i3')}</li><li>${t('ob1i4')}</li></ul>
+      <p class="hint" style="margin:0 0 12px">${t('ob1W')}</p>` +
+      (s.eh ? `<div class="ok-box">✓ ${t('ob1Done', { date: fmtDate(pciDate()) })}</div>` : `<button class="btn block big" onclick="connectEh()" ${busy.eh ? 'disabled' : ''}>${busy.eh ? t('connecting') : t('ob1Btn')}</button>`);
+    nextDisabled = !s.eh;
+  } else if (step === 2) {
+    body = `<div class="hero">💊</div><h2>${t('ob2T')}</h2>` + (s.eh
+      ? `<p>${t('ob2B')}</p><div>` + MEDS.map((m, i) => `<div class="time-row"><span><b style="color:var(--ink)">${pick(m.name)}</b><br><span class="sub-zh">${pick(m.note)}</span></span><input type="time" value="${s.times[i]}" onchange="st().times[${i}]=this.value;save()"></div>`).join('') + '</div>'
+      : `<p>${t('ob2NoEh')}</p>`);
+  } else if (step === 3) {
+    body = `<div class="hero">🛏️</div><h2>${t('ob3T')}</h2><ol class="steps"><li>${t('ob3s1')}</li><li>${t('ob3s2')}</li><li>${t('ob3s3')}</li></ol>` +
+      (s.soma ? `<div class="ok-box">✓ ${t('ob3Done')}</div>` : `<button class="btn block big" onclick="pairSoma()" ${busy.soma ? 'disabled' : ''}>${busy.soma ? t('pairing') : t('pairSoma')}</button>`);
+    nextDisabled = !s.soma;
+  } else if (step === 4) {
+    skip = false;
+    body = `<div class="hero">🗓️</div><h2>${t('ob4T')}</h2><div class="routine">
+      <div><b>☀️ ${t('ob4a')}</b>${t('ob4aB')}</div><div><b>🚶 ${t('ob4b')}</b>${t('ob4bB')}</div>
+      <div><b>🌙 ${t('ob4c')}</b>${t('ob4cB')}</div><div><b>🩺 ${t('ob4d')}</b>${t('ob4dB')}</div></div>`;
+    next = t('ob4Start');
+  }
+  ob.innerHTML = `
+    <div class="ob-top"><span>${t('obStep', { n: step + 1 })}</span><div class="dots">${dots}</div><button class="icon-btn" onclick="speak(document.querySelector('.ob-body').innerText)">${t('listen')}</button></div>
+    <div class="ob-body">${body}</div>
+    <div class="ob-foot">
+      ${step > 0 ? `<button class="btn light" onclick="obGo(-1)">${t('obBack')}</button>` : ''}
+      ${skip ? `<button class="btn light" onclick="obGo(1)">${t('obSkip')}</button>` : ''}
+      <button class="btn" onclick="obGo(1)" ${nextDisabled ? 'disabled' : ''}>${next}</button>
+    </div>`;
+}
+function obGo(d) {
+  const s = st();
+  s.ob = s.ob + d;
+  if (s.ob > 4) { s.ob = 99; TAB = 'today'; }
+  if (s.ob < 0) s.ob = 0;
+  refresh();
+}
+
+/* ================= Guide ================= */
+function guideKey() { return MODE === 'new' && st().ob < 99 ? 'onboarding' : TAB; }
+function guideHTML(g, withTitle) {
+  return (withTitle ? `<div class="mod">${pick(g.mod)}</div><h2>${pick(g.title)}</h2>` : '') +
+    `<p>${pick(g.text)}</p><h4>${t('howToUse')}</h4><ol>${g.how.map((x) => `<li>${pick(x)}</li>`).join('')}</ol>
+     <h4>${t('needsMet')}</h4>${g.needs.map(([n, f]) => `<div class="need"><b>${t('needLbl')}${LANG === 'en' ? ': ' : '：'}${pick(n)}</b><span>→ ${pick(f)}</span></div>`).join('')}`;
+}
+function renderAnnot() { $('annot').innerHTML = guideHTML(GUIDE[guideKey()], true); }
+function openHelp() {
+  const g = GUIDE[guideKey()];
+  $('helpPanel').innerHTML = `<div class="eyebrow">${pick(g.mod)}</div><h2>${pick(g.title)}</h2>${guideHTML(g, false)}<button class="btn light block" style="margin-top:12px" onclick="closeHelp()">${t('close')}</button>`;
+  $('helpSheet').classList.add('show');
+}
+function closeHelp() { $('helpSheet').classList.remove('show'); }
+
+/* ================= Actions ================= */
+function go(tab) { TAB = tab; $('screen').scrollTop = 0; refresh(); }
+function setView(v) { VIEW = v; window.scrollTo(0, 0); refresh(); }
+function setMode(m) { MODE = m; symMsg = null; herbResult = null; refresh(); }
+function setLang(l) { LANG = l; save(); refresh(); }
+function toggleBig() { document.body.classList.toggle('big'); save(); refresh(); }
+function resetNew() { S.new = makeNew(); symMsg = null; herbResult = null; TAB = 'today'; refresh(); }
+
+function toggleSym(id) {
+  const s = st(), x = SYMPTOMS.find((y) => y.id === id);
+  if (id === 'none') s.sym = s.sym.includes('none') ? [] : ['none'];
+  else {
+    s.sym = s.sym.filter((y) => y !== 'none');
+    s.sym = s.sym.includes(id) ? s.sym.filter((y) => y !== id) : [...s.sym, id];
+  }
+  symMsg = null;
+  if (s.sym.includes(id)) {
+    if (x.level === 'red') {
+      symMsg = { cls: 'red', key: 'msg_red' };
+      addLog(T['sym_' + id], T.resp_red, 'red');
+      openSos();
     } else {
-      fb.className = 'feedback';
+      symMsg = { cls: x.level === 'amber' ? 'amber' : 'ok', key: 'msg_' + id };
+      if (id !== 'none') addLog(T['sym_' + id], id === 'bleed' ? T.resp_bleed : x.level === 'amber' ? T.resp_amber : T.resp_log, x.level === 'amber' ? 'amber' : 'log');
     }
   }
-
-  function addLog(what, resp, level) {
-    state.log = state.log.filter((l) => !(l.when === 'Today' && l.what === what));
-    state.log.push({ when: 'Today', what, resp, level });
+  refresh();
+}
+function addLog(what, resp, level) {
+  const s = st();
+  s.log = s.log.filter((l) => !(l.today && l.what[0] === what[0]));
+  s.log.push({ today: true, what, resp, level });
+}
+function openSos() {
+  $('sosPanel').innerHTML = `<h2 style="color:var(--red)">${t('sosTitle')}</h2><p>${t('sosP1')}</p><p><b>${t('sosP2')}</b></p>
+    <a class="call" href="tel:999">📞 ${t('call999')}</a>
+    <div class="row"><button class="btn light" style="flex:1" onclick="speak(t('sosTitle')+'. '+t('sosP1')+' '+t('sosP2'))">${t('listen')}</button><button class="btn light" style="flex:1" onclick="$('sosSheet').classList.remove('show')">${t('imOk')}</button></div>`;
+  $('sosSheet').classList.add('show');
+}
+function checkHerb(val) {
+  const input = $('herbInput');
+  const raw = (val ?? (input ? input.value : '')).trim();
+  if (!raw) { herbResult = null; refresh(); return; }
+  const q = raw.toLowerCase();
+  const hit = HERBS.find((h) => h.keys.some((k) => q.includes(k.toLowerCase()) || (q.length >= 2 && k.toLowerCase().includes(q))));
+  herbResult = { q: raw, hit };
+  if (hit && hit.level !== 'green') {
+    const what = [0, 1, 2].map((i) => T.herbLogWhat[i].replace('{q}', raw));
+    const resp = [0, 1, 2].map((i) => T.herbLogResp[i].replace('{v}', hit.title[i]));
+    st().log.push({ today: true, what, resp, level: 'log' });
   }
-
-  function closeSheet() { $('sheet').classList.remove('show'); }
-
-  function renderSleepScale() {
-    const faces = ['😫', '😕', '😐', '🙂', '😴'];
-    $('sleepScale').innerHTML = faces.map((f, i) =>
-      `<button class="${state.sleep === i ? 'on' : ''}" onclick="state.sleep=${i};renderSleepScale()" aria-label="Sleep ${i + 1} of 5">${f}</button>`).join('');
+  refresh();
+}
+function addQ() {
+  const v = $('qInput').value.trim();
+  if (!v) return;
+  st().questions.push(v);
+  refresh();
+}
+function connectEh() {
+  if (busy.eh) return;
+  busy.eh = true; refresh();
+  setTimeout(() => { busy.eh = false; st().eh = true; if (st().ob === 99) toast('✓ ' + t('ob1Done', { date: fmtDate(pciDate()) })); refresh(); }, 1300);
+}
+function pairSoma() {
+  if (busy.soma) return;
+  busy.soma = true; refresh();
+  setTimeout(() => { busy.soma = false; st().soma = true; if (st().ob === 99) toast('✓ ' + t('ob3Done')); refresh(); }, 1500);
+}
+function speakPage() {
+  const s = st();
+  let text = '';
+  if (TAB === 'today') {
+    text = (MODE === 'new' && !s.eh ? t('greetNew') : t('greet')) + '. ';
+    if (s.eh) {
+      const left = MEDS.map((m, i) => i).filter((i) => !s.meds[i]).sort((a, b) => s.times[a].localeCompare(s.times[b]));
+      text += left.length ? t('speakMeds', { n: left.length, list: left.map((i) => s.times[i] + ' ' + pick(MEDS[i].name)).join(LANG === 'en' ? ', ' : '，') }) : t('speakMedsDone');
+    } else text += t('noMeds');
+    text += ' ' + t('howToday');
+  } else if (TAB === 'night') {
+    text = !s.soma ? t('noSomaBody') : MODE === 'demo' ? t('speakNight') : t('firstNightBody');
+  } else if (TAB === 'plan') {
+    text = s.eh ? t('myMeds') + '. ' + MED_INFO.map((m) => pick(m.name) + '. ' + pick(m.how)).join('. ') : t('planEmptyB');
+  } else {
+    text = s.eh ? t('speakVisit', { date: fmtAppt(apptDate()), n: s.questions.length }) : t('noAppt');
   }
+  speak(text.replace(/·/g, ','));
+}
 
-  function renderMeds() {
-    $('medList').innerHTML = MEDS.map((m, i) => `
-      <label class="med ${state.meds[i] ? 'done' : ''}">
-        <input type="checkbox" ${state.meds[i] ? 'checked' : ''} onchange="state.meds[${i}]=this.checked;renderMeds()">
-        <div><div class="t">${m.time} · ${m.name}<span class="tag ${m.type}">${m.type === 'w' ? 'Western' : 'TCM'}</span></div><div class="d">${m.note}</div></div>
-      </label>`).join('');
-    const done = state.meds.filter(Boolean).length, pct = done / MEDS.length, C = 2 * Math.PI * 22;
-    $('medRing').innerHTML = `<circle cx="27" cy="27" r="22" fill="none" stroke="#E2E8F0" stroke-width="6"/>
-      <circle cx="27" cy="27" r="22" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round"
-        stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 27 27)"/>
-      <text x="27" y="31" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${done}/${MEDS.length}</text>`;
+/* ================= Doctor ================= */
+function renderDoctor() {
+  if (MODE === 'new') {
+    $('doc').innerHTML = `<div class="doc-empty"><div style="font-size:2.6rem">📄</div><h2 style="margin:8px 0">${t('dEmptyT')}</h2><p>${t('dEmptyB')}</p>
+      <div style="font-weight:700;color:var(--ink)">${t('dEmptyWill')}</div><ul><li>${t('dE1')}</li><li>${t('dE2')}</li><li>${t('dE3')}</li><li>${t('dE4')}</li></ul><br>
+      <button class="btn" onclick="setMode('demo')">${t('dEmptyDemo')}</button></div>`;
+    return;
   }
-
-  function toggleMissed() { $('missed').classList.toggle('show'); }
-
-  function renderWalk() {
-    $('walkNow').textContent = state.walk;
-    $('walkGoal').textContent = state.walkGoal;
-    $('walkBar').style.width = Math.min(100, state.walk / state.walkGoal * 100) + '%';
-    const done = state.walk >= state.walkGoal;
-    $('walkChip').className = 'chip ' + (done ? 'green' : '');
-    $('walkChip').textContent = done ? 'Done today ✓' : 'Week ' + Math.ceil(dayNo / 7) + ' goal';
-  }
-  function addWalk() { state.walk = Math.min(state.walk + 5, 60); renderWalk(); }
-
-  function renderRecipe() {
-    const r = RECIPES[TODAY.getDate() % RECIPES.length];
-    $('todayRecipe').innerHTML = `<div class="em">${r.em}</div><div><b>${r.name}</b><span class="zh">${r.zh}</span><br><span>${r.why}</span></div>`;
-  }
-
-  // ---------------- Night ----------------
-  function renderNight() {
-    $('sleepBars').innerHTML = barChart([{ values: SLEEP7, color: 'var(--blue)' }], NIGHTS, { max: 9, h: 110, showLast: true });
-    $('hrLine').innerHTML = lineChart(HR7, NIGHTS, { min: 56, max: 68, h: 110 });
-    // thermal profile: 22:00 -> 06:00
-    const W = 330, H = 92, x = (h) => 28 + (h / 8) * (W - 38), y = (t) => 10 + (1 - (t - 32) / 9) * (H - 30);
-    const pts = [[0, 33.5], [0.4, 37], [0.75, 37], [1.2, 34.5], [8, 34.5]];
-    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
-    s += `<line x1="28" x2="${W - 10}" y1="${y(40)}" y2="${y(40)}" stroke="var(--red)" stroke-dasharray="4 3"/>`;
-    s += `<text x="${W - 10}" y="${y(40) - 4}" font-size="9" fill="var(--red)" text-anchor="end" font-weight="700">40 °C auto shut-off</text>`;
-    s += `<polyline points="${pts.map(([h, t]) => x(h) + ',' + y(t)).join(' ')}" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/>`;
-    s += `<text x="${x(0.55)}" y="${y(37) - 6}" font-size="10" font-weight="700" fill="#B45309" text-anchor="middle">37.0°</text>`;
-    s += `<text x="${x(4.5)}" y="${y(34.5) - 6}" font-size="10" font-weight="700" fill="#B45309" text-anchor="middle">34.5° neutral</text>`;
-    ['22:00', '00:00', '02:00', '04:00', '06:00'].forEach((lb, i) => { s += `<text x="${x(i * 2)}" y="${H - 4}" font-size="9" fill="#94A3B8" text-anchor="middle">${lb}</text>`; });
-    $('thermal').innerHTML = s + '</svg>';
-  }
-  function prewarmMsg() {
-    $('prewarmNote').textContent = $('prewarm').checked
-      ? 'Bed will warm to 37.0 °C at 22:00, then step down to 34.5 °C once you fall asleep.'
-      : 'Pre-warming off tonight. Bed stays at neutral 34.5 °C.';
-  }
-
-  // ---------------- Plan ----------------
-  function renderQuick() {
-    $('quickHerbs').innerHTML = QUICK.map((q) => `<button onclick="$('herbInput').value='${q}';checkHerb()">${q}</button>`).join('');
-  }
-  function checkHerb() {
-    const q = $('herbInput').value.trim().toLowerCase();
-    const v = $('verdict');
-    if (!q) { v.className = 'verdict'; return; }
-    const hit = HERBS.find((h) => h.keys.some((k) => q.includes(k.toLowerCase()) || k.toLowerCase().includes(q) && q.length >= 2));
-    if (hit) {
-      const icon = { red: '🚫', amber: '⚠️', green: '✅' }[hit.level];
-      v.className = 'verdict show ' + hit.level;
-      v.innerHTML = `<b>${icon} ${esc($('herbInput').value.trim())}: ${hit.title}</b>${hit.why}`;
-      if (hit.level !== 'green') addLog(`Checked "${$('herbInput').value.trim()}"`, 'Herb checker: ' + hit.title.toLowerCase(), 'log');
-    } else {
-      v.className = 'verdict show gray';
-      v.innerHTML = `<b>❔ Not in Cora's list yet</b>Please ask your pharmacist or a registered Chinese medicine practitioner before adding "${esc($('herbInput').value.trim())}".`;
-    }
-  }
-
-  // ---------------- Visit ----------------
-  function renderQ() {
-    $('qList').innerHTML = state.questions.length
-      ? state.questions.map((q, i) => `<div class="q"><span>• ${esc(q)}</span><button onclick="state.questions.splice(${i},1);renderQ()" aria-label="Remove">×</button></div>`).join('')
-      : '<div class="hint" style="margin:0">No questions yet.</div>';
-  }
-  function addQ() {
-    const v = $('qInput').value.trim();
-    if (!v) return;
-    state.questions.push(v);
-    $('qInput').value = '';
-    renderQ();
-  }
-
-  // ---------------- Doctor ----------------
-  function renderDoctor() {
-    const wk = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'];
-    $('docPeriod').textContent = `${fmtDate(PCI_DATE)} – ${fmtDate(TODAY)}`;
-    $('docTrend').innerHTML = lineChart(null, wk, {
-      w: 560, h: 190,
-      series: [
-        { values: WEEK_HR, color: 'var(--blue)', min: 55, max: 76 },
-        { values: WEEK_PSQI, color: '#F59E0B', min: 0, max: 21 },
-      ],
-    });
-    $('docAdh').innerHTML = barChart([
-      { values: WEEK_ADH_W, color: 'var(--blue)' },
-      { values: WEEK_ADH_C, color: '#DB2777' },
-    ], wk, { w: 560, h: 170, max: 100, showLast: true });
-
-    const cls = { red: 'red', amber: 'amber', log: 'gray', ok: 'green' };
-    $('symTable').innerHTML = state.log.map((l) =>
-      `<tr><td><b>${l.when}</b></td><td>${esc(l.what)}</td><td><span class="chip ${cls[l.level]}">${esc(l.resp)}</span></td></tr>`).join('');
-    const flags = state.log.filter((l) => l.level === 'red' || l.level === 'amber').length;
-    $('flagCount').textContent = flags + ' item' + (flags === 1 ? '' : 's') + ' to review';
-    $('docQ').innerHTML = state.questions.length ? state.questions.map((q) => `<li>${esc(q)}</li>`).join('') : '<li>None</li>';
-
-    const today = state.log.filter((l) => l.when === 'Today').map((l) => l.what).join(', ');
-    $('docNote').value =
-`Adherence: MMAS-8 improved from 6.75 to 8/8. Western medicines 99% and Tongxinluo 97% of doses ticked in weeks 7–8. Tongxinluo reminder moved to 19:30 after two missed evening doses in week 6.
+  const s = st();
+  const wk = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => LANG === 'en' ? 'W' + n : t('wk', { n }));
+  const cls = { red: 'red', amber: 'amber', log: 'gray' };
+  const flags = s.log.filter((l) => l.level === 'red' || l.level === 'amber').length;
+  const todayItems = s.log.filter((l) => l.today).map((l) => pick(l.what)).join(LANG === 'en' ? ', ' : '、');
+  const note = {
+    en: `Adherence: MMAS-8 improved from 6.75 to 8/8. Western medicines 99% and Tongxinluo 97% of doses ticked in weeks 7–8. Tongxinluo reminder moved to 19:30 after two missed evening doses in week 6.
 Sleep: PSQI improved from 11 to 5. Soma in-bed time stable (~8 h), 12 turns/night.
 Nocturnal resting HR (Soma Tier 2, trend only): 72 → 61 bpm over 8 weeks; mean valid signal 91%.
-Symptoms: palpitations week 3 (resolved after nurse call); low mood week 5 (rehab nurse follow-up).${today ? '\nToday\'s check-in: ' + today + '.' : ''}
-Herb safety: patient asked about adding danshen (week 2); advised to avoid. No reported use of interacting herbs or grapefruit.
-For review: patient questions listed above. [Clinician to complete assessment and plan.]`;
-  }
+Symptoms: palpitations week 3 (resolved after nurse call); low mood week 5 (rehab nurse follow-up).
+Herb safety: asked about adding danshen (week 2); advised to avoid. No reported use of interacting herbs or grapefruit.`,
+    yue: `服藥依從性：MMAS-8由6.75升至8/8。第7–8星期西藥99%、通心絡97%劑量已確認服用。第6星期兩次漏服晚間通心絡後，提示時間改為19:30。
+睡眠：PSQI由11改善至5。Soma在床時間穩定（約8小時），每晚轉身12次。
+夜間靜息心率（Soma第2級，只供趨勢參考）：8星期內由72降至61 bpm；平均有效訊號91%。
+症狀：第3星期心悸（護士致電後已緩解）；第5星期情緒低落（復康護士跟進）。
+草藥安全：第2星期查詢湯中加丹參，已建議避免。未有報告使用相沖草藥或西柚。`,
+    zh: `服药依从性：MMAS-8由6.75升至8/8。第7–8周西药99%、通心络97%剂量已确认服用。第6周两次漏服晚间通心络后，提醒时间改为19:30。
+睡眠：PSQI由11改善至5。Soma在床时间稳定（约8小时），每晚翻身12次。
+夜间静息心率（Soma第2级，仅供趋势参考）：8周内由72降至61 bpm；平均有效信号91%。
+症状：第3周心悸（护士致电后已缓解）；第5周情绪低落（康复护士跟进）。
+草药安全：第2周询问汤里加丹参，已建议避免。未报告使用相冲草药或西柚。`,
+  }[LANG] + (todayItems ? '\n' + t('todayCheck', { x: todayItems }) : '') + '\n' + ['[Clinician to complete assessment and plan.]', '［由醫生填寫評估及計劃。］', '［由医生填写评估及计划。］'][LI[LANG]];
 
-  // ---------------- Init ----------------
-  $('dayNo').textContent = dayNo;
-  $('weekNo').textContent = Math.ceil(dayNo / 7);
-  $('pciDate').textContent = fmtDate(PCI_DATE);
-  renderSymptoms(); renderSleepScale(); renderMeds(); renderWalk(); renderRecipe();
-  renderNight(); renderQuick(); renderQ(); renderAnnot('today');
+  $('doc').innerHTML = `
+    <div class="doc-head">
+      <div><div class="eyebrow">${t('dEyebrow')}</div><h1>${t('dTitle')}</h1><div class="meta">${t('dMeta', { p: fmtDate(pciDate()) + ' – ' + fmtDate(today()) })}</div></div>
+      <div class="row no-print"><span class="chip gray">${t('dReview')}</span><button class="btn" onclick="window.print()">${t('dPrint')}</button></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">${t('k1')}</div><div class="num">8.0 <small>/ 8</small></div><div class="delta">${t('d1')}</div></div>
+      <div class="kpi"><div class="lbl">${t('k2')}</div><div class="num">96<small>%</small></div><div class="delta">${t('d2')}</div></div>
+      <div class="kpi"><div class="lbl">${t('k3')}</div><div class="num">5</div><div class="delta">${t('d3')}</div></div>
+      <div class="kpi"><div class="lbl">${t('k4')}</div><div class="num">61 <small>bpm</small></div><div class="delta">${t('d4')}</div></div>
+      <div class="kpi"><div class="lbl">${t('k5')}</div><div class="num">92<small>%</small></div><div class="delta" style="color:var(--muted)">${t('d5')}</div></div>
+    </div>
+    <div class="dgrid">
+      <div>
+        <div class="panel-d"><h3>${t('dTrend')} <span class="legend"><span><i style="background:var(--blue)"></i>${t('lgHR')}</span><span><i style="background:#F59E0B"></i>PSQI</span></span></h3><div class="hint">${t('dTrendHint')}</div>
+          ${lineChart(wk, [{ values: WEEK_HR, color: 'var(--blue)', min: 55, max: 76 }, { values: WEEK_PSQI, color: '#F59E0B', min: 0, max: 21 }], { w: 560, h: 190 })}</div>
+        <div class="panel-d"><h3>${t('dAdh')} <span class="legend"><span><i style="background:var(--blue)"></i>${t('tagW')}</span><span><i style="background:#DB2777"></i>${['Tongxinluo', '通心絡', '通心络'][LI[LANG]]}</span></span></h3><div class="hint">${t('dAdhHint')}</div>
+          ${barChart(wk, [{ values: WEEK_ADH_W, color: 'var(--blue)' }, { values: WEEK_ADH_C, color: '#DB2777' }], { w: 560, h: 170, max: 100 })}</div>
+      </div>
+      <div>
+        <div class="panel-d"><h3>${t('dLog')} <span class="chip amber">${t('flags', { n: flags })}</span></h3><div class="hint">${t('dLogHint')}</div>
+          <table><thead><tr><th>${t('thWhen')}</th><th>${t('thRep')}</th><th>${t('thResp')}</th></tr></thead><tbody>
+          ${s.log.map((l) => `<tr><td><b>${l.today ? t('whenToday') : t('wk', { n: l.wk })}</b></td><td>${esc(pick(l.what))}</td><td><span class="chip ${cls[l.level]}">${esc(pick(l.resp))}</span></td></tr>`).join('')}
+          </tbody></table></div>
+        <div class="panel-d"><h3>${t('dQ')}</h3><ul style="margin:6px 0 0;padding-left:18px;font-size:.85rem">${s.questions.length ? s.questions.map((q) => `<li>${esc(pick(q))}</li>`).join('') : `<li>${t('none')}</li>`}</ul></div>
+      </div>
+    </div>
+    <div class="panel-d"><h3>${t('dNote')} <span class="chip gray">${t('dEdit')}</span></h3><div class="hint">${t('dNoteHint')}</div>
+      <textarea>${esc(note)}</textarea><div class="foot-note">${t('dFoot')}</div></div>`;
+}
+
+/* ================= Render loop ================= */
+function refresh() {
+  renderChrome();
+  $('patientView').hidden = VIEW !== 'patient';
+  $('doctorView').hidden = VIEW !== 'doctor';
+  if (VIEW === 'patient') {
+    renderToday(); renderNight(); renderPlan(); renderVisit();
+    document.querySelectorAll('.page').forEach((p) => p.classList.toggle('on', p.id === 'p-' + TAB));
+    renderOb(); renderAnnot();
+  } else {
+    renderDoctor();
+  }
+  save();
+}
+
+(function init() {
+  const prefs = load('cora_prefs');
+  if (prefs) { if (prefs.lang && LI[prefs.lang] !== undefined) LANG = prefs.lang; if (prefs.big) document.body.classList.add('big'); }
+  const qs = new URLSearchParams(location.search);
+  if (qs.get('lang') && LI[qs.get('lang')] !== undefined) LANG = qs.get('lang');
+  if (qs.get('mode') === 'new') MODE = 'new';
+  refresh();
+  window.addEventListener('resize', () => document.documentElement.style.setProperty('--topbar-h', $('topbar').offsetHeight + 'px'));
+})();
 </script>
 </body>
 </html>
