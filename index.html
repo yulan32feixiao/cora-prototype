@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cora · Post-PCI Recovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --ink: #0F172A;
+    --body: #334155;
+    --muted: #64748B;
+    --line: #E2E8F0;
+    --bg: #F4F7FB;
+    --card: #FFFFFF;
+    --blue: #2563EB;
+    --blue-soft: #EFF4FF;
+    --green: #059669;
+    --green-soft: #ECFDF5;
+    --amber: #B45309;
+    --amber-soft: #FFFBEB;
+    --red: #DC2626;
+    --red-soft: #FEF2F2;
+    --radius: 18px;
+    font-size: 15px;
+  }
+  body.big { font-size: 18px; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, .num { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; color: var(--ink); margin: 0; }
+  button { font: inherit; cursor: pointer; }
+  .zh { color: var(--muted); font-weight: 500; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding: 10px 20px; background: var(--navy); color: #fff;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .logo {
+    width: 30px; height: 30px; border-radius: 9px; background: var(--blue);
+    display: grid; place-items: center; font-weight: 800; font-family: 'Plus Jakarta Sans';
+  }
+  .brand b { font-family: 'Plus Jakarta Sans'; font-size: 1.05rem; }
+  .brand small { display: block; color: #94A3B8; font-size: .72rem; }
+  .demo-tag { font-size: .72rem; background: #F59E0B; color: #1F2937; padding: 3px 9px; border-radius: 99px; font-weight: 700; }
+  .seg { display: flex; background: #1E293B; border-radius: 12px; padding: 3px; }
+  .seg button { border: 0; background: transparent; color: #CBD5E1; padding: 7px 14px; border-radius: 9px; font-weight: 600; font-size: .85rem; }
+  .seg button.on { background: #fff; color: var(--navy); }
+  .ghost-btn { border: 1px solid #334155; background: transparent; color: #E2E8F0; padding: 6px 10px; border-radius: 9px; font-weight: 700; font-size: .85rem; }
+
+  /* ---------- Patient stage ---------- */
+  .stage { display: flex; justify-content: center; align-items: flex-start; gap: 40px; padding: 28px 20px 40px; }
+  .phone {
+    width: 390px; height: 820px; flex: none; position: relative;
+    background: var(--bg); border: 10px solid #0B1220; border-radius: 48px;
+    box-shadow: 0 30px 60px -20px rgba(13,27,42,.35); overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .statusbar { display: flex; justify-content: space-between; padding: 12px 26px 4px; font-size: .78rem; font-weight: 600; color: var(--ink); background: #fff; }
+  .screen { flex: 1; overflow-y: auto; scrollbar-width: none; }
+  .screen::-webkit-scrollbar { display: none; }
+  .page { display: none; padding: 14px 16px 24px; }
+  .page.on { display: block; }
+  .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-top: 1px solid var(--line); padding: 6px 4px 16px; }
+  .tabbar button { border: 0; background: none; color: var(--muted); font-size: .7rem; font-weight: 600; display: grid; justify-items: center; gap: 2px; padding: 4px 0; }
+  .tabbar button .ic { font-size: 1.25rem; line-height: 1; filter: grayscale(1); opacity: .6; }
+  .tabbar button.on { color: var(--blue); }
+  .tabbar button.on .ic { filter: none; opacity: 1; }
+
+  .annot { width: 330px; position: sticky; top: 90px; }
+  .annot .mod { font-size: .75rem; font-weight: 700; letter-spacing: .08em; color: var(--blue); text-transform: uppercase; }
+  .annot h2 { font-size: 1.6rem; font-weight: 800; margin: 4px 0 10px; }
+  .annot p { margin: 0 0 14px; }
+  .annot .need { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }
+  .annot .need b { color: var(--ink); display: block; font-size: .85rem; margin-bottom: 2px; }
+  .annot .need span { font-size: .85rem; }
+
+  /* ---------- Shared components ---------- */
+  .hello { display: flex; justify-content: space-between; align-items: center; margin: 4px 2px 12px; }
+  .hello h1 { font-size: 1.35rem; font-weight: 800; }
+  .hello .sub { font-size: .8rem; color: var(--muted); }
+  .chip { display: inline-flex; align-items: center; gap: 5px; font-size: .7rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: var(--blue-soft); color: var(--blue); white-space: nowrap; }
+  .chip.green { background: var(--green-soft); color: var(--green); }
+  .chip.amber { background: var(--amber-soft); color: var(--amber); }
+  .chip.red { background: var(--red-soft); color: var(--red); }
+  .chip.gray { background: #F1F5F9; color: var(--muted); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; margin-bottom: 12px; }
+  .card h3 { font-size: .98rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .card .hint { font-size: .78rem; color: var(--muted); margin: -4px 0 10px; }
+  .row { display: flex; align-items: center; gap: 10px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat { background: #F8FAFC; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  .stat .lbl { font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .stat .num { font-size: 1.35rem; font-weight: 800; }
+  .stat .num small { font-size: .75rem; font-weight: 600; color: var(--muted); }
+  .stat .note { font-size: .7rem; color: var(--muted); }
+  .sos {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: var(--red-soft); border: 1px solid #FECACA; color: #991B1B;
+    border-radius: 14px; padding: 9px 12px; font-size: .76rem; margin-bottom: 12px;
+  }
+  .sos a { background: var(--red); color: #fff; text-decoration: none; font-weight: 700; padding: 5px 10px; border-radius: 9px; white-space: nowrap; }
+  .btn { border: 0; background: var(--blue); color: #fff; font-weight: 700; padding: 9px 14px; border-radius: 12px; font-size: .85rem; }
+  .btn.light { background: var(--blue-soft); color: var(--blue); }
+  .btn.block { width: 100%; }
+  .link { border: 0; background: none; color: var(--blue); font-weight: 600; font-size: .8rem; padding: 0; }
+
+  /* check-in */
+  .sym { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sym button { border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 6px 11px; font-size: .78rem; font-weight: 600; color: var(--body); }
+  .sym button.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .sym button.warn { border-color: #FECACA; color: #B91C1C; }
+  .sym button.warn.on { background: var(--red); border-color: var(--red); color: #fff; }
+  .feedback { margin-top: 10px; font-size: .8rem; border-radius: 12px; padding: 9px 11px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: var(--green-soft); color: #065F46; }
+  .feedback.amber { background: var(--amber-soft); color: #92400E; }
+  .feedback.red { background: var(--red-soft); color: #991B1B; }
+  .sleep-scale { display: flex; justify-content: space-between; margin-top: 4px; }
+  .sleep-scale button { border: 1px solid var(--line); background: #fff; border-radius: 12px; width: 52px; height: 44px; font-size: 1.3rem; }
+  .sleep-scale button.on { border-color: var(--blue); background: var(--blue-soft); }
+
+  /* meds */
+  .ring { width: 54px; height: 54px; flex: none; }
+  .med { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--line); }
+  .med:first-of-type { border-top: 0; }
+  .med input { width: 22px; height: 22px; accent-color: var(--green); margin-top: 2px; flex: none; }
+  .med .t { font-weight: 700; color: var(--ink); font-size: .85rem; }
+  .med .d { font-size: .74rem; color: var(--muted); }
+  .med.done .t { text-decoration: line-through; color: var(--muted); }
+  .tag { font-size: .62rem; font-weight: 700; padding: 1px 6px; border-radius: 6px; margin-left: 4px; vertical-align: 1px; }
+  .tag.w { background: var(--blue-soft); color: var(--blue); }
+  .tag.c { background: #FDF2F8; color: #BE185D; }
+  .rule { font-size: .74rem; background: var(--amber-soft); color: #92400E; border-radius: 10px; padding: 8px 10px; margin-top: 8px; }
+
+  .bar { height: 10px; background: #E2E8F0; border-radius: 99px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--green); border-radius: 99px; transition: width .3s; }
+
+  .recipe { display: flex; gap: 10px; }
+  .recipe .em { font-size: 1.8rem; width: 48px; height: 48px; flex: none; border-radius: 12px; background: #FFF7ED; display: grid; place-items: center; }
+  .recipe b { color: var(--ink); font-size: .85rem; display: block; }
+  .recipe span { font-size: .75rem; }
+
+  /* checker */
+  .checker { display: flex; gap: 6px; }
+  .checker input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 9px 11px; font: inherit; font-size: .85rem; }
+  .quick { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .quick button { border: 1px solid var(--line); background: #F8FAFC; border-radius: 8px; padding: 3px 8px; font-size: .72rem; }
+  .verdict { margin-top: 10px; border-radius: 12px; padding: 10px 12px; font-size: .8rem; display: none; }
+  .verdict.show { display: block; }
+  .verdict b { display: block; font-size: .85rem; margin-bottom: 2px; }
+  .verdict.red { background: var(--red-soft); color: #991B1B; }
+  .verdict.amber { background: var(--amber-soft); color: #92400E; }
+  .verdict.green { background: var(--green-soft); color: #065F46; }
+  .verdict.gray { background: #F1F5F9; color: var(--body); }
+
+  .target { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); font-size: .82rem; }
+  .target:first-of-type { border-top: 0; }
+  .target b { color: var(--ink); }
+  .medrow { padding: 8px 0; border-top: 1px solid var(--line); font-size: .8rem; }
+  .medrow:first-of-type { border-top: 0; }
+  .medrow b { color: var(--ink); }
+
+  /* night */
+  .tier { font-size: .65rem; font-weight: 800; letter-spacing: .06em; padding: 2px 7px; border-radius: 6px; }
+  .tier.t1 { background: var(--green-soft); color: var(--green); }
+  .tier.t2 { background: var(--amber-soft); color: var(--amber); }
+  .thermal { position: relative; height: 92px; margin-top: 6px; }
+  .switch { position: relative; width: 44px; height: 26px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch span { position: absolute; inset: 0; background: #CBD5E1; border-radius: 99px; transition: .2s; }
+  .switch span::before { content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .2s; }
+  .switch input:checked + span { background: var(--blue); }
+  .switch input:checked + span::before { transform: translateX(18px); }
+
+  /* visit */
+  .q { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; padding: 8px 0; border-top: 1px solid var(--line); font-size: .82rem; }
+  .q:first-child { border-top: 0; }
+  .q button { border: 0; background: none; color: var(--muted); font-size: 1rem; line-height: 1; }
+
+  /* emergency sheet */
+  .sheet { position: absolute; inset: 0; background: rgba(15,23,42,.55); display: none; align-items: flex-end; z-index: 5; }
+  .sheet.show { display: flex; }
+  .sheet .panel { background: #fff; width: 100%; border-radius: 26px 26px 0 0; padding: 22px 20px 30px; }
+  .sheet .panel h2 { color: var(--red); font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
+  .sheet .panel p { font-size: .85rem; margin: 0 0 10px; }
+  .sheet .call { display: block; text-align: center; background: var(--red); color: #fff; text-decoration: none; font-weight: 800; font-size: 1.1rem; padding: 14px; border-radius: 14px; margin: 14px 0 8px; }
+
+  /* ---------- Doctor view ---------- */
+  .doc { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; }
+  .doc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+  .doc-head .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; color: var(--blue); text-transform: uppercase; }
+  .doc-head h1 { font-size: 1.9rem; font-weight: 800; margin: 2px 0 4px; }
+  .doc-head .meta { font-size: .85rem; color: var(--muted); }
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  .kpi .lbl { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .kpi .num { font-size: 1.9rem; font-weight: 800; color: var(--blue); line-height: 1.2; }
+  .kpi .num small { font-size: .85rem; color: var(--muted); font-weight: 600; }
+  .kpi .delta { font-size: .78rem; font-weight: 600; color: var(--green); }
+  .dgrid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
+  .panel-d { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+  .panel-d h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .panel-d .hint { font-size: .78rem; color: var(--muted); margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  th { text-align: left; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  textarea { width: 100%; min-height: 150px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: .85rem; color: var(--body); resize: vertical; }
+  .foot-note { font-size: .75rem; color: var(--muted); margin-top: 8px; }
+  .legend { display: flex; gap: 14px; font-size: .75rem; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+  svg text { font-family: 'Inter', sans-serif; }
+
+  @media (max-width: 1100px) { .annot { display: none; } .kpis { grid-template-columns: repeat(3, 1fr); } .dgrid { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) {
+    .stage { padding: 0; }
+    .phone { width: 100%; height: calc(100vh - 100px); border: 0; border-radius: 0; box-shadow: none; }
+    .statusbar { display: none; }
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .topbar { padding: 10px 16px; }
+    .doc { padding: 16px; }
+  }
+  @media print {
+    .topbar, #patientView { display: none !important; }
+    #doctorView { display: block !important; }
+    body { background: #fff; }
+    .no-print { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">C</div>
+    <div><b>Cora</b> <span class="zh" style="color:#94A3B8">× Soma</span><small>Post-PCI home recovery · 心臟支架術後康復</small></div>
+    <span class="demo-tag">CONCEPT PROTOTYPE · SIMULATED DATA</span>
+  </div>
+  <div class="row">
+    <div class="seg" role="tablist">
+      <button id="vPatient" class="on" onclick="setView('patient')">Patient app 病人</button>
+      <button id="vDoctor" onclick="setView('doctor')">Doctor view 醫生</button>
+    </div>
+    <button class="ghost-btn" onclick="document.body.classList.toggle('big')" title="Larger text">A+</button>
+  </div>
+</header>
+
+<!-- ======================= PATIENT APP ======================= -->
+<section id="patientView">
+  <div class="stage">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮▮▮ 🔋</span></div>
+      <div class="screen" id="screen">
+
+        <!-- ===== TODAY (Module C + daily check-in) ===== -->
+        <div class="page on" id="p-today">
+          <div class="hello">
+            <div>
+              <div class="sub">Day <span id="dayNo"></span> after PCI · Week <span id="weekNo"></span></div>
+              <h1>Good morning, Mr Chan<br><span class="zh" style="font-size:.95rem">早晨，陳生</span></h1>
+            </div>
+            <span class="chip green">● eHealth+ synced</span>
+          </div>
+
+          <div class="sos">
+            <span>Chest pain or breathless at rest? Don't wait for the app. 胸痛或氣促請即求助</span>
+            <a href="tel:999">Call 999</a>
+          </div>
+
+          <div class="card">
+            <h3>How are you today? <span class="zh">今日感覺</span></h3>
+            <p class="hint">Tap anything you notice. Your cardiologist sees this at your next visit.</p>
+            <div class="sym" id="symList"></div>
+            <div class="feedback" id="symFeedback"></div>
+            <div style="margin-top:12px;font-size:.8rem;font-weight:600;color:var(--ink)">How did you sleep? <span class="zh">瞓得好唔好</span></div>
+            <div class="sleep-scale" id="sleepScale"></div>
+          </div>
+
+          <div class="card">
+            <h3>
+              <span>Today's medicines <span class="zh">今日藥物</span></span>
+              <svg class="ring" viewBox="0 0 54 54" id="medRing"></svg>
+            </h3>
+            <div id="medList"></div>
+            <div class="rule">⚠️ Never stop aspirin or clopidogrel on your own. Stopping early can block the stent. Ask your cardiologist first.</div>
+            <button class="link" style="margin-top:8px" onclick="toggleMissed()">Missed a dose? ›</button>
+            <div class="feedback amber" id="missed">Take it when you remember, unless it's almost time for the next dose. <b>Never take a double dose.</b> If unsure, ask your pharmacist.</div>
+          </div>
+
+          <div class="card">
+            <h3>Gentle walk <span class="chip" id="walkChip"></span></h3>
+            <p class="hint">Goal rises each week, as set by your rehab plan. Stop and rest if you feel chest discomfort.</p>
+            <div class="row" style="justify-content:space-between;font-size:.82rem;margin-bottom:6px">
+              <span><b class="num" id="walkNow" style="font-size:1.2rem"></b> / <span id="walkGoal"></span> min</span>
+              <button class="btn light" onclick="addWalk()">+ 5 min</button>
+            </div>
+            <div class="bar"><i id="walkBar"></i></div>
+          </div>
+
+          <div class="card">
+            <h3>Today's heart-friendly meal <span class="chip amber">TCM 食養</span></h3>
+            <div class="recipe" id="todayRecipe"></div>
+            <div class="rule" style="background:var(--blue-soft);color:#1E40AF">Low salt (&lt;2,000 mg sodium/day) · low saturated fat. Want to add a herb to your soup? <button class="link" onclick="go('plan')">Check it first ›</button></div>
+          </div>
+        </div>
+
+        <!-- ===== NIGHT (Module B) ===== -->
+        <div class="page" id="p-night">
+          <div class="hello">
+            <div>
+              <div class="sub">Last night · 22:30 – 06:45</div>
+              <h1>Soma night report<br><span class="zh" style="font-size:.95rem">昨晚睡眠</span></h1>
+            </div>
+            <span class="chip green">● Soma connected</span>
+          </div>
+
+          <div class="card">
+            <h3>Sleep & movement <span class="tier t1">TIER 1 · PRESSURE SENSORS</span></h3>
+            <div class="grid2">
+              <div class="stat"><div class="lbl">In bed</div><div class="num">8h 15m</div><div class="note">22:30 – 06:45</div></div>
+              <div class="stat"><div class="lbl">Asleep</div><div class="num">7h 22m</div><div class="note">89% efficiency</div></div>
+              <div class="stat"><div class="lbl">Turns</div><div class="num">12</div><div class="note">Usual for you</div></div>
+              <div class="stat"><div class="lbl">Out of bed</div><div class="num">1×</div><div class="note">03:10, 4 min</div></div>
+            </div>
+            <div style="margin-top:12px;font-size:.75rem;font-weight:700;color:var(--muted)">HOURS ASLEEP · LAST 7 NIGHTS</div>
+            <div id="sleepBars"></div>
+          </div>
+
+          <div class="card">
+            <h3>Resting heart & breathing <span class="tier t2">TIER 2 · BEING VALIDATED</span></h3>
+            <p class="hint">Estimated by BCG sensors only during still, quiet sleep. A trend for your doctor, <b>not an alarm</b>. Soma cannot detect a heart attack.</p>
+            <div class="grid2">
+              <div class="stat"><div class="lbl">Resting HR</div><div class="num">61 <small>bpm</small></div><div class="note">7-night avg 62</div></div>
+              <div class="stat"><div class="lbl">Breathing</div><div class="num">14 <small>/min</small></div><div class="note">7-night avg 14</div></div>
+            </div>
+            <div class="row" style="margin-top:10px;justify-content:space-between;font-size:.78rem">
+              <span>Valid signal last night</span><b class="num" style="color:var(--green)">92%</b>
+            </div>
+            <div class="bar" style="margin-top:4px"><i style="width:92%"></i></div>
+            <div class="foot-note">8% of the night was dropped because of movement noise. Noisy data is never shown as a reading.</div>
+            <div style="margin-top:12px;font-size:.75rem;font-weight:700;color:var(--muted)">RESTING HR TREND · LAST 7 NIGHTS</div>
+            <div id="hrLine"></div>
+          </div>
+
+          <div class="card">
+            <h3>Bed warmth <span class="tier t1">TIER 1 · THERMAL</span></h3>
+            <p class="hint">Warms before bed to help you fall asleep, then cools to neutral. Hard cut-off at 40 °C.</p>
+            <div class="thermal" id="thermal"></div>
+            <div class="row" style="justify-content:space-between;margin-top:8px;font-size:.82rem">
+              <span>Pre-warm tonight at 22:00 <span class="zh">今晚預熱</span></span>
+              <label class="switch"><input type="checkbox" id="prewarm" checked onchange="prewarmMsg()"><span></span></label>
+            </div>
+            <div class="foot-note" id="prewarmNote">Bed will warm to 37.0 °C at 22:00, then step down to 34.5 °C once you fall asleep.</div>
+          </div>
+        </div>
+
+        <!-- ===== MY PLAN (Module A) ===== -->
+        <div class="page" id="p-plan">
+          <div class="hello">
+            <div>
+              <div class="sub">From eHealth+ · synced today 07:00</div>
+              <h1>My recovery plan<br><span class="zh" style="font-size:.95rem">我的康復計劃</span></h1>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>My procedure</h3>
+            <div style="font-size:.82rem">PCI with drug-eluting stent (LAD) after heart attack · <b id="pciDate"></b><br>Discharged from hospital 3 days later · Cardiologist: Dr K. W. Wong</div>
+          </div>
+
+          <div class="card">
+            <h3>My targets <span class="zh">目標</span></h3>
+            <div class="target"><span>Blood pressure<br><span class="zh">target &lt;130/80</span></span><span><b>124/78</b> <span class="chip green">On target</span></span></div>
+            <div class="target"><span>LDL cholesterol<br><span class="zh">target &lt;1.4 mmol/L</span></span><span><b>1.32</b> <span class="chip green">On target</span></span></div>
+            <div class="target"><span>Fasting glucose<br><span class="zh">target &lt;6.0 mmol/L</span></span><span><b>5.4</b> <span class="chip green">On target</span></span></div>
+            <div class="target"><span>Smoking<br><span class="zh">target: stopped</span></span><span><b>Stopped</b> <span class="chip green">Since admission</span></span></div>
+            <div class="foot-note">Latest lab results from hospital, via eHealth+. Cora does not measure these.</div>
+          </div>
+
+          <div class="card">
+            <h3>My medicines <span class="zh">藥物</span></h3>
+            <div class="medrow"><b>Aspirin 100 mg</b> <span class="tag w">Western</span><br>Once daily with breakfast · keeps the stent open</div>
+            <div class="medrow"><b>Clopidogrel 75 mg</b> <span class="tag w">Western</span><br>Once daily with breakfast · keeps the stent open (usually 12 months)</div>
+            <div class="medrow"><b>Atorvastatin 40 mg</b> <span class="tag w">Western</span><br>Once daily at bedtime · lowers cholesterol, steadies plaque</div>
+            <div class="medrow"><b>Tongxinluo 通心絡 · 4 capsules</b> <span class="tag c">TCM</span><br>Three times daily after meals · prescribed alongside your Western medicines</div>
+            <div class="foot-note">Take exactly as prescribed. Times can be adjusted by your doctor or pharmacist.</div>
+          </div>
+
+          <div class="card">
+            <h3>Can I eat or drink this? <span class="zh">食得唔食得</span></h3>
+            <p class="hint">Many soups and herbs clash with heart medicines. Check before you add them.</p>
+            <div class="checker">
+              <input id="herbInput" placeholder="e.g. 丹參, grapefruit, oats" onkeydown="if(event.key==='Enter')checkHerb()">
+              <button class="btn" onclick="checkHerb()">Check</button>
+            </div>
+            <div class="quick" id="quickHerbs"></div>
+            <div class="verdict" id="verdict"></div>
+          </div>
+        </div>
+
+        <!-- ===== VISIT (bridge to Module D) ===== -->
+        <div class="page" id="p-visit">
+          <div class="hello">
+            <div>
+              <div class="sub">Cardiology clinic · Dr K. W. Wong</div>
+              <h1>My next visit<br><span class="zh" style="font-size:.95rem">覆診</span></h1>
+            </div>
+          </div>
+
+          <div class="card" style="background:var(--navy);border-color:var(--navy);color:#CBD5E1">
+            <div style="font-size:.75rem;font-weight:700;letter-spacing:.06em">NEXT APPOINTMENT</div>
+            <div class="num" style="color:#fff;font-size:1.5rem;font-weight:800;margin:2px 0">Fri 20 Nov 2026 · 10:30</div>
+            <div style="font-size:.8rem">Cardiac clinic, 4/F · bring your medicine box</div>
+          </div>
+
+          <div class="card">
+            <h3>Questions for my doctor <span class="zh">想問醫生</span></h3>
+            <p class="hint">Write them down when you think of them, so you don't forget at the visit.</p>
+            <div id="qList"></div>
+            <div class="checker" style="margin-top:8px">
+              <input id="qInput" placeholder="Type a question…" onkeydown="if(event.key==='Enter')addQ()">
+              <button class="btn" onclick="addQ()">Add</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>My 8-week summary</h3>
+            <div class="grid2">
+              <div class="stat"><div class="lbl">Medicines taken</div><div class="num">97%</div><div class="note">last 2 weeks</div></div>
+              <div class="stat"><div class="lbl">Walking</div><div class="num">5 / 7</div><div class="note">days this week</div></div>
+            </div>
+            <button class="btn block" style="margin-top:12px" onclick="setView('doctor')">Share summary with Dr Wong ›</button>
+            <div class="foot-note">You choose what is shared. Data stays in your eHealth+ record.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <nav class="tabbar">
+        <button class="on" data-tab="today" onclick="go('today')"><span class="ic">☀️</span>Today</button>
+        <button data-tab="night" onclick="go('night')"><span class="ic">🌙</span>Night</button>
+        <button data-tab="plan" onclick="go('plan')"><span class="ic">📋</span>My plan</button>
+        <button data-tab="visit" onclick="go('visit')"><span class="ic">🩺</span>Visit</button>
+      </nav>
+
+      <div class="sheet" id="sheet">
+        <div class="panel">
+          <h2>Call 999 now 請即致電 999</h2>
+          <p>Chest pain or pressure that lasts more than a few minutes, or breathlessness at rest, can be a heart attack.</p>
+          <p><b>Do not wait for Cora or Soma data.</b> Take your GTN spray if your doctor prescribed one, unlock your door and stay seated.</p>
+          <a class="call" href="tel:999">📞 Call 999</a>
+          <button class="btn light block" onclick="closeSheet()">I'm OK — close</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="annot" id="annot"></aside>
+  </div>
+</section>
+
+<!-- ======================= DOCTOR VIEW (Module D) ======================= -->
+<section id="doctorView" hidden>
+  <div class="doc">
+    <div class="doc-head">
+      <div>
+        <div class="eyebrow">Module D · Longitudinal recovery report</div>
+        <h1>Mr Chan, 62 · 8-week post-PCI summary</h1>
+        <div class="meta">DES to LAD · <span id="docPeriod"></span> · For Dr K. W. Wong (Cardiology) · Patient-reported + Soma sensor data</div>
+      </div>
+      <div class="row no-print">
+        <span class="chip gray">Clinician review only · not a diagnosis</span>
+        <button class="btn" onclick="window.print()">Print / save PDF</button>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Adherence · MMAS-8</div><div class="num">8.0 <small>/ 8</small></div><div class="delta">↑ from 6.75 (wk 1–2)</div></div>
+      <div class="kpi"><div class="lbl">Diet log completed</div><div class="num">96<small>%</small></div><div class="delta">↑ from 78%</div></div>
+      <div class="kpi"><div class="lbl">Sleep · PSQI</div><div class="num">5</div><div class="delta">↓ from 11 (lower = better)</div></div>
+      <div class="kpi"><div class="lbl">Resting HR at night</div><div class="num">61 <small>bpm</small></div><div class="delta">↓ from 71 · trend only</div></div>
+      <div class="kpi"><div class="lbl">Soma valid signal</div><div class="num">92<small>%</small></div><div class="delta" style="color:var(--muted)">avg 91% over 8 weeks</div></div>
+    </div>
+
+    <div class="dgrid">
+      <div>
+        <div class="panel-d">
+          <h3>8-week trends <span class="legend"><span><i style="background:var(--blue)"></i>Resting HR (bpm)</span><span><i style="background:#F59E0B"></i>PSQI</span></span></h3>
+          <div class="hint">HR from Soma Tier 2 (quiet-sleep windows only, being validated). PSQI from fortnightly in-app questionnaire.</div>
+          <div id="docTrend"></div>
+        </div>
+        <div class="panel-d">
+          <h3>Weekly medication adherence <span class="legend"><span><i style="background:var(--blue)"></i>Western</span><span><i style="background:#DB2777"></i>Tongxinluo</span></span></h3>
+          <div class="hint">% of scheduled doses ticked in Cora.</div>
+          <div id="docAdh"></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel-d">
+          <h3>Symptom & safety log <span class="chip amber" id="flagCount"></span></h3>
+          <div class="hint">What the patient reported and what Cora advised. Today's check-ins appear here live.</div>
+          <table>
+            <thead><tr><th>When</th><th>Reported</th><th>Cora response</th></tr></thead>
+            <tbody id="symTable"></tbody>
+          </table>
+        </div>
+        <div class="panel-d">
+          <h3>Patient's questions for this visit</h3>
+          <ul id="docQ" style="margin:6px 0 0;padding-left:18px;font-size:.85rem"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-d">
+      <h3>Draft summary for eHealth+ record <span class="chip gray">Editable by clinician</span></h3>
+      <div class="hint">Cora drafts from the data above. The cardiologist reviews, edits and decides. Cora makes no diagnosis or prescribing decision.</div>
+      <textarea id="docNote"></textarea>
+      <div class="foot-note">Demo regimen simplified for the prototype. Real post-PCI regimens often also include a beta-blocker, ACE inhibitor/ARB and stomach protection.</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ---------------- Demo data ----------------
+  const PCI_DATE = new Date('2026-08-24');
+  const TODAY = new Date('2026-10-19');
+  const dayNo = Math.round((TODAY - PCI_DATE) / 86400000);
+
+  const SYMPTOMS = [
+    { id: 'none', label: '😊 No symptoms', level: 'ok' },
+    { id: 'chest', label: 'Chest pain / pressure', level: 'red', warn: true },
+    { id: 'breath', label: 'Breathless at rest', level: 'red', warn: true },
+    { id: 'bleed', label: 'Bleeding / black stools', level: 'amber', warn: true },
+    { id: 'palp', label: 'Palpitations', level: 'amber' },
+    { id: 'dizzy', label: 'Dizzy', level: 'amber' },
+    { id: 'tired', label: 'Very tired', level: 'log' },
+    { id: 'mood', label: 'Low mood / worried', level: 'log' },
+  ];
+  const SYM_MSG = {
+    ok: ['ok', 'Logged — great to hear. Keep going with today\'s plan.'],
+    bleed: ['amber', 'Please contact your clinic today. Do not stop aspirin or clopidogrel on your own. If bleeding is heavy or won\'t stop, call 999.'],
+    palp: ['amber', 'Logged for Dr Wong. If it keeps happening, or you feel faint, contact your clinic.'],
+    dizzy: ['amber', 'Logged. Sit or lie down until it passes. If it keeps happening, contact your clinic.'],
+    tired: ['ok', 'Logged for your cardiologist. Tiredness is common in recovery; mention it at your visit.'],
+    mood: ['ok', 'Logged. Worry and low mood are common after a heart attack and are part of recovery. Your doctor can help — it will be on your visit summary.'],
+  };
+
+  const MEDS = [
+    { time: '08:00', name: 'Aspirin 100 mg + Clopidogrel 75 mg', note: 'With breakfast', type: 'w' },
+    { time: '08:30', name: 'Tongxinluo 通心絡 · 4 capsules', note: 'After breakfast', type: 'c' },
+    { time: '13:30', name: 'Tongxinluo 通心絡 · 4 capsules', note: 'After lunch', type: 'c' },
+    { time: '19:30', name: 'Tongxinluo 通心絡 · 4 capsules', note: 'After dinner', type: 'c' },
+    { time: '22:00', name: 'Atorvastatin 40 mg', note: 'At bedtime · no grapefruit', type: 'w' },
+  ];
+
+  const RECIPES = [
+    { em: '🥣', name: 'Steamed oats with black fungus & goji', zh: '黑木耳杞子蒸燕麥', why: 'Soluble fibre helps lower cholesterol. No added salt.' },
+    { em: '🍵', name: 'Light hawthorn, lotus leaf & tangerine peel tea', zh: '山楂荷葉陳皮茶', why: 'After meals for digestion. Brew lightly — under 3 g hawthorn.' },
+    { em: '🐟', name: 'Steamed fish with ginger & light astragalus broth', zh: '薑蔥黃芪蒸魚', why: 'Omega-3 fats; culinary astragalus under 5 g; ginger instead of salt.' },
+    { em: '🍐', name: 'Snow pear, lily bulb & lotus seed soup (no sugar)', zh: '雪梨百合蓮子湯', why: 'A calming evening soup to support sleep. No rock sugar.' },
+  ];
+
+  const HERBS = [
+    { keys: ['grapefruit', '西柚', '葡萄柚'], level: 'red', title: 'Avoid — clashes with atorvastatin', why: 'Grapefruit raises statin levels in the blood (CYP3A4), increasing the risk of muscle side effects.' },
+    { keys: ['red yeast rice', '紅麴', '红曲', '紅曲'], level: 'red', title: 'Avoid — a hidden second statin', why: 'Red yeast rice naturally contains a statin. Together with atorvastatin this doubles the dose.' },
+    { keys: ['danshen', '丹參', '丹参'], level: 'red', title: 'Avoid unless prescribed', why: 'Danshen thins the blood. On aspirin + clopidogrel it adds to bleeding risk. Your Tongxinluo is already prescribed for circulation.' },
+    { keys: ['sanqi', 'san qi', '三七', '田七'], level: 'red', title: 'Avoid unless prescribed', why: 'Sanqi affects clotting and adds to bleeding risk with your antiplatelet medicines.' },
+    { keys: ['ginkgo', '銀杏', '银杏', '白果'], level: 'red', title: 'Avoid unless prescribed', why: 'Ginkgo can increase bleeding risk with aspirin and clopidogrel.' },
+    { keys: ['dong quai', 'angelica', '當歸', '当归'], level: 'red', title: 'Avoid unless prescribed', why: 'Dong quai may increase bleeding risk with antiplatelet medicines — common in soups, so check labels.' },
+    { keys: ['ginseng', '人參', '人参', '高麗參', '西洋參', '花旗參'], level: 'amber', title: 'Ask your doctor or pharmacist first', why: 'Ginseng, especially in concentrated or high doses, can affect blood pressure and heart rhythm.' },
+    { keys: ['hawthorn', '山楂'], level: 'amber', title: 'Food amounts only', why: 'A light tea (under 3 g) is in your approved list. Avoid concentrated hawthorn supplements unless your doctor agrees.' },
+    { keys: ['oat', '燕麥', '燕麦'], level: 'green', title: 'Good choice', why: 'Oat fibre (beta-glucan) helps lower LDL cholesterol.' },
+    { keys: ['black fungus', 'wood ear', '黑木耳', '木耳'], level: 'green', title: 'Fine in normal food amounts', why: 'Part of your approved recipe list.' },
+    { keys: ['goji', '杞子', '枸杞'], level: 'green', title: 'Fine in normal food amounts', why: 'Part of your approved recipe list.' },
+    { keys: ['lily', '百合'], level: 'green', title: 'Fine in normal food amounts', why: 'Used in your calming evening soup.' },
+    { keys: ['lotus seed', '蓮子', '莲子'], level: 'green', title: 'Fine in normal food amounts', why: 'Used in your calming evening soup.' },
+    { keys: ['fish', '魚', '鱼', 'salmon', 'sea bass'], level: 'green', title: 'Good choice', why: 'Steamed fish gives omega-3 fats. Avoid salted or deep-fried fish.' },
+    { keys: ['ginger', '薑', '姜'], level: 'green', title: 'Fine as seasoning', why: 'Use ginger and spring onion instead of salt or soy sauce.' },
+    { keys: ['astragalus', '黃芪', '黄芪', '北芪'], level: 'amber', title: 'Culinary amounts only (under 5 g)', why: 'A small slice in broth is in your approved list. Do not take concentrated astragalus products without asking.' },
+  ];
+  const QUICK = ['西柚', '紅麴', '丹參', '三七', '當歸', '花旗參', '山楂', '燕麥', '黑木耳', '百合'];
+
+  const SLEEP7 = [6.4, 6.9, 7.1, 6.6, 7.3, 7.0, 7.4];
+  const HR7 = [64, 63, 63, 62, 62, 61, 61];
+  const NIGHTS = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
+  const WEEK_HR = [72, 70, 68, 66, 64, 63, 62, 61];
+  const WEEK_PSQI = [11, 11, 9, 8, 7, 6, 5, 5];
+  const WEEK_ADH_W = [86, 90, 93, 96, 98, 98, 99, 99];
+  const WEEK_ADH_C = [72, 80, 86, 91, 94, 95, 96, 97];
+
+  const state = {
+    sym: new Set(),
+    sleep: null,
+    meds: MEDS.map(() => false),
+    walk: 15,
+    walkGoal: 25,
+    questions: ['Can I travel to Shenzhen by train next month?', 'When can I stop clopidogrel?'],
+    log: [
+      { when: 'Wk 2', what: 'Asked about adding 丹參 to soup', resp: 'Herb checker: avoid (bleeding risk with DAPT)', level: 'amber' },
+      { when: 'Wk 3', what: 'Palpitations, 2 nights', resp: 'Advised to contact clinic · nurse call, resolved', level: 'amber' },
+      { when: 'Wk 5', what: 'Low mood', resp: 'Logged for visit · rehab nurse follow-up', level: 'log' },
+      { when: 'Wk 6', what: 'Missed evening Tongxinluo ×2', resp: 'Reminder time moved to 19:30', level: 'log' },
+    ],
+  };
+
+  const ANNOT = {
+    today: {
+      mod: 'Module C · Daily guidance', title: 'One screen for the whole day',
+      text: 'Western medicines and Tongxinluo in a single checklist, a daily symptom check-in, a walking goal and one safe TCM meal.',
+      needs: [
+        ['Stopping antiplatelets early is dangerous', 'Combined checklist + a clear "never stop on your own" rule and missed-dose advice.'],
+        ['Patients are unsure which symptoms matter', 'Check-in sorts symptoms: emergency → 999, contact clinic, or log for the visit.'],
+        ['Anxiety and low mood are common after MI', 'Mood is one tap and goes straight to the doctor\'s summary.'],
+      ],
+    },
+    night: {
+      mod: 'Module B · Overnight dashboard', title: 'Soma, without wearables',
+      text: 'Tier 1 (pressure + thermal) is shown as fact. Tier 2 (BCG heart and breathing) is shown only as a trend, with signal quality.',
+      needs: [
+        ['Older patients dislike wearing devices at night', 'Sensors sit in the mattress cover; nothing to charge or put on.'],
+        ['Home sensor data can be noisy', 'Valid-signal ratio shown; noisy segments are dropped, never displayed.'],
+        ['Must not be mistaken for an alarm', 'Explicit "not an alarm" label — emergencies always go to 999.'],
+      ],
+    },
+    plan: {
+      mod: 'Module A · Clinical profile via eHealth+', title: 'Hospital plan, in plain words',
+      text: 'Targets, labs and medicines come from eHealth+. The herb checker filters soup ingredients against the patient\'s actual prescription.',
+      needs: [
+        ['Herbal soups are part of daily life in HK', 'Checker understands Chinese names (丹參, 當歸, 紅麴) and explains why.'],
+        ['Patients don\'t know why each drug matters', 'Each medicine has a one-line plain-language purpose.'],
+        ['No double data entry', 'Lab results are imported, not typed by the patient.'],
+      ],
+    },
+    visit: {
+      mod: 'Bridge to Module D', title: 'Arrive prepared',
+      text: 'Next appointment, a running list of questions and a one-tap share of the 8-week summary to the cardiologist.',
+      needs: [
+        ['Clinic visits are short', 'Doctor sees trends and the patient\'s questions before the patient sits down.'],
+        ['Patients forget what to ask', 'Questions are saved whenever they come to mind.'],
+        ['Privacy (PDPO)', 'Patient chooses to share; data stays in the eHealth+ record.'],
+      ],
+    },
+  };
+
+  // ---------------- Helpers ----------------
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmtDate = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  function lineChart(values, labels, opts = {}) {
+    const W = opts.w || 330, H = opts.h || 120, pad = { l: 28, r: 10, t: 12, b: 22 };
+    const series = opts.series || [{ values, color: opts.color || 'var(--blue)', min: opts.min, max: opts.max }];
+    let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+    const n = labels.length, xs = (i) => pad.l + i * (W - pad.l - pad.r) / (n - 1);
+    labels.forEach((lb, i) => { svg += `<text x="${xs(i)}" y="${H - 6}" font-size="10" fill="#94A3B8" text-anchor="middle">${lb}</text>`; });
+    series.forEach((s, si) => {
+      const min = s.min ?? Math.min(...s.values) - 2, max = s.max ?? Math.max(...s.values) + 2;
+      const ys = (v) => pad.t + (1 - (v - min) / (max - min)) * (H - pad.t - pad.b);
+      if (si === 0) {
+        [min, (min + max) / 2, max].forEach((g) => {
+          svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${ys(g)}" y2="${ys(g)}" stroke="#EEF2F7"/>`;
+          svg += `<text x="${pad.l - 6}" y="${ys(g) + 3}" font-size="9" fill="#94A3B8" text-anchor="end">${Math.round(g)}</text>`;
+        });
+      }
+      const pts = s.values.map((v, i) => `${xs(i)},${ys(v)}`).join(' ');
+      svg += `<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+      s.values.forEach((v, i) => {
+        const last = i === s.values.length - 1;
+        svg += `<circle cx="${xs(i)}" cy="${ys(v)}" r="${last ? 4.5 : 3}" fill="${last ? s.color : '#fff'}" stroke="${s.color}" stroke-width="2"/>`;
+        if (last || i === 0) svg += `<text x="${xs(i)}" y="${ys(v) - 9}" font-size="10" font-weight="700" fill="${s.color}" text-anchor="middle">${v}</text>`;
+      });
+    });
+    return svg + '</svg>';
+  }
+
+  function barChart(groups, labels, opts = {}) {
+    const W = opts.w || 330, H = opts.h || 120, pad = { l: 28, r: 6, t: 14, b: 22 };
+    const max = opts.max || Math.max(...groups.flatMap((g) => g.values));
+    const n = labels.length, slot = (W - pad.l - pad.r) / n, bw = Math.min(22, (slot - 6) / groups.length);
+    let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">`;
+    const ys = (v) => pad.t + (1 - v / max) * (H - pad.t - pad.b);
+    [0, max / 2, max].forEach((g) => {
+      svg += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${ys(g)}" y2="${ys(g)}" stroke="#EEF2F7"/>`;
+      svg += `<text x="${pad.l - 6}" y="${ys(g) + 3}" font-size="9" fill="#94A3B8" text-anchor="end">${Math.round(g)}</text>`;
+    });
+    labels.forEach((lb, i) => {
+      const x0 = pad.l + i * slot + (slot - bw * groups.length - 2 * (groups.length - 1)) / 2;
+      groups.forEach((g, gi) => {
+        const v = g.values[i], x = x0 + gi * (bw + 2);
+        svg += `<rect x="${x}" y="${ys(v)}" width="${bw}" height="${ys(0) - ys(v)}" rx="3" fill="${g.color}" opacity="${i === n - 1 ? 1 : .55}"/>`;
+        if (opts.showLast && i === n - 1) svg += `<text x="${x + bw / 2}" y="${ys(v) - 4}" font-size="10" font-weight="700" fill="${g.color}" text-anchor="middle">${v}</text>`;
+      });
+      svg += `<text x="${pad.l + i * slot + slot / 2}" y="${H - 6}" font-size="10" fill="#94A3B8" text-anchor="middle">${lb}</text>`;
+    });
+    return svg + '</svg>';
+  }
+
+  // ---------------- Navigation ----------------
+  function go(tab) {
+    document.querySelectorAll('.page').forEach((p) => p.classList.toggle('on', p.id === 'p-' + tab));
+    document.querySelectorAll('.tabbar button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
+    $('screen').scrollTop = 0;
+    renderAnnot(tab);
+  }
+
+  function setView(v) {
+    $('patientView').hidden = v !== 'patient';
+    $('doctorView').hidden = v !== 'doctor';
+    $('vPatient').classList.toggle('on', v === 'patient');
+    $('vDoctor').classList.toggle('on', v === 'doctor');
+    if (v === 'doctor') renderDoctor();
+    window.scrollTo(0, 0);
+  }
+
+  function renderAnnot(tab) {
+    const a = ANNOT[tab];
+    $('annot').innerHTML = `<div class="mod">${a.mod}</div><h2>${a.title}</h2><p>${a.text}</p>` +
+      a.needs.map(([n, f]) => `<div class="need"><b>Need: ${n}</b><span>→ ${f}</span></div>`).join('');
+  }
+
+  // ---------------- Today ----------------
+  function renderSymptoms() {
+    $('symList').innerHTML = SYMPTOMS.map((s) =>
+      `<button class="${s.warn ? 'warn' : ''} ${state.sym.has(s.id) ? 'on' : ''}" onclick="toggleSym('${s.id}')">${s.label}</button>`).join('');
+  }
+
+  function toggleSym(id) {
+    const s = SYMPTOMS.find((x) => x.id === id);
+    if (id === 'none') state.sym = new Set(state.sym.has('none') ? [] : ['none']);
+    else {
+      state.sym.delete('none');
+      state.sym.has(id) ? state.sym.delete(id) : state.sym.add(id);
+    }
+    renderSymptoms();
+    const fb = $('symFeedback');
+    if (state.sym.has(id)) {
+      if (s.level === 'red') {
+        $('sheet').classList.add('show');
+        addLog(s.label, 'Emergency advice shown: call 999', 'red');
+        fb.className = 'feedback red show';
+        fb.textContent = 'Emergency advice shown. If symptoms are happening now, call 999.';
+        return;
+      }
+      const [cls, msg] = SYM_MSG[id === 'none' ? 'ok' : id];
+      fb.className = 'feedback show ' + cls;
+      fb.textContent = msg;
+      if (id !== 'none') addLog(s.label, id === 'bleed' ? 'Advised: contact clinic today; do not stop DAPT' : id === 'palp' || id === 'dizzy' ? 'Logged; advised to contact clinic if persistent' : 'Logged for visit', s.level === 'amber' ? 'amber' : 'log');
+    } else {
+      fb.className = 'feedback';
+    }
+  }
+
+  function addLog(what, resp, level) {
+    state.log = state.log.filter((l) => !(l.when === 'Today' && l.what === what));
+    state.log.push({ when: 'Today', what, resp, level });
+  }
+
+  function closeSheet() { $('sheet').classList.remove('show'); }
+
+  function renderSleepScale() {
+    const faces = ['😫', '😕', '😐', '🙂', '😴'];
+    $('sleepScale').innerHTML = faces.map((f, i) =>
+      `<button class="${state.sleep === i ? 'on' : ''}" onclick="state.sleep=${i};renderSleepScale()" aria-label="Sleep ${i + 1} of 5">${f}</button>`).join('');
+  }
+
+  function renderMeds() {
+    $('medList').innerHTML = MEDS.map((m, i) => `
+      <label class="med ${state.meds[i] ? 'done' : ''}">
+        <input type="checkbox" ${state.meds[i] ? 'checked' : ''} onchange="state.meds[${i}]=this.checked;renderMeds()">
+        <div><div class="t">${m.time} · ${m.name}<span class="tag ${m.type}">${m.type === 'w' ? 'Western' : 'TCM'}</span></div><div class="d">${m.note}</div></div>
+      </label>`).join('');
+    const done = state.meds.filter(Boolean).length, pct = done / MEDS.length, C = 2 * Math.PI * 22;
+    $('medRing').innerHTML = `<circle cx="27" cy="27" r="22" fill="none" stroke="#E2E8F0" stroke-width="6"/>
+      <circle cx="27" cy="27" r="22" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 27 27)"/>
+      <text x="27" y="31" text-anchor="middle" font-size="12" font-weight="800" fill="var(--ink)">${done}/${MEDS.length}</text>`;
+  }
+
+  function toggleMissed() { $('missed').classList.toggle('show'); }
+
+  function renderWalk() {
+    $('walkNow').textContent = state.walk;
+    $('walkGoal').textContent = state.walkGoal;
+    $('walkBar').style.width = Math.min(100, state.walk / state.walkGoal * 100) + '%';
+    const done = state.walk >= state.walkGoal;
+    $('walkChip').className = 'chip ' + (done ? 'green' : '');
+    $('walkChip').textContent = done ? 'Done today ✓' : 'Week ' + Math.ceil(dayNo / 7) + ' goal';
+  }
+  function addWalk() { state.walk = Math.min(state.walk + 5, 60); renderWalk(); }
+
+  function renderRecipe() {
+    const r = RECIPES[TODAY.getDate() % RECIPES.length];
+    $('todayRecipe').innerHTML = `<div class="em">${r.em}</div><div><b>${r.name}</b><span class="zh">${r.zh}</span><br><span>${r.why}</span></div>`;
+  }
+
+  // ---------------- Night ----------------
+  function renderNight() {
+    $('sleepBars').innerHTML = barChart([{ values: SLEEP7, color: 'var(--blue)' }], NIGHTS, { max: 9, h: 110, showLast: true });
+    $('hrLine').innerHTML = lineChart(HR7, NIGHTS, { min: 56, max: 68, h: 110 });
+    // thermal profile: 22:00 -> 06:00
+    const W = 330, H = 92, x = (h) => 28 + (h / 8) * (W - 38), y = (t) => 10 + (1 - (t - 32) / 9) * (H - 30);
+    const pts = [[0, 33.5], [0.4, 37], [0.75, 37], [1.2, 34.5], [8, 34.5]];
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    s += `<line x1="28" x2="${W - 10}" y1="${y(40)}" y2="${y(40)}" stroke="var(--red)" stroke-dasharray="4 3"/>`;
+    s += `<text x="${W - 10}" y="${y(40) - 4}" font-size="9" fill="var(--red)" text-anchor="end" font-weight="700">40 °C auto shut-off</text>`;
+    s += `<polyline points="${pts.map(([h, t]) => x(h) + ',' + y(t)).join(' ')}" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/>`;
+    s += `<text x="${x(0.55)}" y="${y(37) - 6}" font-size="10" font-weight="700" fill="#B45309" text-anchor="middle">37.0°</text>`;
+    s += `<text x="${x(4.5)}" y="${y(34.5) - 6}" font-size="10" font-weight="700" fill="#B45309" text-anchor="middle">34.5° neutral</text>`;
+    ['22:00', '00:00', '02:00', '04:00', '06:00'].forEach((lb, i) => { s += `<text x="${x(i * 2)}" y="${H - 4}" font-size="9" fill="#94A3B8" text-anchor="middle">${lb}</text>`; });
+    $('thermal').innerHTML = s + '</svg>';
+  }
+  function prewarmMsg() {
+    $('prewarmNote').textContent = $('prewarm').checked
+      ? 'Bed will warm to 37.0 °C at 22:00, then step down to 34.5 °C once you fall asleep.'
+      : 'Pre-warming off tonight. Bed stays at neutral 34.5 °C.';
+  }
+
+  // ---------------- Plan ----------------
+  function renderQuick() {
+    $('quickHerbs').innerHTML = QUICK.map((q) => `<button onclick="$('herbInput').value='${q}';checkHerb()">${q}</button>`).join('');
+  }
+  function checkHerb() {
+    const q = $('herbInput').value.trim().toLowerCase();
+    const v = $('verdict');
+    if (!q) { v.className = 'verdict'; return; }
+    const hit = HERBS.find((h) => h.keys.some((k) => q.includes(k.toLowerCase()) || k.toLowerCase().includes(q) && q.length >= 2));
+    if (hit) {
+      const icon = { red: '🚫', amber: '⚠️', green: '✅' }[hit.level];
+      v.className = 'verdict show ' + hit.level;
+      v.innerHTML = `<b>${icon} ${esc($('herbInput').value.trim())}: ${hit.title}</b>${hit.why}`;
+      if (hit.level !== 'green') addLog(`Checked "${$('herbInput').value.trim()}"`, 'Herb checker: ' + hit.title.toLowerCase(), 'log');
+    } else {
+      v.className = 'verdict show gray';
+      v.innerHTML = `<b>❔ Not in Cora's list yet</b>Please ask your pharmacist or a registered Chinese medicine practitioner before adding "${esc($('herbInput').value.trim())}".`;
+    }
+  }
+
+  // ---------------- Visit ----------------
+  function renderQ() {
+    $('qList').innerHTML = state.questions.length
+      ? state.questions.map((q, i) => `<div class="q"><span>• ${esc(q)}</span><button onclick="state.questions.splice(${i},1);renderQ()" aria-label="Remove">×</button></div>`).join('')
+      : '<div class="hint" style="margin:0">No questions yet.</div>';
+  }
+  function addQ() {
+    const v = $('qInput').value.trim();
+    if (!v) return;
+    state.questions.push(v);
+    $('qInput').value = '';
+    renderQ();
+  }
+
+  // ---------------- Doctor ----------------
+  function renderDoctor() {
+    const wk = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'];
+    $('docPeriod').textContent = `${fmtDate(PCI_DATE)} – ${fmtDate(TODAY)}`;
+    $('docTrend').innerHTML = lineChart(null, wk, {
+      w: 560, h: 190,
+      series: [
+        { values: WEEK_HR, color: 'var(--blue)', min: 55, max: 76 },
+        { values: WEEK_PSQI, color: '#F59E0B', min: 0, max: 21 },
+      ],
+    });
+    $('docAdh').innerHTML = barChart([
+      { values: WEEK_ADH_W, color: 'var(--blue)' },
+      { values: WEEK_ADH_C, color: '#DB2777' },
+    ], wk, { w: 560, h: 170, max: 100, showLast: true });
+
+    const cls = { red: 'red', amber: 'amber', log: 'gray', ok: 'green' };
+    $('symTable').innerHTML = state.log.map((l) =>
+      `<tr><td><b>${l.when}</b></td><td>${esc(l.what)}</td><td><span class="chip ${cls[l.level]}">${esc(l.resp)}</span></td></tr>`).join('');
+    const flags = state.log.filter((l) => l.level === 'red' || l.level === 'amber').length;
+    $('flagCount').textContent = flags + ' item' + (flags === 1 ? '' : 's') + ' to review';
+    $('docQ').innerHTML = state.questions.length ? state.questions.map((q) => `<li>${esc(q)}</li>`).join('') : '<li>None</li>';
+
+    const today = state.log.filter((l) => l.when === 'Today').map((l) => l.what).join(', ');
+    $('docNote').value =
+`Adherence: MMAS-8 improved from 6.75 to 8/8. Western medicines 99% and Tongxinluo 97% of doses ticked in weeks 7–8. Tongxinluo reminder moved to 19:30 after two missed evening doses in week 6.
+Sleep: PSQI improved from 11 to 5. Soma in-bed time stable (~8 h), 12 turns/night.
+Nocturnal resting HR (Soma Tier 2, trend only): 72 → 61 bpm over 8 weeks; mean valid signal 91%.
+Symptoms: palpitations week 3 (resolved after nurse call); low mood week 5 (rehab nurse follow-up).${today ? '\nToday\'s check-in: ' + today + '.' : ''}
+Herb safety: patient asked about adding danshen (week 2); advised to avoid. No reported use of interacting herbs or grapefruit.
+For review: patient questions listed above. [Clinician to complete assessment and plan.]`;
+  }
+
+  // ---------------- Init ----------------
+  $('dayNo').textContent = dayNo;
+  $('weekNo').textContent = Math.ceil(dayNo / 7);
+  $('pciDate').textContent = fmtDate(PCI_DATE);
+  renderSymptoms(); renderSleepScale(); renderMeds(); renderWalk(); renderRecipe();
+  renderNight(); renderQuick(); renderQ(); renderAnnot('today');
+</script>
+</body>
+</html>
