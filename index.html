@@ -266,6 +266,10 @@
     .brand small, .demo-tag { display: none; }
     .doc { padding: 16px; }
   }
+  body.shot .topbar, body.shot .annot { display: none !important; }
+  body.shot { --topbar-h: 0px; }
+  body.shot .stage { padding-top: 24px; }
+  @media (max-width: 520px) { body.shot .stage { padding: 0; } body.shot .phone { height: 100dvh; } }
   @media print {
     .topbar, #patientView, .no-print { display: none !important; }
     #doctorView { display: block !important; }
@@ -1244,6 +1248,9 @@ function refresh() {
   const qs = new URLSearchParams(location.search);
   if (qs.get('lang') && LI[qs.get('lang')] !== undefined) LANG = qs.get('lang');
   if (qs.get('mode') === 'new') MODE = 'new';
+  if (['plan', 'night', 'today', 'visit'].includes(qs.get('tab'))) TAB = qs.get('tab');
+  if (qs.get('view') === 'doctor') VIEW = 'doctor';
+  if (qs.get('shot')) document.body.classList.add('shot');   // screenshot mode: hide top bar and side panel
   refresh();
   window.addEventListener('resize', () => document.documentElement.style.setProperty('--topbar-h', $('topbar').offsetHeight + 'px'));
 })();
