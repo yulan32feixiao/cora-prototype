@@ -11,4 +11,4 @@ Concept prototype for Imperial Hackathon 2026, Challenge 4 (Healthbridge GBA).
 - **Patient app / Doctor view.** The doctor view is the Module D 8-week report.
 - **? How to use** on every screen explains how to use it and which patient need it meets.
 
-All data is simulated. Cora is a recovery-support tool. It does not diagnose or prescribe.
+Health content is backed by the sources in [SOURCES.md](SOURCES.md). All data is simulated. Cora is a recovery-support tool. It does not diagnose or prescribe.
