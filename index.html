@@ -35,6 +35,11 @@
   .seg { display: flex; background: #1E293B; border-radius: 12px; padding: 3px; }
   .seg button { border: 0; background: transparent; color: #CBD5E1; padding: 6px 11px; border-radius: 9px; font-weight: 600; font-size: .8rem; white-space: nowrap; }
   .seg button.on { background: #fff; color: var(--navy); }
+  .seg-light { display: flex; background: #F1F5F9; border-radius: 12px; padding: 3px; }
+  .seg-light button { flex: 1; border: 0; background: transparent; color: var(--muted); padding: 7px 0; border-radius: 9px; font-weight: 700; font-size: .82rem; }
+  .seg-light button.on { background: #fff; color: var(--blue); box-shadow: 0 1px 2px rgba(15,23,42,.08); }
+  .set-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: .84rem; }
+  .set-row:first-of-type { border-top: 0; }
   .ghost-btn { border: 1px solid #334155; background: transparent; color: #E2E8F0; padding: 6px 10px; border-radius: 9px; font-weight: 700; font-size: .8rem; }
 
   /* ---------- Patient stage ---------- */
@@ -266,7 +271,8 @@
     .brand small, .demo-tag { display: none; }
     .doc { padding: 16px; }
   }
-  body.shot .topbar, body.shot .annot { display: none !important; }
+  .topbar { display: none !important; }
+  body.shot .annot { display: none !important; }
   body.shot { --topbar-h: 0px; }
   body.shot .stage { padding-top: 24px; }
   @media (max-width: 520px) { body.shot .stage { padding: 0; } body.shot .phone { height: 100dvh; } }
@@ -517,6 +523,12 @@ const T = {
   dEmptyDemo: ['View the 8-week demo report', '睇8星期示範報告', '查看8周示范报告'],
   todayCheck: ["Today's check-in: {x}.", '今日打卡：{x}。', '今日打卡：{x}。'],
 
+  settings: ['Settings', '設定', '设置'],
+  language: ['Language', '語言', '语言'],
+  tryNew: ['Try as a new user ›', '用新用戶身份試 ›', '以新用户身份体验 ›'],
+  backDemo: ['Back to the 8-week demo ›', '返去8星期示範 ›', '返回8周示范 ›'],
+  openDoctor: ['Open doctor view ›', '打開醫生版 ›', '打开医生端 ›'],
+  backPatient: ['← Patient app', '← 病人App', '← 患者App'],
   amberSosTitle: ['Please contact your clinic today', '請今日聯絡診所', '请今天联系诊所'],
   trendOnly: ['Trend only — not an alarm. Emergencies: call 999.', '只係趨勢，唔係警報。緊急情況請打999。', '仅为趋势，不是警报。紧急情况请拨打999。'],
   lastNight: ['Last night', '琴晚', '昨晚'],
@@ -552,6 +564,7 @@ const ICONS = {
   file: '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>',
   alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
   book: '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>',
 };
 const ic = (n, cls = '') => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
@@ -860,7 +873,7 @@ function renderChrome() {
       <button class="ghost-btn" onclick="toggleBig()" title="Larger text">A+</button>
       ${MODE === 'new' ? `<button class="ghost-btn" onclick="resetNew()">${t('resetNew')}</button>` : ''}
     </div>`;
-  document.documentElement.style.setProperty('--topbar-h', $('topbar').offsetHeight + 'px');
+  document.documentElement.style.setProperty('--topbar-h', '0px');
   const tabs = [['plan', 'clipboard', 'tabPlan'], ['night', 'moon', 'tabNight'], ['today', 'sun', 'tabToday'], ['visit', 'steth', 'tabVisit']];
   $('tabbar').innerHTML = tabs.map(([id, icn, k]) => `<button class="${TAB === id ? 'on' : ''}" onclick="go('${id}')">${ic(icn)}${t(k)}</button>`).join('');
 }
@@ -957,6 +970,12 @@ function renderPlan() {
     else h += `<div class="verdict gray"><b>❔ ${t('notInListT')}</b>${t('notInListB', { q: esc(q) })}</div>`;
   }
   h += '</div>';
+  h += `<div class="card"><h3>${ttl('globe', t('settings'))}</h3>
+    <div class="set-row"><span>${t('language')}</span><div class="seg-light" style="width:170px"><button class="${LANG === 'en' ? 'on' : ''}" onclick="setLang('en')">EN</button><button class="${LANG === 'yue' ? 'on' : ''}" onclick="setLang('yue')">粵</button><button class="${LANG === 'zh' ? 'on' : ''}" onclick="setLang('zh')">普</button></div></div>
+    <div class="set-row"><span>${t('bigText')}</span><label class="switch"><input type="checkbox" ${document.body.classList.contains('big') ? 'checked' : ''} onchange="toggleBig()"><span></span></label></div>
+    <div class="set-row"><button class="link" onclick="setView('doctor')">${t('openDoctor')}</button></div>
+    <div class="set-row"><button class="link" onclick="${MODE === 'demo' ? "setMode('new')" : "setMode('demo');go('plan')"}">${MODE === 'demo' ? t('tryNew') : t('backDemo')}</button>${MODE === 'new' ? `<button class="link" onclick="resetNew()">${t('resetNew')}</button>` : ''}</div>
+  </div>`;
   $('p-plan').innerHTML = h;
 }
 
@@ -1170,7 +1189,7 @@ function renderDoctor() {
   if (MODE === 'new') {
     $('doc').innerHTML = `<div class="doc-empty"><div style="font-size:2.6rem">📄</div><h2 style="margin:8px 0">${t('dEmptyT')}</h2><p>${t('dEmptyB')}</p>
       <div style="font-weight:700;color:var(--ink)">${t('dEmptyWill')}</div><ul><li>${t('dE1')}</li><li>${t('dE2')}</li><li>${t('dE3')}</li><li>${t('dE4')}</li></ul><br>
-      <button class="btn" onclick="setMode('demo')">${t('dEmptyDemo')}</button></div>`;
+      <button class="btn" onclick="setMode('demo')">${t('dEmptyDemo')}</button> <button class="btn light" onclick="setView('patient')">${t('backPatient')}</button></div>`;
     return;
   }
   const s = st();
@@ -1199,7 +1218,7 @@ Herb safety: asked about adding danshen (week 2); advised to avoid. No reported 
   $('doc').innerHTML = `
     <div class="doc-head">
       <div><div class="eyebrow">${t('dEyebrow')}</div><h1>${t('dTitle')}</h1><div class="meta">${t('dMeta', { p: fmtDate(pciDate()) + ' – ' + fmtDate(today()) })}</div></div>
-      <div class="row no-print"><span class="chip gray">${t('dReview')}</span><button class="btn" onclick="window.print()">${t('dPrint')}</button></div>
+      <div class="row no-print"><button class="btn light" onclick="setView('patient')">${t('backPatient')}</button><span class="chip gray">${t('dReview')}</span><button class="btn" onclick="window.print()">${t('dPrint')}</button></div>
     </div>
     <div class="kpis">
       <div class="kpi"><div class="lbl">${t('k1')}</div><div class="num">8.0 <small>/ 8</small></div><div class="delta">${t('d1')}</div></div>
@@ -1252,7 +1271,6 @@ function refresh() {
   if (qs.get('view') === 'doctor') VIEW = 'doctor';
   if (qs.get('shot')) document.body.classList.add('shot');   // screenshot mode: hide top bar and side panel
   refresh();
-  window.addEventListener('resize', () => document.documentElement.style.setProperty('--topbar-h', $('topbar').offsetHeight + 'px'));
 })();
 </script>
 </body>
